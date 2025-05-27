@@ -36,6 +36,21 @@
     class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex flex-col items-center justify-center p-4 md:p-8">
 
     <div class="w-full max-w-4xl mx-auto">
+
+        <div class="flex justify-between mb-4">
+            <a href="fence-quoter.html"
+                class="inline-flex items-center px-3 py-1 border border-slate-300 rounded text-sm text-slate-700 hover:bg-slate-50 transition-colors">
+                <i class="ri-flashlight-line text-sm mr-2"></i>
+                Cercas electricas
+            </a>
+            <a href="admin-quoter.html"
+                class="inline-flex items-center px-3 py-1 border border-slate-300 rounded text-sm text-slate-700 hover:bg-slate-50 transition-colors">
+                <i class="ri-settings-3-line mr-2"></i>
+                Panel Admin
+            </a>
+        </div>
+
+
         <div class="text-center mb-8">
             <h1 class="text-3xl font-bold text-slate-800 mb-2">Cotizador de Servicios</h1>
             <p class="text-slate-600">Configura y obtén un presupuesto instantáneo para tus necesidades</p>
@@ -61,7 +76,7 @@
                     <!-- Contenido -->
                     <div class="p-6">
                         <div class="space-y-5">
-                            
+
                             <!-- Tipo de Servicio -->
                             <!-- <div>
                                 <label for="tipoServicio" class="text-sm font-medium mb-1.5 block">
@@ -75,7 +90,7 @@
                                 </select>
                             </div> -->
 
-                            
+
                             <!-- Sección Cámaras -->
                             <div id="seccionCamaras">
                                 <h3 class="text-xl font-semibold text-slate-800 mb-4 flex items-center gap-2">
@@ -106,7 +121,7 @@
                                         <select id="cantidadCamaras"
                                             class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                                             <option value="2">2</option>
-                                            <option value="4" selected>4</option>
+                                            <option value="4">4</option>
                                             <option value="8">8</option>
                                             <option value="16">16</option>
                                         </select>
@@ -246,13 +261,15 @@
 
                     <!-- Footer -->
                     <div class="p-6 pt-0 flex flex-col gap-2">
-                        <button id="btnContactar"
+                        <!-- <button id="btnContactar"
                             class="w-full bg-blue-600 hover:bg-teal-700 text-white py-2 px-4 rounded-md flex items-center justify-center transition-colors">
                             <i class="ri-phone-line mr-2"></i> Contactar
+                        </button> -->
+
+                        <button id="btnContactarDatos"
+                            class="w-full bg-blue-600 hover:bg-teal-700 text-white py-2 px-4 rounded-md flex items-center justify-center transition-colors">
+                            <i class="ri-mail-line mr-2"></i> Contactar con datos de Cotización
                         </button>
-                        <!-- <button id="btnContactarDatos" class="w-full border border-slate-300 hover:bg-slate-50 text-slate-700 py-2 px-4 rounded-md flex items-center justify-center transition-colors">
-              <i class="ri-mail-line mr-2"></i> Contactar con datos de Cotización
-            </button> -->
                     </div>
                 </div>
             </div>
