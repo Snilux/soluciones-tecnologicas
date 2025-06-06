@@ -1,0 +1,221 @@
+<%- include('../partials/head.ejs') %>
+
+<body class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+    <!-- Main Content -->
+    <%- include('../partials/nav-administration.ejs') %>
+
+    <div class="p-6">
+        <div class="max-w-7xl mx-auto">
+            <!-- Header -->
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 mb-8">
+                <div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="p-2 bg-blue-500/20 rounded-lg">
+                            <svg class="h-6 w-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                                </path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                        </div>
+                        <h1 class="text-2xl sm:text-3xl font-bold text-white">Panel de Administración</h1>
+                    </div>
+                    <p class="text-gray-400 text-sm sm:text-base">Configura los parámetros del cotizador de servicios
+                    </p>
+                </div>
+
+                <button
+                    class="bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white px-3 py-2 sm:px-4 sm:py-2 rounded-lg flex items-center justify-center gap-2 transition-colors duration-200 border border-gray-600 text-sm sm:text-base w-full sm:w-auto">
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    <span class="sm:inline">Volver al Cotizador</span>
+                </button>
+            </div>
+
+
+            <!-- Tabs -->
+            <div class="mb-8">
+                <div class="border-b border-gray-700">
+                    <nav class="-mb-px flex space-x-8">
+                        <button
+                            class="tab-button active border-b-2 border-blue-500 py-2 px-1 text-sm font-medium text-blue-400">
+                            Opciones de Formulario
+                        </button>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Tab Content -->
+            <div id="formulario-tab" class="tab-content">
+                <!-- Configuration Cards Grid -->
+                <div class="p-4 sm:p-6 lg:p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <% groupedData.forEach(group => { %>
+
+                    <div class="bg-gray-900 border border-gray-600 rounded-lg overflow-hidden shadow-lg">
+
+                        <div class="p-4 bg-gray-800 border-b border-gray-700">
+                            <div class="flex justify-between items-start gap-3 mb-3">
+                                <div class="flex-1 min-w-0">
+                                    <h3 class="text-lg font-semibold text-white mb-1 truncate">
+                                        <%= group.parametro_nombre %></h3>
+                                    <p class="text-sm text-gray-400 line-clamp-2"><%= group.descripcion %></p>
+                                </div>
+
+                                <button onclick="openAddModal(this)" data-parametro="<%= group.parametro_nombre %>"
+                                    data-des="<%= group.descripcion %>"
+                                    class="bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded text-xs flex items-center gap-1 transition-colors flex-shrink-0">
+                                    <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                    </svg>
+                                    <span class="hidden sm:inline">Agregar</span>
+                                </button>
+                            </div>
+                        </div>
+
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-xs">
+                                <thead class="bg-gray-700">
+                                    <tr>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-300 uppercase">
+                                            Valor
+                                        </th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-300 uppercase">
+                                            Precio
+                                        </th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-300 uppercase">
+                                            Acciones
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-600">
+                                    <% group.items.forEach(item => { %>
+
+                                    <tr class="hover:bg-gray-800 transition-colors">
+                                        <td class="px-4 py-2 whitespace-nowrap">
+                                            <div class="text-sm font-medium text-white"><%= item.valor %></div>
+                                        </td>
+                                        <td class="px-4 py-2 whitespace-nowrap">
+                                            <div class="text-sm text-gray-300">$<%= item.precio %></div>
+                                        </td>
+                                        <td class="px-4 py-2 whitespace-nowrap">
+                                            <div class="flex gap-2">
+                                                <button onclick="openEditModal(this)" data-id="<%= item.valor_id %>"
+                                                    data-valor="<%= item.valor %>" data-precio="<%= item.precio %>"
+                                                    data-parametro="<%= item.parametro_nombre %>"
+                                                    class="text-blue-400 hover:text-blue-300 hover:bg-blue-500/20 p-2 rounded transition-colors"
+                                                    title="Editar">
+                                                    <svg class="h-4 w-4" fill="none" stroke="currentColor"
+                                                        viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+                                                        </path>
+                                                    </svg>
+                                                </button>
+                                                <button onclick="openDeleteModal(this)" data-id="<%= item.valor_id %>"
+                                                    data-valor="<%= item.valor %>"
+                                                    class="text-red-400 hover:text-red-300 hover:bg-red-500/20 p-2 rounded transition-colors"
+                                                    title="Eliminar">
+                                                    <svg class="h-4 w-4" fill="none" stroke="currentColor"
+                                                        viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                                        </path>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <% }) %>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Modal add -->
+
+        <div id="modalAdd"
+            class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center">
+            <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50">
+
+            </div>
+
+            <div class="modal-container bg-gray-800 w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
+
+                <div
+                    class="modal-close absolute top-0 right-0 cursor-pointer flex flex-col items-center mt-4 mr-4 text-white text-sm z-50">
+                    <svg class="fill-current text-white" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                        viewBox="0 0 18 18">
+                        <path
+                            d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z">
+                        </path>
+                    </svg>
+                    <span class="text-sm">(ESC)</span>
+                </div>
+
+                <!-- Add margin if you want to see some of the overlay behind the modal-->
+                <div class="modal-content py-4 text-left px-6">
+
+                    <!--Title-->
+                    <div class="flex justify-between items-center pb-1">
+                        <h3 id="parametro" class="text-lg font-semibold text-white mb-1 truncate"></h3>
+                        <div class="modal-close cursor-pointer z-50">
+                            <svg class="fill-current text-white" xmlns="http://www.w3.org/2000/svg" width="18"
+                                height="18" viewBox="0 0 18 18">
+                                <path
+                                    d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z">
+                                </path>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!--Body-->
+                    <div class="my-5">
+                        <label for="nombre" class="block text-gray-300 text-sm font-bold mb-2">Valor:</label>
+                        <input type="text" id="valueAdd"
+                            class="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-gray-700 text-white border-gray-600"
+                            placeholder="Ej: 2 MP, 5 MP, 8 MP">
+
+                        <label for="valor" class="block text-gray-300 text-sm font-bold mt-4 mb-2">Precio:</label>
+                        <input type="number" id="priceAdd"
+                            class="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-gray-700 text-white border-gray-600"
+                            placeholder="0.00">
+                    </div>
+
+                    <!--Footer-->
+                    <div class="flex justify-end pt-2">
+                        <button
+                            class="modal-close px-4 bg-gray-600 p-3 rounded-lg text-white hover:bg-gray-400">Cancelar</button>
+                        <button id="btnAdd" type="submit"
+                            class="px-4 bg-blue-600 p-3 ml-3 rounded-lg text-white hover:bg-blue-400">Guardar
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Modal -->
+    <%- include('../partials/edit-modal.ejs') %>
+    <%- include('../partials/delete-modal-cameras.ejs') %>
+
+    <!-- Delete Confirmation Modal -->
+    <script src="/js/quoters-cameras.js"></script>
+    <script src="/js/quoters-cameras-delete.js"></script>
+    <script src="/js/quoters-cameras-add.js"></script>
+    <script src="/js/panel-administration.js"></script>
+</body>
+
+</html>
