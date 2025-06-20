@@ -5,5 +5,8 @@ const router = express.Router();
 
 router.get("/", indexController.renderIndex);
 
+router.get('/camaras', indexController.getDataCameras)
+
+router.post('/camaras', indexController.calculatePriceCameras)
 
 export default router;

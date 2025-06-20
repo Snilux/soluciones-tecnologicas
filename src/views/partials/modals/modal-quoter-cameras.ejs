@@ -1,0 +1,128 @@
+<div id="quotationModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+        <div class="p-6">
+            <!-- Header -->
+            <div class="text-center mb-2">
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">Cotización de Sistema de Cámaras</h2>
+                <button onclick="closeQuotationModal()"
+                    class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <!-- Precio Principal -->
+            <div class="text-center bg-blue-50 p-6 rounded-lg mb-6">
+                <div class="text-4xl font-bold text-blue-600 mb-2" id="totalPrice">
+                    $38,164.39 MXM
+                </div>
+                <p class="text-gray-600">Precio total del sistema</p>
+            </div>
+
+            <!-- Especificaciones Técnicas -->
+            <div class="grid md:grid-cols-2 gap-4 mb-2">
+                <div class="bg-white border rounded-lg p-4">
+                    <div class="flex items-center gap-2 mb-3">
+                        <i data-lucide="hard-drive" class="w-5 h-5 text-blue-500"></i>
+                        <h3 class="text-lg font-semibold">Almacenamiento</h3>
+                    </div>
+                    <div class="text-2xl font-bold text-green-600 mb-1" id="hardDriveSize">4TB</div>
+                    <p class="text-sm text-gray-600">
+                        Disco duro de alta capacidad para <span id="modalRecordingDays">22</span> días de grabación
+                        continua
+                    </p>
+                </div>
+
+                <div class="bg-white border rounded-lg p-4">
+                    <div class="flex items-center gap-2 mb-3">
+                        <i data-lucide="bar-chart-3" class="w-5 h-5 text-purple-500"></i>
+                        <h3 class="text-lg font-semibold">Especificaciones</h3>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-sm">
+                            <span>Resolución:</span>
+                            <span class="font-medium" id="modalResolution">8MP</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span>Cámaras:</span>
+                            <span class="font-medium"><span id="modalQuantity">16</span> unidades</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span>Tipo:</span>
+                            <span class="font-medium" id="modalLocation">Exterior</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resumen del Proyecto -->
+            <div class="bg-white border rounded-lg p-4 mb-2">
+                <div class="flex items-center gap-2 mb-3">
+                    <i data-lucide="camera" class="w-5 h-5 text-orange-500"></i>
+                    <h3 class="text-lg font-semibold">Resumen del Proyecto</h3>
+                </div>
+                <p class="text-gray-700 leading-relaxed mb-4" id="projectSummary">
+                    Sistema de videovigilancia profesional con <strong><span id="summaryQuantityText">16</span> cámaras
+                        de <span id="summaryResolutionText">8MP</span></strong>
+                    para instalación en <strong id="summaryLocationText">exterior</strong>. Incluye cableado
+                    para distancias de <strong id="summaryDistanceText">11-20mts</strong> e instalación a altura de
+                    <strong id="summaryHeightText">3-4mts</strong>.
+                </p>
+
+                <div class="grid grid-cols-2 gap-4 text-sm">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="map-pin" class="w-4 h-4 text-gray-500"></i>
+                        <span>Instalación <span id="installationType">Exterior</span></span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="ruler" class="w-4 h-4 text-gray-500"></i>
+                        <span>Cableado <span id="cableDistance">11-20mts</span></span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="calendar" class="w-4 h-4 text-gray-500"></i>
+                        <span><span id="recordingDaysText">22</span> días grabación</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="hard-drive" class="w-4 h-4 text-gray-500"></i>
+                        <span>Disco <span id="diskSizeText">4TB</span></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Desglose de Precios -->
+            <div class="bg-white border rounded-lg p-4 mb-2">
+                <h3 class="text-lg font-semibold mb-4">Desglose de Precios</h3>
+                <div class="space-y-3">
+                    <div class="flex justify-between">
+                        <span>Costo de Cámaras y Disco Duro:</span>
+                        <span class="font-medium" id="camerasAndDiskCost">$26,964.39</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Costo de Cableado:</span>
+                        <span class="font-medium" id="cablingCost">$9,600.00</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Costo de Instalación por Altura:</span>
+                        <span class="font-medium" id="installationCost">$1,600.00</span>
+                    </div>
+                    <hr class="my-3">
+                    <div class="flex justify-between font-bold text-lg">
+                        <span>Total:</span>
+                        <span class="text-blue-600" id="finalTotal">$38,164.39 MXM</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botones de Acción -->
+            <div class="flex gap-3">
+                <button
+                    class="flex-1 border border-gray-300 text-gray-700 font-medium py-2 px-4 rounded-md hover:bg-gray-50 transition-colors duration-200">
+                    Descargar PDF
+                </button>
+                <button
+                    class="flex-1 bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md transition-colors duration-200">
+                    Confirmar Pedido
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

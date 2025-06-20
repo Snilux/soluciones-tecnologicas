@@ -1,357 +1,101 @@
-<!DOCTYPE html>
-<html lang="es">
+<script>
+    function calcularCotizacion(
+        cantidadCamaras,
+        lugar,
+        distancia,
+        altura,
+        megapixeles,
+        diasGrabacion
+    ) {
+        // Precios de cámaras por MP
+        const preciosCamara = {
+            2: 736.65,
+            5: 847.59,
+            8: 1286.40,
+        };
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cotizador de Servicios Moderno</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        teal: {
-                            50: "#f0fdfa",
-                            100: "#ccfbf1",
-                            200: "#99f6e4",
-                            300: "#5eead4",
-                            400: "#2dd4bf",
-                            500: "#14b8a6",
-                            600: "#0d9488",
-                            700: "#0f766e",
-                            800: "#115e59",
-                            900: "#134e4a",
-                            950: "#042f2e",
-                        },
-                    }
-                }
-            }
+        // Precios de DVR según cantidad y MP
+        const preciosDVR = {
+            2: { 4: 686.26, 8: 846.88, 16: 1708.36 },
+            5: { 4: 1026.5, 8: 1484.24, 16: 2876.47 },
+            8: { 4: 1702.38, 8: 2749.95, 16: 5193.29 },
+        };
+
+        // Precios de discos duros
+        const discos = {
+            "1TB": 989.86,
+            "2TB": 1224.29,
+            "3TB": 1800.16,
+            "4TB": 2031.75,
+            "6TB": 3529.63,
+            "8TB": 5756.82,
+            "10TB": 6381.99,
+        };
+
+        // Configuración de disco por combinación de cámaras y días
+        let discoNecesario = "1TB";
+        if (cantidadCamaras == 4 && diasGrabacion == 11) {
+            if (megapixeles == 2) discoNecesario = "1TB";
+            else if (megapixeles == 5) discoNecesario = "3TB";
+            else if (megapixeles == 8) discoNecesario = "4TB";
+        } else if (cantidadCamaras == 4 && diasGrabacion != 11) {
+            if (megapixeles == 2) discoNecesario = "2TB";
+            else if (megapixeles == 5) discoNecesario = "6TB";
+            else if (megapixeles == 8) discoNecesario = "8TB";
         }
-    </script>
-</head>
+        // (Puedes extender con lógica para 8 y 16 cámaras si gustas)
 
-<body
-    class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex flex-col items-center justify-center p-4 md:p-8">
+        // Precio del disco seleccionado
+        const precioDisco = discos[discoNecesario];
 
-    <div class="w-full max-w-4xl mx-auto">
+        // Precio de las cámaras
+        const subtotalCamaras = preciosCamara[megapixeles] * cantidadCamaras;
 
-        <div class="flex justify-between mb-4">
-            <a href="fence-quoter.html"
-                class="inline-flex items-center px-3 py-1 border border-slate-300 rounded text-sm text-slate-700 hover:bg-slate-50 transition-colors">
-                <i class="ri-flashlight-line text-sm mr-2"></i>
-                Cercas electricas
-            </a>
-            <a href="admin-quoter.html"
-                class="inline-flex items-center px-3 py-1 border border-slate-300 rounded text-sm text-slate-700 hover:bg-slate-50 transition-colors">
-                <i class="ri-settings-3-line mr-2"></i>
-                Panel Admin
-            </a>
-        </div>
+        // Precio del DVR
+        const precioDVR = preciosDVR[megapixeles][cantidadCamaras];
 
+        // Costo de instalación por distancia
+        let costoCable = 0;
+        if (distancia === "0-10mts") costoCable = 300;
+        else if (distancia === "11-20mts") costoCable = 500;
+        else if (distancia === "21-30mts") costoCable = 650;
+        // Aumentar +100 si es exterior
+        if (lugar === "Exterior") costoCable += 100;
+        const totalCableado = costoCable * cantidadCamaras;
 
-        <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-slate-800 mb-2">Cotizador de Servicios</h1>
-            <p class="text-slate-600">Configura y obtén un presupuesto instantáneo para tus necesidades</p>
-        </div>
+        // Costo extra por altura
+        let costoAltura = 0;
+        if (altura === "3-4mts") costoAltura = 100;
+        else if (altura === "5-6mts") costoAltura = 200;
+        const totalAltura = costoAltura * cantidadCamaras;
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- Formulario de Cotización -->
-            <div class="md:col-span-2">
-                <div class="bg-white rounded-lg shadow-lg border-0 overflow-hidden">
-                    <!-- Header -->
-                    <div class="bg-gradient-to-r from-blue-500 to-slate-500 text-white p-6 rounded-t-lg">
-                        <div class="flex items-center gap-2 text-xl font-bold">
-                            <span class="bg-white text-blue-500 p-1 rounded-full flex items-center justify-center">
-                                <i class="ri-camera-line text-sm"></i>
-                            </span>
-                            Configura tu Cotización
-                        </div>
-                        <p class="text-teal-50 text-sm mt-1">
-                            Elige las opciones que mejor se adapten a tus necesidades
-                        </p>
-                    </div>
+        // Cálculo total
+        const total = subtotalCamaras + precioDVR + precioDisco + totalCableado + totalAltura;
 
-                    <!-- Contenido -->
-                    <div class="p-6">
-                        <div class="space-y-5">
-
-                            <!-- Tipo de Servicio -->
-                            <!-- <div>
-                                <label for="tipoServicio" class="text-sm font-medium mb-1.5 block">
-                                    Elige qué tipo de servicio deseas cotizar
-                                </label>
-                                <select id="tipoServicio"
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                    <option value="camaras">Cámaras</option>
-                                    <option value="alarmas">Alarmas</option>
-                                    <option value="acceso">Control de Acceso</option>
-                                </select>
-                            </div> -->
-
-
-                            <!-- Sección Cámaras -->
-                            <div id="seccionCamaras">
-                                <h3 class="text-xl font-semibold text-slate-800 mb-4 flex items-center gap-2">
-                                    <i class="ri-camera-line text-blue-500"></i>
-                                    Cámaras
-                                </h3>
-                                <hr class="my-4 border-gray-200">
-
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <!-- Propósito -->
-                                    <div>
-                                        <label for="proposito" class="text-sm font-medium mb-1.5 block">
-                                            ¿Cámaras para?
-                                        </label>
-                                        <select id="proposito"
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                            <option value="negocio">Negocio</option>
-                                            <option value="hogar">Hogar</option>
-                                            <option value="industrial">Industrial</option>
-                                        </select>
-                                    </div>
-
-                                    <!-- Cantidad de cámaras -->
-                                    <div>
-                                        <label for="cantidadCamaras" class="text-sm font-medium mb-1.5 block">
-                                            ¿Cantidad de cámaras?
-                                        </label>
-                                        <select id="cantidadCamaras"
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                            <option value="2">2</option>
-                                            <option value="4">4</option>
-                                            <option value="8">8</option>
-                                            <option value="16">16</option>
-                                        </select>
-                                    </div>
-
-                                    <!-- Ubicación -->
-                                    <div>
-                                        <label for="ubicacion" class="text-sm font-medium mb-1.5 block">
-                                            ¿Dónde se instalarán las cámaras?
-                                        </label>
-                                        <select id="ubicacion"
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                            <option value="interior">Interior</option>
-                                            <option value="exterior">Exterior</option>
-                                            <option value="mixto">Mixto</option>
-                                        </select>
-                                    </div>
-
-                                    <!-- Distancia -->
-                                    <div>
-                                        <label for="distancia" class="text-sm font-medium mb-1.5 block">
-                                            ¿Distancia entre cámaras y grabadora?
-                                        </label>
-                                        <select id="distancia"
-                                            class="w-full  px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                            <option value="0-10mts">0 - 10mts</option>
-                                            <option value="10-20mts">10 - 20mts</option>
-                                            <option value="20-50mts">20 - 50mts</option>
-                                            <option value="50+mts">Más de 50mts</option>
-                                        </select>
-                                    </div>
-
-                                    <!-- Altura -->
-                                    <div>
-                                        <label for="altura" class="text-sm font-medium mb-1.5 block">
-                                            ¿Altura aproximada de cada cámara?
-                                        </label>
-                                        <select id="altura"
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                            <option value="1-2mts">1 - 2mts</option>
-                                            <option value="2-3mts">2 - 3mts</option>
-                                            <option value="3-5mts">3 - 5mts</option>
-                                            <option value="5+mts">Más de 5mts</option>
-                                        </select>
-                                    </div>
-
-                                    <!-- Megapíxeles -->
-                                    <div>
-                                        <label for="megapixeles" class="text-sm font-medium mb-1.5 block">
-                                            ¿Cuántos megapíxeles requieres?
-                                        </label>
-                                        <select id="megapixeles"
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                            <option value="2MP">2 MP</option>
-                                            <option value="4MP">4 MP</option>
-                                            <option value="8MP">8 MP</option>
-                                        </select>
-                                    </div>
-
-                                    <!-- Días de grabación -->
-                                    <div>
-                                        <label for="diasGrabacion" class="text-sm font-medium mb-1.5 block">
-                                            ¿Cuántos días de grabación requiere aproximadamente?
-                                        </label>
-                                        <select id="diasGrabacion"
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                            <option value="7">7 días</option>
-                                            <option value="11" selected>11 días</option>
-                                            <option value="15">15 días</option>
-                                            <option value="30">30 días</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Resumen y Precio -->
-            <div class="md:col-span-1">
-                <div class="bg-white rounded-lg shadow-lg border-0 h-full flex flex-col">
-                    <!-- Header -->
-                    <div class="bg-gradient-to-r from-slate-700 to-slate-800 text-white p-6 rounded-t-lg">
-                        <h3 class="text-lg font-bold">Estimado</h3>
-                        <p class="text-slate-300 text-sm">Resumen de tu cotización</p>
-                    </div>
-
-                    <!-- Contenido -->
-                    <div class="p-6 flex-grow flex flex-col">
-                        <div class="bg-slate-50 rounded-lg p-4 mb-4">
-                            <div class="flex items-center justify-between mb-2">
-                                <span class="text-sm text-slate-500">Servicio:</span>
-                                <span id="resumenServicio"
-                                    class="text-xs px-2 py-1 rounded-full border border-slate-200 font-medium">
-                                    Cámaras
-                                </span>
-                            </div>
-
-                            <div id="resumenCamaras">
-                                <div class="flex items-center justify-between mb-2">
-                                    <span class="text-sm text-slate-500">Cantidad:</span>
-                                    <span id="resumenCantidad"
-                                        class="text-xs px-2 py-1 rounded-full border border-slate-200 font-medium">
-                                        4
-                                    </span>
-                                </div>
-                                <div class="flex items-center justify-between mb-2">
-                                    <span class="text-sm text-slate-500">Calidad:</span>
-                                    <span id="resumenCalidad"
-                                        class="text-xs px-2 py-1 rounded-full border border-slate-200 font-medium">
-                                        2MP
-                                    </span>
-                                </div>
-                                <div class="flex items-center justify-between">
-                                    <span class="text-sm text-slate-500">Grabación:</span>
-                                    <span id="resumenGrabacion"
-                                        class="text-xs px-2 py-1 rounded-full border border-slate-200 font-medium">
-                                        11 días
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mt-auto">
-                            <hr class="my-4 border-gray-200">
-                            <div class="text-center">
-                                <h3 class="text-lg font-medium text-slate-700 mb-1">Precio Estimado</h3>
-                                <div id="precioEstimado" class="text-2xl font-bold text-blue-600 mb-2">$Calculando...
-                                </div>
-                                <p id="requiereEspecializacion" class="text-sm text-amber-600 mt-2 hidden">
-                                    Requiere más especialización
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Footer -->
-                    <div class="p-6 pt-0 flex flex-col gap-2">
-                        <!-- <button id="btnContactar"
-                            class="w-full bg-blue-600 hover:bg-teal-700 text-white py-2 px-4 rounded-md flex items-center justify-center transition-colors">
-                            <i class="ri-phone-line mr-2"></i> Contactar
-                        </button> -->
-
-                        <button id="btnContactarDatos"
-                            class="w-full bg-blue-600 hover:bg-teal-700 text-white py-2 px-4 rounded-md flex items-center justify-center transition-colors">
-                            <i class="ri-mail-line mr-2"></i> Contactar con datos de Cotización
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Elementos del DOM
-        const tipoServicio = document.getElementById('tipoServicio');
-        const proposito = document.getElementById('proposito');
-        const cantidadCamaras = document.getElementById('cantidadCamaras');
-        const ubicacion = document.getElementById('ubicacion');
-        const distancia = document.getElementById('distancia');
-        const altura = document.getElementById('altura');
-        const megapixeles = document.getElementById('megapixeles');
-        const diasGrabacion = document.getElementById('diasGrabacion');
-
-        // Elementos de resumen
-        const resumenServicio = document.getElementById('resumenServicio');
-        const resumenCantidad = document.getElementById('resumenCantidad');
-        const resumenCalidad = document.getElementById('resumenCalidad');
-        const resumenGrabacion = document.getElementById('resumenGrabacion');
-        const precioEstimado = document.getElementById('precioEstimado');
-        const requiereEspecializacion = document.getElementById('requiereEspecializacion');
-
-        // Botones
-        const btnContactar = document.getElementById('btnContactar');
-        const btnContactarDatos = document.getElementById('btnContactarDatos');
-
-        // Función para actualizar el resumen y calcular el precio
-        function actualizarCotizacion() {
-            // Actualizar resumen
-            resumenServicio.textContent = tipoServicio.options[tipoServicio.selectedIndex].text;
-            resumenCantidad.textContent = cantidadCamaras.value;
-            resumenCalidad.textContent = megapixeles.value;
-            resumenGrabacion.textContent = diasGrabacion.value + ' días';
-
-            // Calcular precio
-            const camPrice = parseInt(cantidadCamaras.value) * 100;
-            const mpFactor = megapixeles.value === "2MP" ? 1 : megapixeles.value === "4MP" ? 1.5 : 2;
-            const diasFactor = parseInt(diasGrabacion.value) / 10;
-
-            const total = camPrice * mpFactor * diasFactor;
-
-            if (total > 1000) {
-                requiereEspecializacion.classList.remove('hidden');
-                precioEstimado.textContent = 'Consulta personalizada';
-            } else {
-                requiereEspecializacion.classList.add('hidden');
-                precioEstimado.textContent = '$' + total.toFixed(2);
+        return {
+            total: total.toFixed(2),
+            desglose: {
+                subtotalCamaras,
+                precioDVR,
+                precioDisco,
+                totalCableado,
+                totalAltura,
+                discoNecesario,
             }
-        }
+        };
+    }
 
-        // Eventos para actualizar la cotización
-        tipoServicio.addEventListener('change', actualizarCotizacion);
-        proposito.addEventListener('change', actualizarCotizacion);
-        cantidadCamaras.addEventListener('change', actualizarCotizacion);
-        ubicacion.addEventListener('change', actualizarCotizacion);
-        distancia.addEventListener('change', actualizarCotizacion);
-        altura.addEventListener('change', actualizarCotizacion);
-        megapixeles.addEventListener('change', actualizarCotizacion);
-        diasGrabacion.addEventListener('change', actualizarCotizacion);
+    const resultado = calcularCotizacion(
+        4,             // cantidad de cámaras
+        "Interior",    // lugar de instalación
+        "0-10mts",    // distancia
+        "1-2mts",      // altura
+        2,             // megapíxeles
+        11             // días de grabación
+    );
 
-        // Inicializar cotización
-        actualizarCotizacion();
+    console.log("Total: $" + resultado.total + " MXN");
+    console.table(resultado.desglose);
 
-        // Eventos de botones
-        btnContactar.addEventListener('click', function () {
-            alert('Función de contacto activada');
-        });
 
-        btnContactarDatos.addEventListener('click', function () {
-            const mensaje = `
-        Cotización de ${resumenServicio.textContent}
-        Cantidad: ${resumenCantidad.textContent}
-        Calidad: ${resumenCalidad.textContent}
-        Grabación: ${resumenGrabacion.textContent}
-        Precio estimado: ${precioEstimado.textContent}
-      `;
-            alert(mensaje);
-        });
-    </script>
-</body>
-
-</html>
+</script>

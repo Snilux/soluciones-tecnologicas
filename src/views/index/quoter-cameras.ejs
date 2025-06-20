@@ -1,0 +1,304 @@
+<%- include('../partials/head.ejs') %>
+
+<body
+    class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex flex-col items-center justify-center p-4 md:p-8">
+
+    <div class="w-full max-w-4xl mx-auto">
+
+        <div class="flex justify-between mb-4">
+            <a href="fence-quoter.html"
+                class="inline-flex items-center px-3 py-1 border border-slate-300 rounded text-sm text-slate-700 hover:bg-slate-50 transition-colors">
+                <i class="ri-flashlight-line text-sm mr-2"></i>
+                Cercas electricas
+            </a>
+            <a href="/admin/quoters/cameras"
+                class="inline-flex items-center px-3 py-1 border border-slate-300 rounded text-sm text-slate-700 hover:bg-slate-50 transition-colors">
+                <i class="ri-settings-3-line mr-2"></i>
+                Panel Admin
+            </a>
+        </div>
+
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-slate-800 mb-2">Cotizador de Servicios</h1>
+            <p class="text-slate-600">Configura y obtén un presupuesto instantáneo para tus necesidades</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Formulario de Cotización -->
+            <div class="md:col-span-2">
+                <div class="bg-white rounded-lg shadow-lg border-0 overflow-hidden">
+                    <!-- Header -->
+                    <div class="bg-gradient-to-r from-blue-500 to-slate-500 text-white p-6 rounded-t-lg">
+                        <div class="flex items-center gap-2 text-xl font-bold">
+                            <span class="bg-white text-blue-500 p-1 rounded-full flex items-center justify-center">
+                                <i class="ri-camera-line text-sm"></i>
+                            </span>
+                            Configura tu Cotización
+                        </div>
+                        <p class="text-teal-50 text-sm mt-1">
+                            Elige las opciones que mejor se adapten a tus necesidades
+                        </p>
+                    </div>
+
+                    <!-- Contenido -->
+                    <div class="p-6">
+                        <div class="space-y-5">
+                            <!-- Sección Cámaras -->
+                            <div id="seccionCamaras">
+                                <h3 class="text-xl font-semibold text-slate-800 mb-4 flex items-center gap-2">
+                                    <i class="ri-camera-line text-blue-500"></i>
+                                    Cámaras
+                                </h3>
+                                <hr class="my-4 border-gray-200">
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <!-- Propósito -->
+                                    <div>
+                                        <label for="proposito" class="text-sm font-medium mb-1.5 block">
+                                            ¿Cámaras para?
+                                        </label>
+                                        <select id="proposito" data-param="proposito"
+                                            class="cotizador-select w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                            <option value="negocio">Negocio</option>
+                                            <option value="hogar">Hogar</option>
+                                        </select>
+                                    </div>
+
+                                    <input type="hidden" value="<%= cameraData %>" id="cameraData">
+
+                                    <!-- Campos dinámicos -->
+                                    <% cameraData.forEach((group, index) => {%>
+                                    <%if(!(group.parametro_nombre === 'Disco duro recomendado' || group.parametro_nombre === 'Precio cable interior' || group.parametro_nombre === 'Precio cable exterior')) {%>
+                                    <div>
+                                        <label class="text-sm font-medium mb-1.5 block">
+                                            <%= group.parametro_nombre %>
+                                        </label>
+                                        <select id="param_<%= index %>" data-param="<%= group.parametro_nombre %>"
+                                            data-param-id="<%= group.parametro_id %>"
+                                            class="cotizador-select w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                            <option value="">Selecciona una opción</option>
+                                            <%group.items.forEach(item => {%>
+                                            <option value="<%= item.valor %>" data-precio="<%= item.precio || 0 %>"
+                                                data-factor="<%= item.factor || 1 %>">
+                                                <%= item.valor %>
+                                            </option>
+                                            <%})%>
+                                        </select>
+                                    </div>
+                                    <%}%>
+                                    <%}) %>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- Resumen y Precio -->
+            <div class="md:col-span-1">
+                <div class="bg-white rounded-lg shadow-lg border-0 h-full flex flex-col">
+                    <!-- Header -->
+                    <div class="bg-gradient-to-r from-slate-700 to-slate-800 text-white p-6 rounded-t-lg">
+                        <h3 class="text-lg font-bold">Estimado</h3>
+                        <p class="text-slate-300 text-sm">Resumen de tu cotización</p>
+                    </div>
+
+                    <!-- Contenido -->
+                    <div class="p-6 flex-grow flex flex-col">
+                        <div class="bg-slate-50 rounded-lg p-4 mb-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm text-slate-500">Servicio:</span>
+                                <span id="resumenServicio"
+                                    class="text-xs px-2 py-1 rounded-full border border-slate-200 font-medium">
+                                    Cámaras
+                                </span>
+                            </div>
+
+                            <div id="resumenCamaras">
+                                <!-- Resumen dinámico se generará aquí -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="p-6 pt-0 flex flex-col gap-2">
+                        <button id="btnContactarDatos"
+                            class="w-full bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-md flex items-center justify-center transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                            disabled>
+                            <i class="ri-mail-line mr-2"></i> Realizar Cotización
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <%- include('../partials/modals/modal-quoter-cameras.ejs') %>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        const cotizadorSelects = document.querySelectorAll('.cotizador-select');
+        const resumenCamaras = document.getElementById('resumenCamaras');
+        const btnContactarDatos = document.getElementById('btnContactarDatos');
+
+        const cotizacionActual = {};
+
+        function actualizarCotizacion() {
+            let formularioCompleto = true;
+            resumenCamaras.innerHTML = '';
+
+            cotizadorSelects.forEach(select => {
+                const parametro = select.dataset.param;
+                const selectedOption = select.options[select.selectedIndex];
+
+                const valor = selectedOption?.value || '';
+                const precio = parseFloat(selectedOption?.dataset.precio || 0);
+
+                if (!valor) formularioCompleto = false;
+
+                // Guarda objeto con valor, precio y factor
+                cotizacionActual[parametro] = { valor, precio };
+
+                // Muestra resumen (omitimos proposito si es necesario)
+                if (valor && parametro !== 'proposito') {
+                    const item = document.createElement('div');
+                    item.className = 'flex items-center justify-between mb-2';
+                    item.innerHTML = `
+                    <span class="text-sm text-slate-500">${parametro}:</span>
+                    <span class="text-xs px-2 py-1 rounded-full border border-slate-200 font-medium">
+                      ${valor}
+                    </span>`;
+                    resumenCamaras.appendChild(item);
+                }
+            });
+
+            btnContactarDatos.disabled = !formularioCompleto;
+        }
+
+        cotizadorSelects.forEach(select =>
+            select.addEventListener('change', actualizarCotizacion)
+        );
+
+        // Función actualizada para poblar el modal con los datos reales
+        function populateModal(apiData) {
+            // Actualizar precios principales
+            const precioEstimado = parseFloat(apiData["Precio estimado"]);
+            document.getElementById('totalPrice').textContent = `$${precioEstimado.toLocaleString('en-US', { minimumFractionDigits: 2 })} MXM`;
+            document.getElementById('finalTotal').textContent = `$${precioEstimado.toLocaleString('en-US', { minimumFractionDigits: 2 })} MXM`;
+
+            // Actualizar tamaño de disco
+            const tamañoDisco = apiData["Tamaño disco duro"];
+            document.getElementById('hardDriveSize').textContent = tamañoDisco;
+            document.getElementById('diskSizeText').textContent = tamañoDisco;
+
+            // Actualizar desglose de precios
+            const resumenPrecios = apiData["Resumen de precios"];
+            document.getElementById('camerasAndDiskCost').textContent = `$${parseFloat(resumenPrecios["Costo de Cámaras y Disco Duro"]).toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+            document.getElementById('cablingCost').textContent = `$${parseFloat(resumenPrecios["Costo de Cableado"]).toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+            document.getElementById('installationCost').textContent = `$${parseFloat(resumenPrecios["Costo de Instalación por Altura"]).toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+
+            // Obtener valores de la cotización actual
+            const getConfigValue = (paramName) => {
+                return cotizacionActual[paramName]?.valor || 'No especificado';
+            };
+
+            // Mapear parámetros comunes (ajusta según tus nombres de parámetros)
+            const resolucion = getConfigValue('Resolución de cámara') || getConfigValue('Resolución') || '8MP';
+            const cantidad = getConfigValue('Cantidad de cámaras') || getConfigValue('Cantidad') || '16';
+            const ubicacion = getConfigValue('Lugar instalación') || getConfigValue('Ubicación') || 'Exterior';
+            const distancia = getConfigValue('Distancia cableado') || getConfigValue('Distancia') || '11-20mts';
+            const altura = getConfigValue('Altura instalación') || getConfigValue('Altura') || '3-4mts';
+            const diasGrabacion = getConfigValue('Días de grabación') || getConfigValue('Días') || '22';
+
+            // Actualizar especificaciones en el modal
+            document.getElementById('modalResolution').textContent = resolucion;
+            document.getElementById('modalQuantity').textContent = cantidad;
+            document.getElementById('modalLocation').textContent = ubicacion.charAt(0).toUpperCase() + ubicacion.slice(1);
+            document.getElementById('modalRecordingDays').textContent = diasGrabacion;
+
+            // Actualizar resumen del proyecto
+            document.getElementById('summaryQuantityText').textContent = cantidad;
+            document.getElementById('summaryResolutionText').textContent = resolucion;
+            document.getElementById('summaryLocationText').textContent = ubicacion.toLowerCase();
+            document.getElementById('summaryDistanceText').textContent = distancia;
+            document.getElementById('summaryHeightText').textContent = altura;
+
+            // Actualizar iconos del resumen
+            document.getElementById('installationType').textContent = ubicacion.charAt(0).toUpperCase() + ubicacion.slice(1);
+            document.getElementById('cableDistance').textContent = distancia;
+            document.getElementById('recordingDaysText').textContent = diasGrabacion;
+
+            // Debug: mostrar la cotización actual en consola
+            console.log('Cotización actual:', cotizacionActual);
+            console.log('Datos API:', apiData);
+        }
+
+        actualizarCotizacion();
+
+        /* ----- Acción del botón "Realizar Cotización" ----- */
+        btnContactarDatos.addEventListener('click', async () => {
+            if (btnContactarDatos.disabled) return;
+
+            // Mostrar loading en el botón
+            const originalText = btnContactarDatos.innerHTML;
+            btnContactarDatos.innerHTML = '<i class="ri-loader-4-line mr-2 animate-spin"></i> Calculando...';
+            btnContactarDatos.disabled = true;
+
+            console.log('Enviando cotización:', JSON.stringify(cotizacionActual));
+
+            try {
+                const response = await fetch('/camaras', {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(cotizacionActual),
+                });
+
+                const result = await response.json();
+                console.log('Respuesta API:', result);
+
+                if (response.ok) {
+                    populateModal(result);
+                    document.getElementById('quotationModal').classList.remove('hidden');
+                    document.getElementById('quotationModal').classList.add('flex');
+                } else {
+                    const errorMessage = result.error || 'Error desconocido';
+                    Swal.fire("Error", errorMessage, "error");
+                }
+
+            } catch (error) {
+                console.error("Error al enviar la solicitud:", error);
+                Swal.fire("Error", "Error de conexión <br> Inténtalo de nuevo.", "error");
+            } finally {
+                // Restaurar botón
+                btnContactarDatos.innerHTML = originalText;
+                btnContactarDatos.disabled = false;
+            }
+        });
+
+        function closeQuotationModal() {
+            document.getElementById('quotationModal').classList.add('hidden');
+            document.getElementById('quotationModal').classList.remove('flex');
+        }
+
+        // Cerrar modal al hacer clic fuera
+        document.getElementById('quotationModal').addEventListener('click', function (e) {
+            if (e.target === this) {
+                closeQuotationModal();
+            }
+        });
+
+        // Cerrar modal con tecla Escape
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && !document.getElementById('quotationModal').classList.contains('hidden')) {
+                closeQuotationModal();
+            }
+        });
+    </script>
+
+</body>
+
+</html>

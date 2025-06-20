@@ -29,4 +29,19 @@ const validateQuoterParameter = (data) => {
   return parameterSchema.safeParse(data);
 };
 
-export { validateUser, validateQuoterCamera, validateQuoterParameter };
+const parameterDrvSchema = z.object({
+  mp: z.number().min(1, "Los MP son requeridos"),
+  canales: z.number().min(1, "El numero de canales es requerido"),
+  precio: z.number().min(1, "El precio es requerido"),
+});
+
+const validateParameterDrv = (data) => {
+  return parameterDrvSchema.safeParse(data);
+};
+
+export {
+  validateUser,
+  validateQuoterCamera,
+  validateQuoterParameter,
+  validateParameterDrv,
+};

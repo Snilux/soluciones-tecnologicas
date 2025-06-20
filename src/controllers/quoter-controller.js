@@ -2,6 +2,7 @@ import QuoterModel from "../models/quoter-model.js";
 import {
   validateQuoterCamera,
   validateQuoterParameter,
+  validateParameterDrv,
 } from "../schemas/users.js";
 
 class QuoterController {
@@ -9,6 +10,15 @@ class QuoterController {
     try {
       const quoterCameraData = await QuoterModel.getQuoteCameraData();
 
+      if (quoterCameraData.length === 0) {
+        return res.status(404).json({
+          message: "No se encontrarón los datos de cotización de cámaras",
+        });
+      }
+      // Fetching drv data
+      const drvData = await QuoterModel.getDrvData();
+
+      // Grouping the data by parametro_id
       const groupedData = {};
       quoterCameraData.forEach((item) => {
         const key = item.parametro_id;
@@ -22,18 +32,14 @@ class QuoterController {
         groupedData[key].items.push(item);
       });
 
+      //Make a array
       const groupedDataArray = Object.values(groupedData);
-
-      if (quoterCameraData.length === 0) {
-        return res.status(404).json({
-          message: "No se encontrarón los datos de cotización de cámaras",
-        });
-      }
-      // console.log(quoterCameraData);
+      console.log(drvData);
 
       return res.render("admin/quoter-cameras", {
         tittle: "Datos de cotización de cámaras",
         groupedData: groupedDataArray,
+        drvData: drvData,
       });
     } catch (error) {
       console.log(`Error in quoterCamera ${error}`);
@@ -151,6 +157,112 @@ class QuoterController {
       console.log(`Error in deleteCameraParameter ${error}`);
       return res.status(500).json({
         errorMessage: `Error al eliminar el parámetro de la cámara`,
+      });
+    }
+  }
+
+  async deleteCameraDrvOption(req, res) {
+    const { id } = req.params;
+    console.log(id);
+
+    try {
+      const result = await QuoterModel.deleteCameraDrvOption(id);
+
+      if (result.affectedRows === 0 || !result) {
+        return res.status(404).json({
+          errorMessage: `No se encontró el drv con ID ${id}`,
+        });
+      }
+
+      return res.status(200).json({
+        successMessage: `Parámetro eliminado correctamente`,
+        affectedRows: result.affectedRows,
+      });
+    } catch (error) {
+      console.log(`Error in deleteCameraParameter ${error}`);
+      return res.status(500).json({
+        errorMessage: `Error al eliminar el parámetro de la cámara`,
+      });
+    }
+  }
+
+  async addCameraDrvOption(req, res) {
+    console.log(req.body);
+    const dataDrv = validateParameterDrv(req.body);
+
+    console.log(dataDrv);
+
+    if (!dataDrv.success) {
+      const errors = dataDrv.error.errors.map((err) => {
+        const field = err.path.join(".");
+        return `${field}: ${err.message}`;
+      });
+
+      return res.status(400).json({
+        errorMessage: `Error en la validación de los datos \n`,
+        errors: errors || "Datos inválidos",
+      });
+    }
+
+    try {
+      const response = await QuoterModel.addCameraDrvOption(dataDrv.data);
+
+      if (!response.success) {
+        return res.status(404).json({
+          errorMessage: response.errorMessage,
+        });
+      }
+
+      return res.status(201).json({
+        successMessage: response.successMessage,
+        affectedRows: response.affectedRows,
+      });
+    } catch (error) {
+      console.log(`Error in addCameraParameter ${error}`);
+      return res.status(500).json({
+        errorMessage: `Error al agregar el parámetro`,
+      });
+    }
+  }
+
+  async updateCameraDrvOption(req, res) {
+    const { id } = req.params;
+
+    const drvData = validateParameterDrv(req.body);
+
+    if (!drvData.success) {
+      const errors = drvData.error.errors.map((err) => {
+        const field = err.path.join(".");
+        return `${field}: ${err.message}`;
+      });
+
+      return res.status(400).json({
+        errorMessage: `Error en la validación de los datos \n`,
+        errors: errors || "Datos inválidos",
+      });
+    }
+
+    try {
+      const updatedDrvParameter = await QuoterModel.updateCameraDrvOption(
+        id,
+        drvData.data
+      );
+      console.log(updatedDrvParameter);
+
+      if (!updatedDrvParameter.success) {
+        return res.status(404).json({
+          errorMessage: updatedDrvParameter.errorMessage,
+        });
+      }
+
+      return res.status(200).json({
+        successMessage: updatedDrvParameter.successMessage,
+        affectedRows: updatedDrvParameter.affectedRows,
+      });
+    } catch (error) {
+      console.log(`Error in updateCameraParameter ${error}`);
+      return res.status(500).json({
+        errorMessage: `Error al actualizar el parámetro de la camara`,
       });
     }
   }

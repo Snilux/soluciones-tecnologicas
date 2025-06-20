@@ -1,33 +1,49 @@
-import { success } from "zod/v4";
 import getConnection from "../db.js";
 
 class QuoterModel {
   constructor() {
     this.valores_parametro_camaras = "valores_parametro_camaras";
     this.parametros_camaras = "parametros_camaras";
+    this.drv = "drv";
   }
 
   async getQuoteCameraData() {
     const connection = await getConnection();
+    // Query to get camera parameters and their values
+    const queryCameraData = `SELECT 
+      p.id AS parametro_id,
+      p.nombre AS parametro_nombre,
+      p.descripcion,
+      v.id AS valor_id,
+      v.valor,
+      v.precio
+      FROM 
+      ${this.parametros_camaras} p
+      LEFT JOIN 
+      ${this.valores_parametro_camaras} v ON p.id = v.parametro_id
+      ORDER BY 
+      p.id, v.id;`;
+
     try {
-      const result = await connection.query(`SELECT 
-    p.id AS parametro_id,
-    p.nombre AS parametro_nombre,
-    p.descripcion,
-    v.id AS valor_id,
-    v.valor,
-    v.precio
-    FROM 
-    parametros_camaras p
-    LEFT JOIN 
-    valores_parametro_camaras v ON p.id = v.parametro_id
-    ORDER BY 
-    p.id, v.id;
-        `);
+      const result = await connection.query(queryCameraData);
 
       return result[0];
     } catch (error) {
       console.error("Error in getQuoteCameraData:", error);
+      throw error;
+    }
+  }
+
+  async getDrvData() {
+    //Query for get data of drv
+    const queryDataDrv = `SELECT * FROM ??`;
+    const connection = await getConnection();
+
+    try {
+      const drvData = await connection.query(queryDataDrv, [this.drv]);
+      return drvData[0];
+    } catch (error) {
+      console.log(`Error el get drv data ${error}`);
       throw error;
     }
   }
@@ -113,7 +129,7 @@ class QuoterModel {
     const query = `INSERT INTO ?? (parametro_id, valor, precio) VALUES (?, ? ,? );`;
 
     // console.log(data);
-    
+
     try {
       const result = await connection.query(query, [
         this.valores_parametro_camaras,
@@ -133,13 +149,98 @@ class QuoterModel {
         affectedRows: result[0].affectedRows,
         success: true,
       };
-
-
     } catch (error) {
       console.error(`Error in addCameraParameter: ${error}`);
       throw error;
     }
   }
+
+  async deleteCameraDrvOption(id) {
+    const connection = await getConnection();
+    const query = `DELETE FROM ?? WHERE id = ?`;
+
+    try {
+      const result = await connection.query(query, [this.drv, id]);
+
+      if (result[0].affectedRows === 0) {
+        return {
+          errorMessage: `No se encontró el parámetro con ID ${id}`,
+          success: false,
+        };
+      }
+      return {
+        successMessage: `Parámetro eliminado correctamente`,
+        affectedRows: result[0].affectedRows,
+        success: true,
+      };
+    } catch (error) {
+      console.log(`Error in model trying delete drv ${error}`);
+      throw error;
+    }
+  }
+
+  async addCameraDrvOption(data) {
+    const connection = await getConnection();
+    const query = `INSERT INTO ?? (mp, canales, precio) VALUES (? ,? ,? )`;
+    const { mp, canales, precio } = data;
+
+    try {
+      const response = await connection.query(query, [
+        this.drv,
+        mp,
+        canales,
+        precio,
+      ]);
+
+      if (response[0].affectedRows === 0) {
+        return {
+          errorMessage: `No se pudo agregar la opcion de dvr`,
+          success: false,
+        };
+      }
+      return {
+        successMessage: `Parámetro agregado correctamente`,
+        affectedRows: response[0].affectedRows,
+        success: true,
+      };
+    } catch (error) {
+      console.log(`Error in model trying insert drv option ${error}`);
+      throw error;
+    }
+  }
+
+  async updateCameraDrvOption(id, data) {
+    const connection = await getConnection();
+    const query = `UPDATE ?? SET mp = ?, canales = ?, precio = ? WHERE id = ?`;
+
+    try {
+      const result = await connection.query(query, [
+        this.drv,
+        data.mp,
+        data.canales,
+        data.precio,
+        id,
+      ]);
+
+      if (result[0].affectedRows === 0) {
+        return {
+          errorMessage: `No se encontró el drv con ID ${id}`,
+          success: false,
+        };
+      }
+      return {
+        successMessage: `Drv actualizado correctamente`,
+        affectedRows: result[0].affectedRows,
+        success: true,
+      };
+    } catch (error) {
+      console.log(`Error in try update camera parameter ${error}`);
+      throw error;
+    }
+  }
+
+
+
 }
 
 export default new QuoterModel();
