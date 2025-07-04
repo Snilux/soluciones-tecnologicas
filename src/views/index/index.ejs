@@ -1,1 +1,655 @@
-<h1>Principal</h1>
+<%- include('../partials/head.ejs') %>
+
+<body class="bg-dark-bg text-white m-0 p-0">
+
+    <%- include('../partials/nav-index.ejs') %>
+    <!-- Navbar -->
+
+
+    <!-- Hero Section -->
+    <section class="relative h-screen flex items-center justify-center bg-hero-pattern bg-cover bg-center bg-no-repeat">
+        <div class="absolute inset-0 bg-black/60"></div>
+        <div class="relative z-10 text-center px-5">
+            <h1 class="text-6xl text-white drop-shadow-2xl mb-4">Innovación que conecta</h1>
+            <p class="text-xl text-white drop-shadow-2xl">Telecommunication Company</p>
+        </div>
+    </section>
+
+    <!-- Soluciones Section -->
+    <div class="container mx-auto py-20 px-4 mt-20">
+        <div class="flex justify-center gap-10 flex-wrap">
+            <section
+                class="bg-card-bg border-2 border-secondary rounded-2xl p-8 max-w-md w-full text-center text-white shadow-2xl backdrop-blur-md transition-transform duration-300 hover:-translate-y-2">
+                <div class="mb-3">
+                    <i class="fas fa-laptop-code text-5xl text-primary"></i>
+                </div>
+                <h2 class="text-2xl text-primary font-semibold mb-4">Acerca de nosotros</h2>
+                <p class="text-lg leading-relaxed text-text-light">
+                    Soluciones Tecnológicas es una empresa mexicana consolidada, formada por profesionales en Seguridad
+                    Electrónica
+                    y Telecomunicaciones.
+                </p>
+            </section>
+
+            <section
+                class="bg-card-bg border-2 border-secondary rounded-2xl p-8 max-w-md w-full text-center text-white shadow-2xl backdrop-blur-md transition-transform duration-300 hover:-translate-y-2">
+                <div class="mb-3">
+                    <i class="fas fa-network-wired text-5xl text-primary"></i>
+                </div>
+                <h2 class="text-2xl text-primary font-semibold mb-4">Años de experiencia</h2>
+                <p class="text-lg leading-relaxed text-text-light">
+                    Contamos con 17 años de experiencia desarrollando soluciones tecnológicas de alto valor. Innovación
+                    y mejora
+                    continua nos definen.
+                </p>
+            </section>
+        </div>
+    </div>
+
+    <!-- Services Section -->
+    <section class="py-16 px-5 text-center">
+        <h2 class="text-4xl mb-10 text-primary font-bold">SERVICIOS</h2>
+        <div class="flex justify-center gap-8 flex-wrap">
+            <div
+                class="bg-card-bg p-6 rounded-2xl max-w-sm shadow-lg text-center border-2 border-secondary transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl">
+                <img src="/images/camara.jpg" alt="Sistemas de Vigilancia"
+                    class="w-full h-44 object-cover rounded-xl mb-5">
+                <h3 class="text-2xl mb-3 text-primary font-semibold">Sistemas de Vigilancia</h3>
+                <p class="text-lg text-white mb-5 leading-relaxed">Instalación y mantenimiento de cámaras de vigilancia.
+                </p>
+            </div>
+            <div
+                class="bg-card-bg p-6 rounded-2xl max-w-sm shadow-lg text-center border-2 border-secondary transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl">
+                <img src="/images/cerca.jpg" alt="Cercas Eléctricas" class="w-full h-44 object-cover rounded-xl mb-5">
+                <h3 class="text-2xl mb-3 text-primary font-semibold">Cercas Eléctricas</h3>
+                <p class="text-lg text-white mb-5 leading-relaxed">Instalación y mantenimiento de cercado eléctrico.</p>
+            </div>
+            <div
+                class="bg-card-bg p-6 rounded-2xl max-w-sm shadow-lg text-center border-2 border-secondary transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl">
+                <img src="/images/panel.jpg" alt="Paneles Solares" class="w-full h-44 object-cover rounded-xl mb-5">
+                <h3 class="text-2xl mb-3 text-primary font-semibold">Paneles Solares</h3>
+                <p class="text-lg text-white mb-5 leading-relaxed">Instalación y mantenimiento de paneles solares.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Specifications -->
+    <section
+        class="py-20 px-5 bg-card-bg text-white border-2 border-secondary rounded-2xl max-w-6xl mx-auto my-24 backdrop-blur-md">
+        <h2 class="text-4xl text-center mb-12 text-primary font-bold">
+            <i class="fas fa-microchip"></i>
+            Especificaciones Técnicas
+        </h2>
+        <div class="flex flex-col gap-16">
+            <div class="bg-black/20 p-8 rounded-2xl border border-gray-400/30 shadow-lg">
+                <div class="flex items-center gap-4 mb-6 text-primary">
+                    <i class="fas fa-camera"></i>
+                    <h3 class="text-2xl font-semibold m-0">Cámaras de Seguridad</h3>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div
+                        class="bg-black/20 p-5 rounded-xl text-center transition-transform duration-300 hover:-translate-y-1 border border-white/10">
+                        <div class="mb-3">
+                            <i class="fas fa-eye text-3xl text-primary"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xl mb-2 text-white font-semibold">Resolución</h4>
+                            <p class="text-base text-text-light m-0">Desde 1080p hasta 4K Ultra HD</p>
+                        </div>
+                    </div>
+                    <div
+                        class="bg-black/20 p-5 rounded-xl text-center transition-transform duration-300 hover:-translate-y-1 border border-white/10">
+                        <div class="mb-3">
+                            <i class="fas fa-moon text-3xl text-primary"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xl mb-2 text-white font-semibold">Visión Nocturna</h4>
+                            <p class="text-base text-text-light m-0">Hasta 30 metros con LEDs IR</p>
+                        </div>
+                    </div>
+                    <div
+                        class="bg-black/20 p-5 rounded-xl text-center transition-transform duration-300 hover:-translate-y-1 border border-white/10">
+                        <div class="mb-3">
+                            <i class="fas fa-cloud text-3xl text-primary"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xl mb-2 text-white font-semibold">Almacenamiento</h4>
+                            <p class="text-base text-text-light m-0">Local (DVR/NVR) y en la nube</p>
+                        </div>
+                    </div>
+                    <div
+                        class="bg-black/20 p-5 rounded-xl text-center transition-transform duration-300 hover:-translate-y-1 border border-white/10">
+                        <div class="mb-3">
+                            <i class="fas fa-mobile-alt text-3xl text-primary"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xl mb-2 text-white font-semibold">Acceso Remoto</h4>
+                            <p class="text-base text-text-light m-0">Apps móviles iOS y Android</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-black/20 p-8 rounded-2xl border border-gray-400/30 shadow-lg">
+                <div class="flex items-center gap-4 mb-6 text-primary">
+                    <i class="fas fa-sun"></i>
+                    <h3 class="text-2xl font-semibold m-0">Paneles Solares</h3>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div
+                        class="bg-black/20 p-5 rounded-xl text-center transition-transform duration-300 hover:-translate-y-1 border border-white/10">
+                        <div class="mb-3">
+                            <i class="fas fa-battery-full text-3xl text-primary"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xl mb-2 text-white font-semibold">Potencia</h4>
+                            <p class="text-base text-text-light m-0">300W - 550W por panel</p>
+                        </div>
+                    </div>
+                    <div
+                        class="bg-black/20 p-5 rounded-xl text-center transition-transform duration-300 hover:-translate-y-1 border border-white/10">
+                        <div class="mb-3">
+                            <i class="fas fa-percentage text-3xl text-primary"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xl mb-2 text-white font-semibold">Eficiencia</h4>
+                            <p class="text-base text-text-light m-0">Hasta 22% de eficiencia</p>
+                        </div>
+                    </div>
+                    <div
+                        class="bg-black/20 p-5 rounded-xl text-center transition-transform duration-300 hover:-translate-y-1 border border-white/10">
+                        <div class="mb-3">
+                            <i class="fas fa-shield-alt text-3xl text-primary"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xl mb-2 text-white font-semibold">Garantía</h4>
+                            <p class="text-base text-text-light m-0">25 años de garantía de potencia</p>
+                        </div>
+                    </div>
+                    <div
+                        class="bg-black/20 p-5 rounded-xl text-center transition-transform duration-300 hover:-translate-y-1 border border-white/10">
+                        <div class="mb-3">
+                            <i class="fas fa-thermometer-half text-3xl text-primary"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xl mb-2 text-white font-semibold">Temperatura</h4>
+                            <p class="text-base text-text-light m-0">Operación: -40°C a +85°C</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-black/20 p-8 rounded-2xl border border-gray-400/30 shadow-lg">
+                <div class="flex items-center gap-4 mb-6 text-primary">
+                    <i class="fas fa-zap"></i>
+                    <h3 class="text-2xl font-semibold m-0">Cercas Eléctricas</h3>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div
+                        class="bg-black/20 p-5 rounded-xl text-center transition-transform duration-300 hover:-translate-y-1 border border-white/10">
+                        <div class="mb-3">
+                            <i class="fas fa-bolt text-3xl text-primary"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xl mb-2 text-white font-semibold">Voltaje</h4>
+                            <p class="text-base text-text-light m-0">8,000V - 10,000V de salida</p>
+                        </div>
+                    </div>
+                    <div
+                        class="bg-black/20 p-5 rounded-xl text-center transition-transform duration-300 hover:-translate-y-1 border border-white/10">
+                        <div class="mb-3">
+                            <i class="fas fa-ruler text-3xl text-primary"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xl mb-2 text-white font-semibold">Cobertura</h4>
+                            <p class="text-base text-text-light m-0">Hasta 10 km de perímetro</p>
+                        </div>
+                    </div>
+                    <div
+                        class="bg-black/20 p-5 rounded-xl text-center transition-transform duration-300 hover:-translate-y-1 border border-white/10">
+                        <div class="mb-3">
+                            <i class="fas fa-exclamation-triangle text-3xl text-primary"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xl mb-2 text-white font-semibold">Seguridad</h4>
+                            <p class="text-base text-text-light m-0">Pulsos de baja corriente</p>
+                        </div>
+                    </div>
+                    <div
+                        class="bg-black/20 p-5 rounded-xl text-center transition-transform duration-300 hover:-translate-y-1 border border-white/10">
+                        <div class="mb-3">
+                            <i class="fas fa-bell text-3xl text-primary"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xl mb-2 text-white font-semibold">Alarmas</h4>
+                            <p class="text-base text-text-light m-0">Notificaciones instantáneas</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section
+        class="py-20 px-16 text-white border-2 border-secondary bg-card-bg rounded-2xl max-w-6xl mx-auto my-24 backdrop-blur-md">
+        <h2 class="text-4xl text-center mb-10 text-primary font-bold">
+            <i class="fas fa-star"></i>
+            ¿Por Qué Elegirnos?
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
+            <div
+                class="bg-black/20 rounded-xl p-8 text-center border border-white/10 transition-transform duration-300 hover:-translate-y-1">
+                <div class="mb-4">
+                    <i class="fas fa-award text-4xl text-primary"></i>
+                </div>
+                <h3 class="text-2xl text-primary font-semibold mb-3">Experiencia Comprobada</h3>
+                <p class="text-base text-text-light leading-relaxed">Más de 10 años en el mercado con cientos de
+                    proyectos exitosos</p>
+            </div>
+            <div
+                class="bg-black/20 rounded-xl p-8 text-center border border-white/10 transition-transform duration-300 hover:-translate-y-1">
+                <div class="mb-4">
+                    <i class="fas fa-tools text-4xl text-primary"></i>
+                </div>
+                <h3 class="text-2xl text-primary font-semibold mb-3">Soporte Técnico 24/7</h3>
+                <p class="text-base text-text-light leading-relaxed">Asistencia técnica especializada disponible las 24
+                    horas del día</p>
+            </div>
+            <div
+                class="bg-black/20 rounded-xl p-8 text-center border border-white/10 transition-transform duration-300 hover:-translate-y-1">
+                <div class="mb-4">
+                    <i class="fas fa-certificate text-4xl text-primary"></i>
+                </div>
+                <h3 class="text-2xl text-primary font-semibold mb-3">Garantía Extendida</h3>
+                <p class="text-base text-text-light leading-relaxed">Garantías de hasta 25 años en equipos y 5 años en
+                    instalación</p>
+            </div>
+            <div
+                class="bg-black/20 rounded-xl p-8 text-center border border-white/10 transition-transform duration-300 hover:-translate-y-1">
+                <div class="mb-4">
+                    <i class="fas fa-users text-4xl text-primary"></i>
+                </div>
+                <h3 class="text-2xl text-primary font-semibold mb-3">Equipo Certificado</h3>
+                <p class="text-base text-text-light leading-relaxed">Técnicos certificados y capacitados en las últimas
+                    tecnologías</p>
+            </div>
+            <div
+                class="bg-black/20 rounded-xl p-8 text-center border border-white/10 transition-transform duration-300 hover:-translate-y-1">
+                <div class="mb-4">
+                    <i class="fas fa-dollar-sign text-4xl text-primary"></i>
+                </div>
+                <h3 class="text-2xl text-primary font-semibold mb-3">Precios Competitivos</h3>
+                <p class="text-base text-text-light leading-relaxed">Las mejores tarifas del mercado sin comprometer la
+                    calidad</p>
+            </div>
+            <div
+                class="bg-black/20 rounded-xl p-8 text-center border border-white/10 transition-transform duration-300 hover:-translate-y-1">
+                <div class="mb-4">
+                    <i class="fas fa-handshake text-4xl text-primary"></i>
+                </div>
+                <h3 class="text-2xl text-primary font-semibold mb-3">Atención Personalizada</h3>
+                <p class="text-base text-text-light leading-relaxed">Soluciones diseñadas específicamente para cada
+                    cliente</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics -->
+    <section
+        class="py-20 px-5 bg-card-bg border-2 border-secondary rounded-2xl text-white max-w-6xl mx-auto my-24 backdrop-blur-md text-center statistics">
+        <h2 class="text-4xl mb-10 text-primary font-bold">
+            <i class="fas fa-chart-line"></i>
+            Nuestros Números
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mt-10">
+            <div
+                class="bg-black/20 p-8 rounded-xl transition-transform duration-300 hover:-translate-y-1 border border-white/10">
+                <div class="mb-3">
+                    <i class="fas fa-project-diagram text-4xl text-primary"></i>
+                </div>
+                <div class="text-3xl font-bold text-white mb-3 stat-number" data-target="500">0</div>
+                <div class="text-base text-text-light">Proyectos Completados</div>
+            </div>
+            <div
+                class="bg-black/20 p-8 rounded-xl transition-transform duration-300 hover:-translate-y-1 border border-white/10">
+                <div class="mb-3">
+                    <i class="fas fa-smile text-4xl text-primary"></i>
+                </div>
+                <div class="text-3xl font-bold text-white mb-3 stat-number" data-target="450">0</div>
+                <div class="text-base text-text-light">Clientes Satisfechos</div>
+            </div>
+            <div
+                class="bg-black/20 p-8 rounded-xl transition-transform duration-300 hover:-translate-y-1 border border-white/10">
+                <div class="mb-3">
+                    <i class="fas fa-calendar-alt text-4xl text-primary"></i>
+                </div>
+                <div class="text-3xl font-bold text-white mb-3 stat-number" data-target="10">0</div>
+                <div class="text-base text-text-light">Años de Experiencia</div>
+            </div>
+            <div
+                class="bg-black/20 p-8 rounded-xl transition-transform duration-300 hover:-translate-y-1 border border-white/10">
+                <div class="mb-3">
+                    <i class="fas fa-clock text-4xl text-primary"></i>
+                </div>
+                <div class="text-3xl font-bold text-white mb-3 stat-number" data-target="24">0</div>
+                <div class="text-base text-text-light">Horas de Soporte</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Info Section -->
+    <section class="py-16 px-4">
+        <div
+            class="max-w-6xl mx-auto bg-card-bg backdrop-blur-md border-2 border-secondary rounded-3xl relative overflow-hidden">
+            <div class="absolute -top-20 -right-20 w-40 h-40 bg-primary/10 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-20 -left-20 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl"></div>
+
+            <div class="relative z-10 p-12 sm:p-8">
+                <div class="text-center mb-16">
+                    <div
+                        class="inline-flex items-center gap-2 bg-primary/10 rounded-full px-6 py-2 mb-6 flex-wrap justify-center">
+                        <svg class="w-4 h-4 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polygon
+                                points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26">
+                            </polygon>
+                        </svg>
+                        <span class="text-primary font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl">INFORMACION
+                            CORPORATIVA</span>
+                    </div>
+                    <div class="w-24 h-1 bg-gradient-to-r from-primary to-blue-400 mx-auto rounded"></div>
+                </div>
+
+                <div
+                    class="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 mb-16 transition-transform duration-300 hover:-translate-y-2">
+                    <div class="flex-1 w-full relative">
+                        <div class="h-60 lg:h-80 w-full bg-cover bg-center rounded-2xl relative overflow-hidden transition-transform duration-700 hover:scale-105 shadow-2xl"
+                            style="background-image: url('/images/socios-negocios.avif');">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent">
+                            </div>
+                            <div
+                                class="absolute top-6 left-6 bg-primary/90 backdrop-blur-md rounded-full p-3 shadow-lg">
+                                <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M3 21h18"></path>
+                                    <path d="M5 21V7l8-4v18"></path>
+                                    <path d="M19 21V11l-6-4"></path>
+                                </svg>
+                            </div>
+                            <div
+                                class="absolute inset-0 border-2 border-primary/20 rounded-2xl transition-colors duration-300 group-hover:border-primary/40">
+                            </div>
+                        </div>
+                        <div
+                            class="absolute inset-0 bg-primary/20 blur-6xl opacity-0 transition-opacity duration-500 rounded-2xl -z-10 group-hover:opacity-100">
+                        </div>
+                    </div>
+
+                    <div class="flex-1 flex flex-col gap-6 w-full lg:w-auto mt-8 lg:mt-0">
+                        <div class="flex items-center gap-3">
+                            <div class="w-2 h-8 bg-gradient-to-b from-primary to-blue-400 rounded"></div>
+                            <h3
+                                class="text-xl sm:text-2xl md:text-3xl font-bold text-primary transition-colors duration-300 group-hover:text-blue-300">
+                                SOCIOS DE NEGOCIOS</h3>
+                        </div>
+                        <div class="bg-black/20 backdrop-blur-md rounded-xl p-6 border border-primary/10">
+                            <p class="text-base sm:text-lg leading-relaxed text-white text-justify"> <strong
+                                    class="text-primary">Intellinet Network Solutions:</strong> Es una empresa que
+                                ofrece soluciones de redes y tecnología para negocios. Se especializa en productos como
+                                switches, routers, cables y otros equipos para infraestructura de redes.<br><br>
+                                <strong class="text-primary">Microsoft:</strong> Una de las compañías tecnológicas más
+                                grandes del mundo, fundada en 1975 por Bill Gates y Paul Allen. Desarrolla software,
+                                hardware y servicios en la nube.<br><br>
+                                <strong class="text-primary">Linksys:</strong> Marca especializada en equipos de redes,
+                                como routers y dispositivos para conexión inalámbrica.<br><br>
+                                <strong class="text-primary">Cisco:</strong> Empresa global líder en soluciones de redes
+                                y telecomunicaciones. Provee equipos de red para grandes empresas, proveedores de
+                                servicios y gobiernos. Sus productos incluyen routers, switches, sistemas de seguridad,
+                                y tecnologías para redes empresariales avanzadas.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="flex flex-col lg:flex-row-reverse items-center gap-8 lg:gap-12 transition-transform duration-300 hover:-translate-y-2">
+                    <div class="flex-1 w-full relative">
+                        <div class="h-60 lg:h-80 w-full bg-cover bg-center rounded-2xl relative overflow-hidden transition-transform duration-700 hover:scale-105 shadow-2xl"
+                            style="background-image: url('/images/marcas1.png');">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent">
+                            </div>
+                            <div
+                                class="absolute top-6 right-6 bg-primary/90 backdrop-blur-md rounded-full p-3 shadow-lg">
+                                <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <polygon
+                                        points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26">
+                                    </polygon>
+                                </svg>
+                            </div>
+                            <div
+                                class="absolute inset-0 border-2 border-primary/20 rounded-2xl transition-colors duration-300 group-hover:border-primary/40">
+                            </div>
+                        </div>
+                        <div
+                            class="absolute inset-0 bg-primary/20 blur-6xl opacity-0 transition-opacity duration-500 rounded-2xl -z-10 group-hover:opacity-100">
+                        </div>
+                    </div>
+
+                    <div class="flex-1 flex flex-col gap-6 w-full lg:w-auto mt-8 lg:mt-0">
+                        <div class="flex items-center gap-3">
+                            <div class="w-2 h-8 bg-gradient-to-b from-primary to-blue-400 rounded"></div>
+                            <h3
+                                class="text-xl sm:text-2xl md:text-3xl font-bold text-primary transition-colors duration-300 group-hover:text-blue-300">
+                                MARCAS CORPORATIVAS</h3>
+                        </div>
+                        <div class="bg-black/20 backdrop-blur-md rounded-xl p-6 border border-primary/10">
+                            <p class="text-base sm:text-lg leading-relaxed text-white text-justify"> Algunas de ellas,
+                                como Compaq, HP, Acer, Dell, Toshiba, Lenovo y Sony VAIO, son
+                                conocidas principalmente por la fabricación de computadoras portátiles y de escritorio.
+                                Otras marcas presentes, como D-Link, TP-Link, Ansel Communications y Manhattan, se
+                                enfocan más en equipos de redes, comunicaciones y periféricos informáticos. En conjunto,
+                                estos logotipos representan una variedad de empresas importantes dentro del sector de la
+                                tecnología informática y de comunicaciones.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section
+        class="mt-24 py-16 px-5 bg-card-bg text-blue-900 border-2 border-secondary max-w-6xl mx-auto rounded-2xl text-center"
+        id="contacto">
+        <h2 class="text-4xl mb-10 text-primary font-bold">UBICANOS</h2>
+        <div class="flex flex-wrap justify-center gap-10">
+            <div class="flex-1 min-w-sm h-96 rounded-2xl overflow-hidden shadow-2xl">
+                <iframe
+                    src="https://www.google.com/maps?q=Calz%20Zavaleta%201306%20A-Local%2025,%20Sta%20Cruz%20Buenavista,%2072150%20Heroica%20Puebla%20de%20Zaragoza,%20Pue.&output=embed"
+                    frameborder="0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                    class="w-full h-full rounded-2xl">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <%- include('../partials/footer.ejs') %>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> -->
+
+    <script>
+        function animateCounters() {
+            const counters = document.querySelectorAll(".stat-number");
+
+            counters.forEach((counter) => {
+                const target = Number.parseInt(counter.getAttribute("data-target"));
+                const increment = target / 100; // Incremento para llegar en 100 pasos
+                let current = 0;
+
+                const updateCounter = () => {
+                    if (current < target) {
+                        current += increment;
+                        // Asegura que el número no exceda el target al redondear
+                        counter.textContent = Math.ceil(current);
+                        setTimeout(updateCounter, 20); // Controla la velocidad de la animación
+                    } else {
+                        counter.textContent = target; // Asegura que el valor final sea exacto
+                    }
+                };
+
+                // Resetea el contador a 0 antes de iniciar la animación si ya no lo está
+                if (Number.parseInt(counter.textContent) !== 0) {
+                    counter.textContent = "0";
+                }
+                updateCounter();
+            });
+        }
+
+        // Intersection Observer para animaciones
+        function setupIntersectionObserver() {
+            const observerOptions = {
+                threshold: 0.1, // El 10% del elemento debe ser visible para disparar
+                rootMargin: "0px 0px -50px 0px", // Margen inferior para que se dispare un poco antes
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        // Aplica la animación visual a todos los elementos observados
+                        entry.target.style.opacity = "1";
+                        entry.target.style.transform = "translateY(0)";
+
+                        // Si la sección de estadísticas es la que entra en vista, anima los contadores
+                        if (entry.target.classList.contains("statistics")) {
+                            animateCounters();
+                        }
+
+                        // Deja de observar el elemento una vez que se ha animado
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Selecciona TODOS los elementos que queremos animar con fade-in y slide-up,
+            // incluyendo las tarjetas, categorías y la sección de estadísticas.
+            const animatedElements = document.querySelectorAll(
+                ".service-card, .benefit-card, .spec-category, .statistics"
+            );
+
+            animatedElements.forEach((el) => {
+                // Establece el estado inicial para todos estos elementos: invisibles y ligeramente abajo
+                el.style.opacity = "0";
+                el.style.transform = "translateY(30px)";
+                el.style.transition = "all 0.6s ease-out"; // Aplica la transición para la animación visual
+
+                // Para los contadores dentro de la sección de estadísticas, asegúrate de que inicien en 0
+                if (el.classList.contains("statistics")) {
+                    const counters = el.querySelectorAll("[data-target]");
+                    counters.forEach(counter => counter.textContent = "0");
+                }
+                observer.observe(el); // Empieza a observar el elemento
+            });
+        }
+
+        // Resto de tus funciones (no necesitan cambios):
+
+        // Smooth scrolling para enlaces ancla
+        function setupSmoothScrolling() {
+            document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+                anchor.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute("href"));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: "smooth",
+                            block: "start",
+                        });
+                    }
+                });
+            });
+        }
+
+        // Añadir efectos hover a las tarjetas
+        function setupHoverEffects() {
+            const cards = document.querySelectorAll(
+                ".service-card, .benefit-card, .spec-item"
+            );
+
+            cards.forEach((card) => {
+                card.addEventListener("mouseenter", function () {
+                    this.style.transform = "translateY(-5px) scale(1.02)";
+                });
+
+                card.addEventListener("mouseleave", function () {
+                    this.style.transform = "translateY(0) scale(1)";
+                });
+            });
+        }
+
+        // Añadir efectos de click a los botones CTA
+        function setupButtonEffects() {
+            const buttons = document.querySelectorAll(".cta-button");
+
+            buttons.forEach((button) => {
+                button.addEventListener("click", function (e) {
+                    // Crear efecto de "ripple"
+                    const ripple = document.createElement("span");
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+
+                    ripple.style.width = ripple.style.height = size + "px";
+                    ripple.style.left = x + "px";
+                    ripple.style.top = y + "px";
+                    ripple.classList.add("ripple");
+
+                    this.appendChild(ripple);
+
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+        }
+
+        // Añadir efecto parallax al encabezado
+        function setupParallaxEffect() {
+            window.addEventListener("scroll", () => {
+                const scrolled = window.pageYOffset;
+                const header = document.querySelector(".header");
+                const rate = scrolled * -0.5;
+
+                if (header) {
+                    header.style.transform = `translateY(${rate}px)`;
+                }
+            });
+        }
+
+        // Inicializar todas las funciones cuando el DOM esté cargado
+        document.addEventListener("DOMContentLoaded", () => {
+            setupIntersectionObserver();
+            setupSmoothScrolling();
+            setupHoverEffects();
+            setupButtonEffects();
+            setupParallaxEffect();
+
+            // Añadir animación de carga para todo el body
+            document.body.style.opacity = "0";
+            setTimeout(() => {
+                document.body.style.transition = "opacity 0.5s ease-in";
+                document.body.style.opacity = "1";
+            }, 100);
+        });
+
+
+
+
+    </script>
+    <script src="/js/nav.js"></script>
+</body>
+
+</html>

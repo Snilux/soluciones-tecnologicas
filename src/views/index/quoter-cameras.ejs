@@ -1,26 +1,27 @@
 <%- include('../partials/head.ejs') %>
 
-<body
-    class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex flex-col items-center justify-center p-4 md:p-8">
+<body class="min-h-screen bg-dark-bg flex flex-col items-center justify-center p-4 md:p-8">
+
+    <%- include('../partials/nav-index.ejs') %>
 
     <div class="w-full max-w-4xl mx-auto">
 
         <div class="flex justify-between mb-4">
-            <a href="fence-quoter.html"
-                class="inline-flex items-center px-3 py-1 border border-slate-300 rounded text-sm text-slate-700 hover:bg-slate-50 transition-colors">
+            <a href="/cercas"
+                class="inline-flex items-center px-3 py-1 border border-amber-300 rounded text-sm text-amber-300 hover:bg-amber-500 hover:text-stone-50 transition-colors">
                 <i class="ri-flashlight-line text-sm mr-2"></i>
                 Cercas electricas
             </a>
             <a href="/admin/quoters/cameras"
-                class="inline-flex items-center px-3 py-1 border border-slate-300 rounded text-sm text-slate-700 hover:bg-slate-50 transition-colors">
+                class="inline-flex items-center px-3 py-1 border border-teal-500 rounded text-sm text-teal-500 hover:bg-teal-800 hover:text-stone-50">
                 <i class="ri-settings-3-line mr-2"></i>
                 Panel Admin
             </a>
         </div>
 
         <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-slate-800 mb-2">Cotizador de Servicios</h1>
-            <p class="text-slate-600">Configura y obtén un presupuesto instantáneo para tus necesidades</p>
+            <h1 class="text-3xl font-bold text-blue-800 mb-2">Cotizador de Servicios</h1>
+            <p class="text-blue-600">Configura y obtén un presupuesto instantáneo para tus necesidades</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -63,8 +64,6 @@
                                             <option value="hogar">Hogar</option>
                                         </select>
                                     </div>
-
-                                    <input type="hidden" value="<%= cameraData %>" id="cameraData">
 
                                     <!-- Campos dinámicos -->
                                     <% cameraData.forEach((group, index) => {%>

@@ -1,0 +1,819 @@
+<%- include('../partials/head.ejs') %>
+
+<style>
+    body {
+        background-color: #0d1117;
+        color: white;
+    }
+
+    .tab-content {
+        display: none;
+    }
+
+    .tab-content.active {
+        display: block;
+    }
+
+    .accordion-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+    }
+
+    .accordion-item.active .accordion-content {
+        max-height: 500px;
+    }
+
+    .warning-box,
+    .tip-box {
+        border-radius: 0.5rem;
+        padding: 1rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .warning-box {
+        background: rgba(245, 158, 11, 0.15);
+        color: #fcd34d;
+        border: 1px solid #fcd34d;
+    }
+
+    .tip-box {
+        background: rgba(20, 184, 166, 0.15);
+        color: #3dbeff;
+        border: 1px solid #3dbeff;
+    }
+
+    .metric {
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .metric:hover {
+        background: #14b8a6;
+        color: #fff;
+    }
+
+    .scrollable-content {
+        max-height: 200px;
+        overflow-y: auto;
+    }
+</style>
+
+
+<body class="bg-dark-bg text-white">
+    <!-- Navigation -->
+    <%- include('../partials/nav-index.ejs') %>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 text-center bg-dark-bg">
+        <div class="container mx-auto px-4">
+            <h1
+                class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-cyan-400 to-primary bg-clip-text text-transparent mb-6 mt-4">
+                <i class="fas fa-tools"></i> GUÍAS DE SOPORTE TÉCNICO
+            </h1>
+            <p class="text-lg md:text-xl max-w-2xl mx-auto mb-8 text-white text-justify">
+                Encuentra soluciones completas y recomendaciones profesionales para cámaras de seguridad, paneles
+                solares y cercas eléctricas. Nuestras guías detalladas te ayudarán a resolver cualquier problema técnico
+                y optimizar tu sistema.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4 mb-4">
+                <span
+                    class="inline-flex items-center px-4 py-2 rounded-full font-medium border border-teal-400 bg-[rgba(20,184,166,0.2)] text-primary">
+                    <i class="fas fa-camera mr-2"></i>Cámaras de Seguridad
+                </span>
+                <span
+                    class="inline-flex items-center px-4 py-2 rounded-full font-medium border border-yellow-300 bg-[rgba(245,158,11,0.2)] text-yellow-300">
+                    <i class="fas fa-solar-panel mr-2"></i>Paneles Solares
+                </span>
+                <span
+                    class="inline-flex items-center px-4 py-2 rounded-full font-medium border border-purple-400 bg-[rgba(168,85,247,0.2)] text-white">
+                    <i class="fas fa-bolt mr-2"></i>Cercas Eléctricas
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tabs Section -->
+    <section class="py-8 bg-dark-bg">
+        <div class="container mx-auto px-4">
+            <div
+                class="flex flex-col lg:flex-row bg-tab-bg rounded-lg overflow-hidden space-y-2 lg:space-y-0 lg:space-x-4 p-2">
+                <button
+                    class="tab-button flex-1 flex items-center justify-center py-3 text-lg font-medium transition-colors hover:bg-tab-hover active:bg-tab-active rounded-md"
+                    onclick="showTab('cameras')">
+                    <i class="fas fa-camera mr-2"></i>Cámaras
+                </button>
+                <button
+                    class="tab-button flex-1 flex items-center justify-center py-3 text-lg font-medium transition-colors hover:bg-tab-hover rounded-md"
+                    onclick="showTab('solar')">
+                    <i class="fas fa-solar-panel mr-2"></i>Paneles Solares
+                </button>
+                <button
+                    class="tab-button flex-1 flex items-center justify-center py-3 text-lg font-medium transition-colors hover:bg-tab-hover rounded-md"
+                    onclick="showTab('fences')">
+                    <i class="fas fa-bolt mr-2"></i>Cercas Eléctricas
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cameras Content -->
+    <div id="cameras" class="tab-content active">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-primary text-center mb-12">Cámaras de Seguridad - Guía
+                Completa</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Instalación -->
+                <div
+                    class="bg-card-bg border-2 border-border-color rounded-xl overflow-hidden transition-transform hover:-translate-y-1 hover:shadow-lg">
+                    <div class="p-6 border-b border-tab-bg">
+                        <h3 class="flex items-center text-lg font-semibold text-cyan-400 mb-2"><i
+                                class="fas fa-file-alt mr-2"></i>Instalación Profesional</h3>
+                    </div>
+                    <div class="p-6 text-justify">
+                        <h4 class="font-semibold mb-2">Recomendaciones de Ubicación:</h4>
+                        <ul class="list-disc list-inside mb-4">
+                            <li><strong>Altura óptima:</strong> 2.5 - 3 metros del suelo</li>
+                            <li><strong>Ángulo de visión:</strong> 15-30° hacia abajo</li>
+                            <li><strong>Evitar contraluz:</strong> No apuntar directamente al sol</li>
+                            <li><strong>Protección:</strong> Usar carcasas resistentes al clima</li>
+                            <li><strong>Acceso:</strong> Facilitar mantenimiento futuro</li>
+                        </ul>
+                        <h4 class="font-semibold mb-2">Pasos de Instalación:</h4>
+                        <ol class="list-decimal list-inside mb-4">
+                            <li>Planificar el sistema y marcar ubicaciones</li>
+                            <li>Instalar soportes con tornillos de acero inoxidable</li>
+                            <li>Pasar cables por canaletas protectoras</li>
+                            <li>Conectar alimentación (12V DC o PoE)</li>
+                            <li>Configurar DVR/NVR y probar conexiones</li>
+                            <li>Ajustar enfoque y ángulos de visión</li>
+                        </ol>
+                        <div class="warning-box"><strong>⚠️ Importante:</strong> Siempre desconectar la alimentación
+                            antes de realizar conexiones.</div>
+                    </div>
+                </div>
+                <!-- Solución de Problemas -->
+                <div
+                    class="bg-card-bg border-2 border-border-color rounded-xl overflow-hidden transition-transform hover:-translate-y-1 hover:shadow-lg">
+                    <div class="p-6 border-b border-tab-bg">
+                        <h3 class="flex items-center text-lg font-semibold text-yellow-300 mb-2"><i
+                                class="fas fa-exclamation-circle mr-2"></i>Solución de Problemas</h3>
+                    </div>
+                    <div class="p-6 text-justify">
+                        <div class="accordion">
+                            <!-- Problema 1 -->
+                            <div class="accordion-item bg-black/20 p-6 mt-2 rounded">
+                                <button
+                                    class="accordion-header flex justify-between items-center w-full py-2 font-semibold"
+                                    onclick="toggleAccordion(this)">
+                                    No hay imagen en el monitor
+                                    <span class="accordion-icon">+</span>
+                                </button>
+                                <div class="accordion-content">
+                                    <div class="scrollable-content">
+                                        <p class="font-semibold">Causas posibles:</p>
+                                        <ul class="list-disc list-inside mb-2">
+                                            <li>Falta de alimentación en la cámara</li>
+                                            <li>Cable de video dañado o desconectado</li>
+                                            <li>DVR/NVR apagado o defectuoso</li>
+                                            <li>Canal mal configurado</li>
+                                        </ul>
+                                        <p class="font-semibold">Soluciones:</p>
+                                        <ol class="list-decimal list-inside mb-2">
+                                            <li>Verificar LED de alimentación en la cámara</li>
+                                            <li>Revisar conexiones BNC o RJ45</li>
+                                            <li>Probar con otro canal del DVR</li>
+                                            <li>Usar multímetro para medir voltaje (12V DC)</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Problema 2 -->
+                            <div class="accordion-item bg-black/20 p-6 mt-2 rounded">
+                                <button
+                                    class="accordion-header flex justify-between items-center w-full py-2 font-semibold"
+                                    onclick="toggleAccordion(this)">
+                                    Imagen borrosa o desenfocada
+                                    <span class="accordion-icon">+</span>
+                                </button>
+                                <div class="accordion-content">
+                                    <div class="scrollable-content">
+                                        <p class="font-semibold">Soluciones paso a paso:</p>
+                                        <ol class="list-decimal list-inside mb-2">
+                                            <li>Limpiar el lente con paño de microfibra</li>
+                                            <li>Ajustar el enfoque manualmente (lente varifocal)</li>
+                                            <li>Verificar que no haya condensación interna</li>
+                                            <li>Revisar la resolución configurada en el DVR</li>
+                                            <li>Comprobar la calidad del cable (máximo 100m para analógico)</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Problema 3 -->
+                            <div class="accordion-item bg-black/20 p-6 mt-2 rounded">
+                                <button
+                                    class="accordion-header flex justify-between items-center w-full py-2 font-semibold"
+                                    onclick="toggleAccordion(this)">
+                                    Visión nocturna deficiente
+                                    <span class="accordion-icon">+</span>
+                                </button>
+                                <div class="accordion-content">
+                                    <div class="scrollable-content">
+                                        <p class="font-semibold">Recomendaciones:</p>
+                                        <ul class="list-disc list-inside mb-2">
+                                            <li>Limpiar LEDs infrarrojos regularmente</li>
+                                            <li>Verificar que el sensor de luz funcione</li>
+                                            <li>Ajustar la sensibilidad IR en el menú</li>
+                                            <li>Evitar superficies reflectantes cerca</li>
+                                            <li>Considerar iluminación externa adicional</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Mantenimiento -->
+                <div
+                    class="bg-card-bg border-2 border-border-color rounded-xl overflow-hidden transition-transform hover:-translate-y-1 hover:shadow-lg">
+                    <div class="p-6 border-b border-tab-bg">
+                        <h3 class="flex items-center text-lg font-semibold text-green-400 mb-2"><i
+                                class="fas fa-tools mr-2"></i>Mantenimiento Preventivo</h3>
+                    </div>
+                    <div class="p-6 text-justify">
+                        <h4 class="font-semibold mb-2">Rutina Mensual:</h4>
+                        <ul class="list-disc list-inside mb-4">
+                            <li>Limpiar lentes con productos específicos</li>
+                            <li>Verificar firmeza de soportes y tornillos</li>
+                            <li>Revisar estado de cables y conectores</li>
+                            <li>Probar grabación y reproducción</li>
+                            <li>Actualizar firmware si hay versiones nuevas</li>
+                        </ul>
+                        <h4 class="font-semibold mb-2">Rutina Semestral:</h4>
+                        <ul class="list-disc list-inside mb-4">
+                            <li>Revisar y limpiar el interior del DVR/NVR</li>
+                            <li>Verificar espacio disponible en disco duro</li>
+                            <li>Probar sistema de respaldo (backup)</li>
+                            <li>Revisar configuraciones de red y acceso remoto</li>
+                            <li>Documentar cambios y actualizaciones</li>
+                        </ul>
+                        <div class="tip-box"><strong>💡 Consejo Pro:</strong> Mantén un registro de mantenimiento con
+                            fechas y actividades realizadas.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Solar Panels Content -->
+    <div id="solar" class="tab-content">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-primary text-center mb-12">Paneles Solares - Guía Completa
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Instalación -->
+                <div
+                    class="bg-card-bg border-2 border-border-color rounded-xl overflow-hidden transition-transform hover:-translate-y-1 hover:shadow-lg">
+                    <div class="p-6 border-b border-tab-bg">
+                        <h3 class="flex items-center text-lg font-semibold text-cyan-400 mb-2"><i
+                                class="fas fa-file-alt mr-2"></i>Instalación Óptima</h3>
+                    </div>
+                    <div class="p-6 text-justify">
+                        <h4 class="font-semibold mb-2">Evaluación del Sitio:</h4>
+                        <ul class="list-disc list-inside mb-4">
+                            <li><strong>Orientación ideal:</strong> Sur (hemisferio norte) con desviación máxima ±30°
+                            </li>
+                            <li><strong>Inclinación:</strong> Igual a la latitud del lugar (±15°)</li>
+                            <li><strong>Sombreado:</strong> Evitar sombras entre 9:00 AM y 3:00 PM</li>
+                            <li><strong>Estructura:</strong> Techo en buen estado, capacidad de carga &gt;25 kg/m²</li>
+                            <li><strong>Acceso:</strong> Facilitar mantenimiento y limpieza</li>
+                        </ul>
+                        <h4 class="font-semibold mb-2">Proceso de Instalación:</h4>
+                        <ol class="list-decimal list-inside mb-4">
+                            <li>Diseño del sistema y cálculo de cargas</li>
+                            <li>Instalación de rieles y estructura de montaje</li>
+                            <li>Montaje de paneles con separación adecuada</li>
+                            <li>Conexión en serie/paralelo según diseño</li>
+                            <li>Instalación de inversor en lugar ventilado</li>
+                            <li>Conexión a tablero eléctrico con protecciones</li>
+                            <li>Pruebas de funcionamiento y puesta en marcha</li>
+                        </ol>
+                        <div class="warning-box"><strong>⚠️ Seguridad:</strong> Trabajar con equipos de protección y
+                            desconectar la alimentación principal.</div>
+                    </div>
+                </div>
+                <!-- Diagnóstico de Problemas -->
+                <div
+                    class="bg-card-bg border-2 border-border-color rounded-xl overflow-hidden transition-transform hover:-translate-y-1 hover:shadow-lg">
+                    <div class="p-6 border-b border-tab-bg">
+                        <h3 class="flex items-center text-lg font-semibold text-yellow-300 mb-2"><i
+                                class="fas fa-exclamation-circle mr-2"></i>Diagnóstico de Problemas</h3>
+                    </div>
+                    <div class="p-6 text-justify">
+                        <div class="accordion">
+                            <!-- Problema 1 -->
+                            <div class="accordion-item bg-black/20 p-6 mt-2 rounded">
+                                <button
+                                    class="accordion-header flex justify-between items-center w-full py-2 font-semibold"
+                                    onclick="toggleAccordion(this)">
+                                    Baja producción de energía
+                                    <span class="accordion-icon">+</span>
+                                </button>
+                                <div class="accordion-content">
+                                    <div class="scrollable-content">
+                                        <p class="font-semibold">Causas y soluciones:</p>
+                                        <ul class="list-disc list-inside mb-2">
+                                            <li><strong>Suciedad:</strong> Limpiar paneles con agua y jabón neutro</li>
+                                            <li><strong>Sombreado:</strong> Podar vegetación o reubicar obstáculos</li>
+                                            <li><strong>Conexiones:</strong> Revisar terminales y cables</li>
+                                            <li><strong>Inversor:</strong> Verificar códigos de error en display</li>
+                                            <li><strong>Degradación:</strong> Medir voltaje de cada panel
+                                                individualmente</li>
+                                        </ul>
+                                        <p class="font-semibold">Valores normales:</p>
+                                        <ul class="list-disc list-inside mb-2">
+                                            <li>Voltaje en circuito abierto: 36-45V por panel</li>
+                                            <li>Corriente de cortocircuito: 8-12A por panel</li>
+                                            <li>Eficiencia esperada: 15-22% según tecnología</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Problema 2 -->
+                            <div class="accordion-item bg-black/20 p-6 mt-2 rounded">
+                                <button
+                                    class="accordion-header flex justify-between items-center w-full py-2 font-semibold"
+                                    onclick="toggleAccordion(this)">
+                                    Inversor con errores
+                                    <span class="accordion-icon">+</span>
+                                </button>
+                                <div class="accordion-content">
+                                    <div class="scrollable-content">
+                                        <p class="font-semibold">Códigos de error comunes:</p>
+                                        <ul class="list-disc list-inside mb-2">
+                                            <li><strong>E001 - Sobrevoltaje DC:</strong> Revisar conexiones en serie
+                                            </li>
+                                            <li><strong>E002 - Baja tensión DC:</strong> Verificar sombreado o fallas en
+                                                paneles</li>
+                                            <li><strong>E003 - Falla de red:</strong> Problemas en la conexión AC</li>
+                                            <li><strong>E004 - Sobretemperatura:</strong> Mejorar ventilación del
+                                                inversor</li>
+                                        </ul>
+                                        <p class="font-semibold">Pasos de diagnóstico:</p>
+                                        <ol class="list-decimal list-inside mb-2">
+                                            <li>Anotar código de error exacto</li>
+                                            <li>Medir voltajes DC y AC</li>
+                                            <li>Verificar temperatura ambiente</li>
+                                            <li>Revisar manual del fabricante</li>
+                                            <li>Contactar soporte técnico si persiste</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Problema 3 -->
+                            <div class="accordion-item bg-black/20 p-6 mt-2 rounded">
+                                <button
+                                    class="accordion-header flex justify-between items-center w-full py-2 font-semibold"
+                                    onclick="toggleAccordion(this)">
+                                    Sistema no genera energía
+                                    <span class="accordion-icon">+</span>
+                                </button>
+                                <div class="accordion-content">
+                                    <div class="scrollable-content">
+                                        <p class="font-semibold">Verificaciones básicas:</p>
+                                        <ol class="list-decimal list-inside mb-2">
+                                            <li>Comprobar que el inversor esté encendido</li>
+                                            <li>Verificar protecciones DC y AC</li>
+                                            <li>Medir voltaje en string de paneles</li>
+                                            <li>Revisar conexión a red eléctrica</li>
+                                            <li>Verificar medidor bidireccional</li>
+                                        </ol>
+                                        <div class="tip-box"><strong>💡 Tip:</strong> El sistema solo funciona con luz
+                                            solar directa, no con luz artificial.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Optimización y Mantenimiento -->
+                <div
+                    class="bg-card-bg border-2 border-border-color rounded-xl overflow-hidden transition-transform hover:-translate-y-1 hover:shadow-lg">
+                    <div class="p-6 border-b border-tab-bg">
+                        <h3 class="flex items-center text-lg font-semibold text-green-400 mb-2"><i
+                                class="fas fa-solar-panel mr-2"></i>Optimización y Mantenimiento</h3>
+                    </div>
+                    <div class="p-6 text-justify">
+                        <h4 class="font-semibold mb-2">Mantenimiento Regular:</h4>
+                        <ul class="list-disc list-inside mb-4">
+                            <li><strong>Limpieza (mensual):</strong> Agua destilada y cepillo suave</li>
+                            <li><strong>Inspección visual:</strong> Buscar grietas, decoloración o daños</li>
+                            <li><strong>Revisión de conexiones:</strong> Apretar terminales y verificar cables</li>
+                            <li><strong>Monitoreo de producción:</strong> Comparar con valores esperados</li>
+                            <li><strong>Poda de vegetación:</strong> Mantener área libre de sombras</li>
+                        </ul>
+                        <h4 class="font-semibold mb-2">Optimización de Rendimiento:</h4>
+                        <ul class="list-disc list-inside mb-4">
+                            <li><strong>Horarios de limpieza:</strong> Temprano en la mañana o tarde</li>
+                            <li><strong>Monitoreo continuo:</strong> Usar aplicaciones del fabricante</li>
+                            <li><strong>Mantenimiento preventivo:</strong> Revisión anual por técnico</li>
+                            <li><strong>Actualización de firmware:</strong> Inversor y sistemas de monitoreo</li>
+                            <li><strong>Registro de datos:</strong> Llevar bitácora de producción</li>
+                        </ul>
+                        <h4 class="font-semibold mb-2">Indicadores de Rendimiento:</h4>
+                        <div class="space-y-2">
+                            <div class="metric bg-tab-bg rounded px-4 py-2"><strong>Producción diaria:</strong> 4-6 kWh
+                                por kW instalado</div>
+                            <div class="metric bg-tab-bg rounded px-4 py-2"><strong>Factor de planta:</strong> 15-25%
+                                según ubicación</div>
+                            <div class="metric bg-tab-bg rounded px-4 py-2"><strong>Degradación anual:</strong> Máximo
+                                0.8% por año</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Electric Fences Content -->
+    <div id="fences" class="tab-content">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-primary text-center mb-12">Cercas Eléctricas - Guía Completa
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Instalación -->
+                <div
+                    class="bg-card-bg border-2 border-border-color rounded-xl overflow-hidden transition-transform hover:-translate-y-1 hover:shadow-lg">
+                    <div class="p-6 border-b border-tab-bg">
+                        <h3 class="flex items-center text-lg font-semibold text-cyan-400 mb-2"><i
+                                class="fas fa-file-alt mr-2"></i>Instalación Segura</h3>
+                    </div>
+                    <div class="p-6 text-justify">
+                        <h4 class="font-semibold mb-2">Planificación del Sistema:</h4>
+                        <ul class="list-disc list-inside mb-4">
+                            <li><strong>Perímetro:</strong> Medir y marcar el área a proteger</li>
+                            <li><strong>Energizador:</strong> Calcular potencia según longitud (1J por km)</li>
+                            <li><strong>Altura:</strong> 2.0-2.5 metros para seguridad residencial</li>
+                            <li><strong>Separación de alambres:</strong> 15-20 cm entre líneas</li>
+                            <li><strong>Distancia entre postes:</strong> Máximo 3 metros</li>
+                        </ul>
+                        <h4 class="font-semibold mb-2">Componentes Esenciales:</h4>
+                        <ul class="list-disc list-inside mb-4">
+                            <li><strong>Energizador:</strong> Con certificación y potencia adecuada</li>
+                            <li><strong>Alambre:</strong> Galvanizado calibre 14-16 AWG</li>
+                            <li><strong>Aisladores:</strong> Porcelana o polímero de alta resistencia</li>
+                            <li><strong>Varilla de tierra:</strong> Cobre o acero galvanizado 1.5m</li>
+                            <li><strong>Señalización:</strong> Letreros de advertencia cada 10 metros</li>
+                        </ul>
+                        <h4 class="font-semibold mb-2">Proceso de Instalación:</h4>
+                        <ol class="list-decimal list-inside mb-4">
+                            <li>Instalar varilla de tierra en suelo húmedo</li>
+                            <li>Ubicar energizador en lugar seco y ventilado</li>
+                            <li>Instalar postes con separación uniforme</li>
+                            <li>Montar aisladores en postes</li>
+                            <li>Tender alambre manteniendo tensión constante</li>
+                            <li>Conectar energizador y probar voltaje</li>
+                            <li>Instalar señalización de seguridad</li>
+                        </ol>
+                        <div class="warning-box"><strong>⚠️ Normas de Seguridad:</strong> Cumplir con regulaciones
+                            locales y mantener distancias de seguridad.</div>
+                    </div>
+                </div>
+                <!-- Solución de Fallas -->
+                <div
+                    class="bg-card-bg border-2 border-border-color rounded-xl overflow-hidden transition-transform hover:-translate-y-1 hover:shadow-lg">
+                    <div class="p-6 border-b border-tab-bg">
+                        <h3 class="flex items-center text-lg font-semibold text-yellow-300 mb-2"><i
+                                class="fas fa-exclamation-circle mr-2"></i>Solución de Fallas</h3>
+                    </div>
+                    <div class="p-6 text-justify">
+                        <div class="accordion">
+                            <!-- Problema 1 -->
+                            <div class="accordion-item bg-black/20 p-6 mt-2 rounded">
+                                <button
+                                    class="accordion-header flex justify-between items-center w-full py-2 font-semibold"
+                                    onclick="toggleAccordion(this)">
+                                    No hay descarga eléctrica
+                                    <span class="accordion-icon">+</span>
+                                </button>
+                                <div class="accordion-content">
+                                    <div class="scrollable-content">
+                                        <p class="font-semibold">Verificaciones paso a paso:</p>
+                                        <ol class="list-decimal list-inside mb-2">
+                                            <li>Comprobar que el energizador esté encendido (LED indicador)</li>
+                                            <li>Verificar alimentación eléctrica (110V/220V)</li>
+                                            <li>Revisar fusible interno del energizador</li>
+                                            <li>Medir voltaje en terminales de salida (8,000-10,000V)</li>
+                                            <li>Buscar cortocircuitos en el alambre</li>
+                                            <li>Verificar conexión a tierra</li>
+                                        </ol>
+                                        <p class="font-semibold">Herramientas necesarias:</p>
+                                        <ul class="list-disc list-inside mb-2">
+                                            <li>Voltímetro para cercas eléctricas</li>
+                                            <li>Multímetro básico</li>
+                                            <li>Probador de tierra</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Problema 2 -->
+                            <div class="accordion-item bg-black/20 p-6 mt-2 rounded">
+                                <button
+                                    class="accordion-header flex justify-between items-center w-full py-2 font-semibold"
+                                    onclick="toggleAccordion(this)">
+                                    Descarga débil o intermitente
+                                    <span class="accordion-icon">+</span>
+                                </button>
+                                <div class="accordion-content">
+                                    <div class="scrollable-content">
+                                        <p class="font-semibold">Causas comunes:</p>
+                                        <ul class="list-disc list-inside mb-2">
+                                            <li><strong>Tierra deficiente:</strong> Instalar varillas adicionales</li>
+                                            <li><strong>Vegetación:</strong> Podar plantas que toquen el alambre</li>
+                                            <li><strong>Aisladores dañados:</strong> Reemplazar los agrietados</li>
+                                            <li><strong>Conexiones flojas:</strong> Apretar todas las uniones</li>
+                                            <li><strong>Alambre oxidado:</strong> Limpiar o reemplazar secciones</li>
+                                        </ul>
+                                        <p class="font-semibold">Valores normales:</p>
+                                        <ul class="list-disc list-inside mb-2">
+                                            <li>Voltaje en el alambre: 6,000-8,000V mínimo</li>
+                                            <li>Resistencia de tierra: Menos de 500 ohms</li>
+                                            <li>Corriente de fuga: Menos de 2mA</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Problema 3 -->
+                            <div class="accordion-item bg-black/20 p-6 mt-2 rounded">
+                                <button
+                                    class="accordion-header flex justify-between items-center w-full py-2 font-semibold"
+                                    onclick="toggleAccordion(this)">
+                                    Energizador se apaga constantemente
+                                    <span class="accordion-icon">+</span>
+                                </button>
+                                <div class="accordion-content">
+                                    <div class="scrollable-content">
+                                        <p class="font-semibold">Diagnóstico:</p>
+                                        <ol class="list-decimal list-inside mb-2">
+                                            <li>Verificar sobrecarga por cortocircuito</li>
+                                            <li>Revisar ventilación del equipo</li>
+                                            <li>Comprobar voltaje de alimentación estable</li>
+                                            <li>Verificar que la potencia sea adecuada para la cerca</li>
+                                        </ol>
+                                        <p class="font-semibold">Soluciones:</p>
+                                        <ul class="list-disc list-inside mb-2">
+                                            <li>Eliminar puntos de contacto del alambre</li>
+                                            <li>Mejorar ventilación del energizador</li>
+                                            <li>Instalar regulador de voltaje</li>
+                                            <li>Considerar energizador de mayor potencia</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Seguridad y Mantenimiento -->
+                <div
+                    class="bg-card-bg border-2 border-border-color rounded-xl overflow-hidden transition-transform hover:-translate-y-1 hover:shadow-lg">
+                    <div class="p-6 border-b border-tab-bg">
+                        <h3 class="flex items-center text-lg font-semibold text-purple-400 mb-2"><i
+                                class="fas fa-shield-alt mr-2"></i>Seguridad y Mantenimiento</h3>
+                    </div>
+                    <div class="p-6 text-justify">
+                        <h4 class="font-semibold mb-2">Normas de Seguridad Obligatorias:</h4>
+                        <ul class="list-disc list-inside mb-4">
+                            <li><strong>Señalización:</strong> Letreros visibles cada 10 metros</li>
+                            <li><strong>Altura mínima:</strong> 2 metros en áreas de tránsito</li>
+                            <li><strong>Distancia a líneas eléctricas:</strong> Mínimo 3 metros</li>
+                            <li><strong>Interruptor de emergencia:</strong> Accesible y señalizado</li>
+                            <li><strong>Certificación:</strong> Energizador con normas internacionales</li>
+                        </ul>
+                        <h4 class="font-semibold mb-2">Mantenimiento Preventivo:</h4>
+                        <div class="space-y-2 mb-4">
+                            <div><strong>Semanal:</strong>
+                                <ul class="list-disc list-inside ml-4">
+                                    <li>Verificar funcionamiento del energizador</li>
+                                    <li>Revisar señalización visible</li>
+                                    <li>Comprobar voltaje en diferentes puntos</li>
+                                </ul>
+                            </div>
+                            <div><strong>Mensual:</strong>
+                                <ul class="list-disc list-inside ml-4">
+                                    <li>Limpiar vegetación alrededor del alambre</li>
+                                    <li>Revisar estado de aisladores</li>
+                                    <li>Verificar conexiones y terminales</li>
+                                    <li>Probar sistema de tierra</li>
+                                </ul>
+                            </div>
+                            <div><strong>Semestral:</strong>
+                                <ul class="list-disc list-inside ml-4">
+                                    <li>Revisión completa por técnico especializado</li>
+                                    <li>Medición de resistencia de tierra</li>
+                                    <li>Calibración del energizador</li>
+                                    <li>Actualización de documentación</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <h4 class="font-semibold mb-2">Recomendaciones de Seguridad:</h4>
+                        <div class="space-y-2">
+                            <div class="tip-item"><strong>🚫 Nunca tocar:</strong> El alambre energizado sin desconectar
+                                el sistema</div>
+                            <div class="tip-item"><strong>🔧 Mantenimiento:</strong> Siempre desconectar antes de
+                                trabajar</div>
+                            <div class="tip-item"><strong>👥 Capacitación:</strong> Entrenar a usuarios sobre riesgos y
+                                procedimientos</div>
+                            <div class="tip-item"><strong>📞 Emergencias:</strong> Tener contactos de técnicos
+                                especializados</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-primary text-center mb-6">¿Necesitas Ayuda Adicional?</h2>
+            <p class="text-lg text-center mb-8 max-w-2xl mx-auto">
+                Si no encuentras la solución a tu problema en nuestras guías, nuestro equipo de soporte técnico
+                especializado está disponible para ayudarte con cualquier consulta.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+                <div class="bg-card-bg border-2 border-border-color rounded-xl p-8 flex flex-col items-center">
+                    <i class="fas fa-phone text-3xl text-primary mb-4"></i>
+                    <h3 class="text-xl font-bold mb-2">Soporte Telefónico</h3>
+                    <p class="mb-1">221-188-99-76</p>
+                    <p class="text-sm text-gray-400">Lun-Vie: 9:00 AM - 5:00 PM</p>
+                </div>
+                <div class="bg-card-bg border-2 border-border-color rounded-xl p-8 flex flex-col items-center">
+                    <i class="fas fa-envelope text-3xl text-primary mb-4"></i>
+                    <h3 class="text-xl font-bold mb-2">Email Técnico</h3>
+                    <p class="mb-1">soporte@tecnologicas.net</p>
+                    <p class="text-sm text-gray-400">Respuesta en 24 horas</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <%- include('../partials/footer.ejs') %>
+
+    <script>
+        // Tab functionality
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll(".tab-content")
+            tabContents.forEach((content) => {
+                content.classList.remove("active")
+            })
+
+            // Remove active class and Tailwind highlight from all tab buttons
+            const tabButtons = document.querySelectorAll(".tab-button")
+            tabButtons.forEach((button) => {
+                button.classList.remove("active", "bg-primary", "text-black")
+                button.classList.add("bg-[#334155]", "text-white")
+            })
+
+            // Show selected tab content
+            document.getElementById(tabName).classList.add("active")
+
+            // Add active class and Tailwind highlight to clicked button
+            if (event && event.target) {
+                event.target.classList.add("active", "bg-primary", "text-black")
+                event.target.classList.remove("bg-[#334155]", "text-white")
+            }
+        }
+
+        // Accordion functionality - CORREGIDA
+        function toggleAccordion(header) {
+            const accordionItem = header.parentElement
+            const accordionContent = accordionItem.querySelector(".accordion-content")
+            const isActive = accordionItem.classList.contains("active")
+
+            // Close all accordion items in the same accordion container
+            const accordion = accordionItem.parentElement
+            const allItems = accordion.querySelectorAll(".accordion-item")
+
+            allItems.forEach((item) => {
+                item.classList.remove("active")
+                const content = item.querySelector(".accordion-content")
+                if (content) {
+                    content.style.maxHeight = "0px"
+                }
+            })
+
+            // If the clicked item wasn't active, open it
+            if (!isActive) {
+                accordionItem.classList.add("active")
+                if (accordionContent) {
+                    // Calcular la altura real del contenido
+                    accordionContent.style.maxHeight = accordionContent.scrollHeight + "px"
+                }
+            }
+        }
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener("DOMContentLoaded", () => {
+            console.log("DOM loaded - initializing accordion functionality")
+
+            // Initialize accordion functionality
+            const accordionHeaders = document.querySelectorAll(".accordion-header")
+            console.log("Found accordion headers:", accordionHeaders.length)
+
+            accordionHeaders.forEach((header, index) => {
+                console.log(`Setting up accordion header ${index}`)
+
+                // Remove any existing onclick attributes
+                header.removeAttribute("onclick")
+
+                // Add click event listener
+                header.addEventListener("click", function (e) {
+                    e.preventDefault()
+                    console.log("Accordion header clicked:", index)
+                    toggleAccordion(this)
+                })
+            })
+
+            // Tab functionality
+            const tabButtons = document.querySelectorAll(".tab-button")
+            tabButtons.forEach((button) => {
+                button.addEventListener("click", function (e) {
+                    e.preventDefault()
+                    const onclick = this.getAttribute("onclick")
+                    if (onclick) {
+                        const tabName = onclick.match(/'([^']+)'/)[1]
+                        showTab(tabName)
+                    }
+                })
+            })
+
+            // Contact button functionality
+            const contactButton = document.querySelector(".contact-button")
+            if (contactButton) {
+                contactButton.addEventListener("click", () => {
+                    alert("¡Gracias por tu interés! Te contactaremos pronto para brindarte soporte técnico especializado.")
+                })
+            }
+
+            // Add smooth scroll behavior
+            document.documentElement.style.scrollBehavior = "smooth"
+
+            // Highlight important safety warnings
+            const warningBoxes = document.querySelectorAll(".warning-box")
+            warningBoxes.forEach((box) => {
+                box.addEventListener("mouseenter", function () {
+                    this.style.transform = "scale(1.02)"
+                    this.style.transition = "transform 0.2s ease"
+                })
+
+                box.addEventListener("mouseleave", function () {
+                    this.style.transform = "scale(1)"
+                })
+            })
+
+            // Add copy functionality to technical values
+            const metrics = document.querySelectorAll(".metric")
+            metrics.forEach((metric) => {
+                metric.style.cursor = "pointer"
+                metric.title = "Click para copiar"
+
+                metric.addEventListener("click", function () {
+                    const text = this.textContent
+                    if (navigator.clipboard) {
+                        navigator.clipboard
+                            .writeText(text)
+                            .then(() => {
+                                const originalBg = this.style.backgroundColor
+                                this.style.backgroundColor = "#14b8a6"
+                                this.style.transition = "background-color 0.3s ease"
+
+                                setTimeout(() => {
+                                    this.style.backgroundColor = originalBg
+                                }, 1000)
+                            })
+                            .catch((err) => {
+                                console.log("Error copying text: ", err)
+                            })
+                    }
+                })
+            })
+        })
+
+        // Handle window resize for mobile optimization
+        window.addEventListener("resize", () => {
+            const accordionContents = document.querySelectorAll(".accordion-content.active")
+            accordionContents.forEach((content) => {
+                if (content.parentElement.classList.contains("active")) {
+                    content.style.maxHeight = content.scrollHeight + "px"
+                }
+            })
+        })
+
+    </script>
+    <script src="/js/nav.js"></script>
+</body>
+
+</html>

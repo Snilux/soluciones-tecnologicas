@@ -1,0 +1,143 @@
+<div id="modalCotizacion" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-50">
+    <div class="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+        <!-- Header -->
+        <div class="p-6 border-b">
+            <div class="flex items-center justify-between">
+                <h2 class="text-2xl font-bold text-gray-900 text-center w-full">Cotización de Cerca Eléctrica</h2>
+                <button id="cerrarModal" class="text-gray-400 hover:text-gray-600 flex items-center justify-center">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+
+
+        <!-- Precio Principal -->
+        <div class="p-3 bg-blue-50 text-center mb-2">
+            <div class="text-4xl font-bold text-blue-600" id="precioTotal">$8,500.00 MXN</div>
+            <div class="text-gray-600 mt-1">Precio total del sistema</div>
+        </div>
+
+        <!-- Contenido Principal -->
+        <div class="p-3">
+            <!-- Especificaciones Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2">
+                <!-- Instalación -->
+                <div class="bg-blue-50 rounded-lg p-4">
+                    <div class="flex items-center mb-2">
+                        <i class="ri-flashlight-line text-blue-600 text-xl mr-2"></i>
+                        <span class="font-semibold text-gray-900">Instalación</span>
+                    </div>
+                    <div class="text-2xl font-bold text-blue-600" id="modalAltura">2.5m</div>
+                    <div class="text-sm text-gray-600">Altura de cerca eléctrica profesional</div>
+                </div>
+
+                <!-- Especificaciones -->
+                <div class="bg-purple-50 rounded-lg p-4">
+                    <div class="flex items-center mb-2">
+                        <i class="ri-settings-3-line text-purple-600 text-xl mr-2"></i>
+                        <span class="font-semibold text-gray-900">Especificaciones</span>
+                    </div>
+                    <div class="space-y-1 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Bardas:</span>
+                            <span class="font-medium" id="modalBardas">2</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Metros:</span>
+                            <span class="font-medium" id="modalMetros">11-20mts</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Control:</span>
+                            <span class="font-medium" id="modalControl">Sí</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resumen del Proyecto -->
+            <div class="mb-2 bg-gray-50 rounded-lg  p-4">
+                <div class="flex items-center mb-2">
+                    <i class="ri-file-text-line text-orange-600 text-xl mr-2"></i>
+                    <span class="font-semibold text-gray-900">Resumen del Proyecto</span>
+                </div>
+                <div class="">
+                    <p class="text-gray-700" id="resumenProyecto">
+                        Sistema de cerca eléctrica profesional con <span class="font-semibold">2 bardas</span>
+                        para instalación de <span class="font-semibold">11-20 metros lineales</span>.
+                        Incluye energizador de alta potencia y altura de <span class="font-semibold">2.5
+                            metros</span>.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Iconos de características -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-2 bg-purple-50 rounded-lg p-4">
+                <div class="flex items-center text-sm text-gray-600">
+                    <i class="ri-home-line mr-2"></i>
+                    <span id="iconAltura">Altura 2.5m</span>
+                </div>
+                <div class="flex items-center text-sm text-gray-600">
+                    <i class="ri-ruler-line mr-2"></i>
+                    <span id="iconMetros">11-20 metros</span>
+                </div>
+                <div class="flex items-center text-sm text-gray-600">
+                    <i class="ri-alarm-warning-line mr-2"></i>
+                    <span id="iconContacto">Sin alarma</span>
+                </div>
+                <div class="flex items-center text-sm text-gray-600">
+                    <i class="ri-remote-control-line mr-2"></i>
+                    <span id="iconControlRemoto">Con control</span>
+                </div>
+            </div>
+
+            <!-- Desglose de Precios -->
+            <div class="bg-white border rounded-lg p-4 mb-2">
+                <h3 class="font-semibold text-gray-900 mb-2">Desglose de Precios</h3>
+                <div class="space-y-2" id="desglosePrecio">
+                    <div class="flex justify-between text-sm">
+                        <span class="text-gray-600">Costo Base de Cerca Eléctrica:</span>
+                        <span class="font-medium">$3,000.00</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-gray-600">Costo por Altura (2.5m):</span>
+                        <span class="font-medium">$1,200.00</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-gray-600">Costo por Bardas (2):</span>
+                        <span class="font-medium">$500.00</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-gray-600">Costo por Metraje (11-20mts):</span>
+                        <span class="font-medium">$800.00</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-gray-600">Control Remoto:</span>
+                        <span class="font-medium">$600.00</span>
+                    </div>
+
+                    <hr class="my-3">
+                    <div class="flex justify-between font-bold text-lg">
+                        <span>Total:</span>
+                        <span class="text-blue-600" id="totalFinal">$8,500.00 MXN</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="p-6 border-t bg-gray-50 flex flex-col sm:flex-row gap-3">
+            <button id="btnNoEsLoQueBuscas"
+                class="flex-1 px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100 transition-colors">
+                ¿No es lo que buscas?
+            </button>
+            <button id="btnConfirmarPedido"
+                class="flex-1 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors">
+                Confirmar Pedido
+            </button>
+        </div>
+    </div>
+</div>

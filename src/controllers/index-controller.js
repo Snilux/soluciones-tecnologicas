@@ -1,17 +1,35 @@
-import IndexModel from "../models/index-model.js";
 import QuoterModel from "../models/quoter-model.js";
 
 class indexController {
   async renderIndex(req, res) {
-    res.render("index/index");
+    res.render("index/index", {
+      tittle: "Soluciones tecnologicas .net",
+    });
+  }
+
+  async renderContact(req, res) {
+    return res.render("index/contact", {
+      tittle: "Contactanos",
+    });
+  }
+
+  async renderService(req, res) {
+    return res.render("index/service", {
+      tittle: "Nuestros servicios",
+    });
+  }
+  async renderSupport(req, res) {
+    return res.render("index/support", {
+      tittle: "Nuestros servicios",
+    });
   }
 
   async getDataCameras(req, res) {
     const quoterCameraData = await QuoterModel.getQuoteCameraData();
 
     if (quoterCameraData.length === 0 || !quoterCameraData) {
-      return res.status(404).json({
-        message: "No se encontrarón los datos de cotización de cámaras",
+      return res.render("index", {
+        tittle: "Soluciones tecnologicas",
       });
     }
 
@@ -55,10 +73,10 @@ class indexController {
       // Define parameters to filter from quoterData to create lookup maps.
       const paramsToFilter = [
         "Precio cable interior",
-        "Precio cable exterior", // Keep this for filtering, even if not directly used as base for CamsxCable
+        "Precio cable exterior",
         "Disco duro recomendado",
-        "Altura instalación", // Corrected parameter name for height installation prices
-        "Lugar instalación", // Filtering for prices associated with 'Lugar instalación' (Interior/Exterior).
+        "Altura instalación",
+        "Lugar instalación",
       ];
       const filterData = quoterData.filter((item) =>
         paramsToFilter.includes(item.parametro_nombre)
@@ -67,9 +85,9 @@ class indexController {
       // Prepare lookup maps from filterData for easier access to prices.
       const discPrices = {};
       const cableInteriorPrices = {};
-      const cableExteriorPrices = {}; // Will be populated but not used as the base in CamsxCable calculation
-      const alturaPrices = {}; // Map for "Altura instalación" prices.
-      const lugarInstalacionPrices = {}; // Map for "Lugar instalación" prices (e.g., Exterior surcharge).
+      const cableExteriorPrices = {};
+      const alturaPrices = {};
+      const lugarInstalacionPrices = {};
 
       filterData.forEach((item) => {
         if (item.parametro_nombre === "Disco duro recomendado") {
@@ -77,9 +95,8 @@ class indexController {
         } else if (item.parametro_nombre === "Precio cable interior") {
           cableInteriorPrices[item.valor] = parseFloat(item.precio);
         } else if (item.parametro_nombre === "Precio cable exterior") {
-          cableExteriorPrices[item.valor] = parseFloat(item.precio); // Populating this map
+          cableExteriorPrices[item.valor] = parseFloat(item.precio);
         } else if (item.parametro_nombre === "Altura instalación") {
-          // Corrected condition
           alturaPrices[item.valor] = parseFloat(item.precio);
         } else if (item.parametro_nombre === "Lugar instalación") {
           lugarInstalacionPrices[item.valor] = parseFloat(item.precio);
@@ -87,11 +104,11 @@ class indexController {
       });
 
       // Add detailed logs for populated price maps
-      console.log("DEBUG: discPrices:", discPrices);
-      console.log("DEBUG: cableInteriorPrices:", cableInteriorPrices);
-      console.log("DEBUG: cableExteriorPrices:", cableExteriorPrices);
-      console.log("DEBUG: alturaPrices:", alturaPrices); // This should now be populated
-      console.log("DEBUG: lugarInstalacionPrices:", lugarInstalacionPrices);
+      // console.log("DEBUG: discPrices:", discPrices);
+      // console.log("DEBUG: cableInteriorPrices:", cableInteriorPrices);
+      // console.log("DEBUG: cableExteriorPrices:", cableExteriorPrices);
+      // console.log("DEBUG: alturaPrices:", alturaPrices);
+      // console.log("DEBUG: lugarInstalacionPrices:", lugarInstalacionPrices);
 
       // Added warnings if critical price maps are empty based on user's debug logs.
       if (Object.keys(alturaPrices).length === 0) {
@@ -121,20 +138,19 @@ class indexController {
       const DiaGrab = parseInt(dataPrice["Días de grabación"]?.valor);
 
       // Log received data for debugging purposes
-      console.log("dataPrice (received):", dataPrice);
-      console.log("drvData (from QuoterModel):", drvData);
-      console.log("filterData (from QuoterModel, filtered):", filterData);
-      console.log("Extracted Inputs:", {
-        CantiCams,
-        LugarInstala,
-        DistanciaCamsGrab,
-        AlturaCams,
-        MegaPixCams,
-        DiaGrab,
-      });
+      // console.log("dataPrice (received):", dataPrice);
+      // console.log("drvData (from QuoterModel):", drvData);
+      // console.log("filterData (from QuoterModel, filtered):", filterData);
+      // console.log("Extracted Inputs:", {
+      //   CantiCams,
+      //   LugarInstala,
+      //   DistanciaCamsGrab,
+      //   AlturaCams,
+      //   MegaPixCams,
+      //   DiaGrab,
+      // });
       // Removed the previous "Parsed Prices" log as detailed logs are now above.
 
-      // --- Check for "Otro" selections which require specialization ---
       const isSpecialized =
         dataPrice["Cantidad de cámaras"]?.valor === "Otro" ||
         LugarInstala === "Otro" ||
@@ -171,7 +187,7 @@ class indexController {
       // Add the cost specific to the installation location (Interior/Exterior) from DB.
       // This acts as the "surcharge" for exterior installation, matching original behavior.
       if (LugarInstala === "Exterior") {
-        const lugarInstalacionCost = lugarInstalacionPrices[LugarInstala] || 0; // Should be 100.00 for "Exterior"
+        const lugarInstalacionCost = lugarInstalacionPrices[LugarInstala] || 0;
         console.log(
           `DEBUG: lugarInstalacionCost for ${LugarInstala}: ${lugarInstalacionCost}`
         );
@@ -245,7 +261,7 @@ class indexController {
       console.log(
         `DEBUG: Final PrecioCams: ${CantidadPxCam} + ${CamsxCable} + ${AlturaxCams} = ${PrecioCams}`
       );
-
+      //--- 5. Response ---
       return res.status(200).json({
         "Precio estimado": PrecioCams.toFixed(2),
         "Tamaño disco duro": TamañoDiscFinal,
@@ -259,6 +275,239 @@ class indexController {
       console.error("Error calculating camera price:", error);
       return res.status(500).json({
         error: "Error al calcular el precio estimado.",
+        details: error.message,
+      });
+    }
+  }
+
+  async getDataFences(req, res) {
+    const quoterFenceData = await QuoterModel.getQuoteFenceData();
+
+    if (quoterFenceData.length === 0 || !quoterFenceData) {
+      return res.render("index", {
+        tittle: "Soluciones tecnologicas",
+      });
+    }
+
+    const groupedData = {};
+    quoterFenceData.forEach((item) => {
+      const key = item.parametro_id;
+      if (!groupedData[key]) {
+        groupedData[key] = {
+          parametro_id: item.parametro_id,
+          parametro_nombre: item.parametro_nombre,
+          descripcion: item.descripcion,
+          items: [],
+        };
+      }
+      groupedData[key].items.push(item);
+    });
+
+    //Make a array
+    const groupedDataArray = Object.values(groupedData);
+
+    // console.log(groupedDataArray[0]);
+
+    if (!groupedDataArray) {
+      return res.render("index", {
+        tittle: "Soluciones tecnologicas",
+      });
+    }
+
+    return res.render("index/quoter-fence", {
+      tittle: "Cotizador de camaras",
+      cameraData: groupedDataArray,
+    });
+  }
+
+  async calculatePriceFences(req, res) {
+    try {
+      // Fetch configurable pricing data for electric fences from the DB.
+      const fenceQuoterData = await QuoterModel.getQuoteFenceData(); // Assuming a new model method for fence data
+
+      // Define parameters to filter from fenceQuoterData to create lookup maps.
+      const paramsToFilter = [
+        "Precio base del cercado",
+        "Altura de instalacion",
+        "Numero de bardas",
+        "Distancia lineal",
+        "Contacto cercano",
+        "Control remoto",
+      ];
+      const filterData = fenceQuoterData.filter((item) =>
+        paramsToFilter.includes(item.parametro_nombre)
+      );
+
+      // Prepare lookup maps from filterData for easier access to prices.
+      let baseFencePrice = 0; // Initial base cost for the fence (from DB)
+      const alturaBardaPrices = {}; // Map for prices based on wall height (from DB)
+      const numeroBardasPrices = {}; // Map for prices based on number of walls (from DB)
+      const metrosLinealesPrices = {}; // Map for prices based on linear meters (from DB)
+      const contactoCercanoPrices = {}; // Map for prices related to electrical contact (from DB)
+      const controlRemotoPrices = {}; // Map for prices related to remote control (from DB)
+
+      filterData.forEach((item) => {
+        if (item.parametro_nombre === "Precio base del cercado") {
+          baseFencePrice = parseFloat(item.precio);
+        } else if (item.parametro_nombre === "Altura de instalacion") {
+          alturaBardaPrices[item.valor] = parseFloat(item.precio);
+        } else if (item.parametro_nombre === "Numero de bardas") {
+          numeroBardasPrices[item.valor] = parseFloat(item.precio);
+        } else if (item.parametro_nombre === "Distancia lineal") {
+          metrosLinealesPrices[item.valor] = parseFloat(item.precio);
+        } else if (item.parametro_nombre === "Contacto cercano") {
+          contactoCercanoPrices[item.valor] = parseFloat(item.precio);
+        } else if (item.parametro_nombre === "Control remoto") {
+          controlRemotoPrices[item.valor] = parseFloat(item.precio);
+        }
+      });
+
+      // Log populated price maps for debugging.
+      console.log("DEBUG: baseFencePrice (from DB):", baseFencePrice);
+      console.log("DEBUG: alturaBardaPrices (from DB):", alturaBardaPrices);
+      console.log("DEBUG: numeroBardasPrices (from DB):", numeroBardasPrices);
+      console.log(
+        "DEBUG: metrosLinealesPrices (from DB):",
+        metrosLinealesPrices
+      );
+      console.log(
+        "DEBUG: contactoCercanoPrices (from DB):",
+        contactoCercanoPrices
+      );
+      console.log("DEBUG: controlRemotoPrices (from DB):", controlRemotoPrices);
+
+      // Extract user selections from the request body.
+      const dataPrice = req.body;
+
+      // Ensure that the 'valor' property exists and parse it correctly.
+      // The keys here must match what the client sends in dataPrice.
+      const MetrosBarda = dataPrice["Altura de instalacion"]?.valor;
+      const CantiBardas = dataPrice["Numero de bardas"]?.valor;
+      const MetrosLineales = dataPrice["Distancia lineal"]?.valor;
+      const ContactoElec = dataPrice["Contacto cercano"]?.valor;
+      const ControlRem = dataPrice["Control remoto"]?.valor;
+
+      // Log extracted inputs for debugging.
+      console.log("Extracted Inputs (from dataPrice):", {
+        MetrosBarda,
+        CantiBardas,
+        MetrosLineales,
+        ContactoElec,
+        ControlRem,
+      });
+
+      // --- Check for "Otro" selections which require specialization ---
+      const isSpecialized =
+        MetrosBarda === "Otro" ||
+        CantiBardas === "Otro" ||
+        MetrosLineales === "Otro";
+
+      if (isSpecialized) {
+        return res.status(200).json({
+          "Precio estimado": "Requiere más especialización",
+          "Resumen de precios": {},
+        });
+      }
+
+      let PrecioCercado = baseFencePrice; // Start with the base price from DB.
+      let costoAlturaBarda = 0;
+      let costoNumeroBardas = 0; // New cost component for 'Numero de bardas'
+      let costoMetrosLineales = 0;
+      let costoContactoElectrico = 0;
+      let costoControlRemoto = 0;
+
+      // --- 1. Calculate cost based on 'Altura de instalacion' (Height of Fence) ---
+      // Validate if the value exists in our dynamically loaded prices.
+      if (alturaBardaPrices[MetrosBarda] !== undefined) {
+        costoAlturaBarda = alturaBardaPrices[MetrosBarda];
+      } else {
+        console.warn(
+          `WARNING: Precio para Altura de instalacion "${MetrosBarda}" no encontrado en DB. Asumiendo costo 0.`
+        );
+      }
+      PrecioCercado += costoAlturaBarda;
+      console.log(
+        `DEBUG: PrecioCercado after Altura de instalacion (${MetrosBarda}): ${PrecioCercado} (costoAlturaBarda: ${costoAlturaBarda})`
+      );
+
+      // --- 2. Calculate cost based on 'Numero de bardas' (Number of Walls) ---
+      // This now impacts the price based on DB data.
+      if (numeroBardasPrices[CantiBardas] !== undefined) {
+        costoNumeroBardas = numeroBardasPrices[CantiBardas];
+      } else {
+        console.warn(
+          `WARNING: Precio para Numero de bardas "${CantiBardas}" no encontrado en DB. Asumiendo costo 0.`
+        );
+      }
+      PrecioCercado += costoNumeroBardas;
+      console.log(
+        `DEBUG: PrecioCercado after Numero de bardas (${CantiBardas}): ${PrecioCercado} (costoNumeroBardas: ${costoNumeroBardas})`
+      );
+
+      // --- 3. Calculate cost based on 'Distancia lineal' (Linear Meters) ---
+      // Validate if the value exists in our dynamically loaded prices.
+      if (metrosLinealesPrices[MetrosLineales] !== undefined) {
+        costoMetrosLineales = metrosLinealesPrices[MetrosLineales];
+      } else {
+        console.warn(
+          `WARNING: Precio para Distancia lineal "${MetrosLineales}" no encontrado en DB. Asumiendo costo 0. (Verifica si el valor de entrada es el esperado, ej., "0-10" en lugar de "Interior").`
+        );
+      }
+      PrecioCercado += costoMetrosLineales;
+      console.log(
+        `DEBUG: PrecioCercado after Distancia lineal (${MetrosLineales}): ${PrecioCercado} (costoMetrosLineales: ${costoMetrosLineales})`
+      );
+
+      // --- 4. Calculate cost based on 'Contacto cercano' (Nearby Electrical Contact) ---
+      // Apply cost only if 'No' as per original JS logic, taking the 'No' price from DB.
+      if (ContactoElec === "No") {
+        if (contactoCercanoPrices["No"] !== undefined) {
+          costoContactoElectrico = contactoCercanoPrices["No"];
+        } else {
+          console.warn(
+            `WARNING: Precio para Contacto cercano "No" no encontrado en DB. Asumiendo costo 0.`
+          );
+        }
+      }
+      PrecioCercado += costoContactoElectrico;
+      console.log(
+        `DEBUG: PrecioCercado after Contacto cercano (${ContactoElec}): ${PrecioCercado} (costoContactoElectrico: ${costoContactoElectrico})`
+      );
+
+      // --- 5. Calculate cost based on 'Control remoto' (Remote Control) ---
+      // Apply cost only if 'Si' as per original JS logic, taking the 'Si' price from DB.
+      if (ControlRem === "Si") {
+        if (controlRemotoPrices["Si"] !== undefined) {
+          costoControlRemoto = controlRemotoPrices["Si"];
+        } else {
+          console.warn(
+            `WARNING: Precio para Control remoto "Si" no encontrado en DB. Asumiendo costo 0.`
+          );
+        }
+      }
+      PrecioCercado += costoControlRemoto;
+      console.log(
+        `DEBUG: PrecioCercado after Control remoto (${ControlRem}): ${PrecioCercado} (costoControlRemoto: ${costoControlRemoto})`
+      );
+
+      // Final Return
+      return res.status(200).json({
+        "Precio estimado": PrecioCercado.toFixed(2),
+        "Resumen de precios": {
+          "Costo Base Inicial": baseFencePrice.toFixed(2),
+          "Costo por Altura de Barda": costoAlturaBarda.toFixed(2),
+          "Costo por Numero de Bardas": costoNumeroBardas.toFixed(2), // Added to summary
+          "Costo por Metros Lineales Adicionales":
+            costoMetrosLineales.toFixed(2),
+          "Costo por Falta de Contacto Eléctrico":
+            costoContactoElectrico.toFixed(2),
+          "Costo por Control Remoto": costoControlRemoto.toFixed(2),
+        },
+      });
+    } catch (error) {
+      console.error("Error calculating electric fence price:", error);
+      return res.status(500).json({
+        error: "Error al calcular el precio estimado del cercado eléctrico.",
         details: error.message,
       });
     }

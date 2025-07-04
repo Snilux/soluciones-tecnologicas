@@ -5,6 +5,9 @@ class QuoterModel {
     this.valores_parametro_camaras = "valores_parametro_camaras";
     this.parametros_camaras = "parametros_camaras";
     this.drv = "drv";
+
+    this.parametros_cercado = "parametros_cercado";
+    this.valores_parametro_cercado = "valores_parametro_cercado";
   }
 
   async getQuoteCameraData() {
@@ -48,17 +51,34 @@ class QuoterModel {
     }
   }
 
-  async updateCameraParameter(id, cameraData) {
-    const connection = await getConnection();
-    const query = `UPDATE ?? SET valor = ?, precio = ? WHERE id = ?`;
-
-    try {
-      const result = await connection.query(query, [
+  async updateCameraParameter(id, cameraData, table) {
+    let params = [];
+    if (table === "fence") {
+      params = [
+        this.valores_parametro_cercado,
+        cameraData.valor,
+        cameraData.precio,
+        id,
+      ];
+    } else if (table === "camera") {
+      params = [
         this.valores_parametro_camaras,
         cameraData.valor,
         cameraData.precio,
         id,
-      ]);
+      ];
+    } else {
+      return {
+        errorMessage: `No se encontró la tabla ${table}`,
+        success: false,
+      };
+    }
+
+    const connection = await getConnection();
+    const query = `UPDATE ?? SET valor = ?, precio = ? WHERE id = ?`;
+
+    try {
+      const result = await connection.query(query, params);
 
       if (result[0].affectedRows === 0) {
         return {
@@ -77,15 +97,24 @@ class QuoterModel {
     }
   }
 
-  async deleteCameraParameter(id) {
+  async deleteCameraParameter(id, table) {
+    let params = [];
+    if (table === "camera") {
+      params = [this.valores_parametro_camaras, id];
+    } else if (table === "fence") {
+      params = [this.valores_parametro_cercado, id];
+    } else {
+      return {
+        errorMessage: `No se encontró la tabla ${table}`,
+        success: false,
+      };
+    }
+
     const connection = await getConnection();
     const query = `DELETE FROM ?? WHERE id = ?`;
 
     try {
-      const result = await connection.query(query, [
-        this.valores_parametro_camaras,
-        id,
-      ]);
+      const result = await connection.query(query, params);
 
       if (result[0].affectedRows === 0) {
         return {
@@ -104,16 +133,23 @@ class QuoterModel {
     }
   }
 
-  async getIdCameraParameterByName(name, description) {
+  async getIdCameraParameterByName(name, description, table) {
+    let params = [];
+    if (table === "fences") {
+      params = [this.parametros_cercado, name, description];
+    } else if (table === "cameras") {
+      params = [this.parametros_camaras, name, description];
+    } else {
+      return {
+        errorMessage: `No se encontró la tabla ${table}`,
+        success: false,
+      };
+    }
     const connection = await getConnection();
     const query = `SELECT id FROM ?? WHERE nombre = ? AND descripcion = ?`;
 
     try {
-      const result = await connection.query(query, [
-        this.parametros_camaras,
-        name,
-        description,
-      ]);
+      const result = await connection.query(query, params);
       if (result[0].length === 0) {
         return null;
       }
@@ -124,19 +160,26 @@ class QuoterModel {
     }
   }
 
-  async addCameraParameter(id, data) {
+  async addCameraParameter(id, data, table) {
+    let params = [];
+    if (table === "fence") {
+      params = [this.valores_parametro_cercado, id, data.valor, data.precio];
+    } else if (table === "camera") {
+      params = [this.valores_parametro_camaras, id, data.valor, data.precio];
+    } else {
+      return {
+        errorMessage: `No se encontró la tabla ${table}`,
+        success: false,
+      };
+    }
+
     const connection = await getConnection();
     const query = `INSERT INTO ?? (parametro_id, valor, precio) VALUES (?, ? ,? );`;
 
     // console.log(data);
 
     try {
-      const result = await connection.query(query, [
-        this.valores_parametro_camaras,
-        id,
-        data.valor,
-        data.precio,
-      ]);
+      const result = await connection.query(query, params);
 
       if (result[0].affectedRows === 0) {
         return {
@@ -239,7 +282,31 @@ class QuoterModel {
     }
   }
 
+  async getQuoteFenceData() {
+    const connection = await getConnection();
+    const queryCameraData = `SELECT 
+      p.id AS parametro_id,
+      p.nombre AS parametro_nombre,
+      p.descripcion,
+      v.id AS valor_id,
+      v.valor,
+      v.precio
+      FROM 
+      ${this.parametros_cercado} p
+      LEFT JOIN 
+      ${this.valores_parametro_cercado} v ON p.id = v.parametro_id
+      ORDER BY 
+      p.id, v.id;`;
 
+    try {
+      const result = await connection.query(queryCameraData);
+
+      return result[0];
+    } catch (error) {
+      console.error("Error in getQuoteCameraData:", error);
+      throw error;
+    }
+  }
 
 }
 

@@ -1,0 +1,184 @@
+<%- include('../partials/head.ejs') %>
+
+<body class="font-poppins bg-dark-bg text-white">
+
+    <%- include('../partials/nav-index.ejs') %>
+
+    <div class="pt-32 pb-16 px-4">
+
+        <!-- Page Title -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-primary mb-4">
+                <i class="fas fa-headset mr-3"></i>
+                CONTÁCTANOS
+            </h1>
+            <div class="w-24 h-1 bg-gradient-to-r from-primary to-blue-400 mx-auto rounded"></div>
+        </div>
+
+        <!-- Contact Section -->
+        <section class="max-w-6xl mx-auto">
+            <div class="bg-card-bg border-2 border-secondary rounded-3xl p-8 md:p-12 backdrop-blur-md">
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+
+                    <!-- Contact Information -->
+                    <div class="space-y-8">
+
+                        <!-- Phone Numbers -->
+                        <div class="bg-black/20 rounded-2xl p-6 border border-white/10">
+                            <h3 class="text-2xl font-semibold text-primary mb-6 text-center">
+                                <i class="fas fa-phone-alt mr-3"></i>
+                                Teléfonos
+                            </h3>
+                            <div class="space-y-4">
+                                <div class="flex flex-col">
+                                    <span class="font-semibold text-white mb-1">Soluciones Tecnologicas.NET</span>
+                                    <a href="tel:222 - 114 - 8855"
+                                        class="text-lg text-text-light hover:text-primary transition-colors duration-300">
+                                        222 - 114 - 8855
+                                    </a>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="font-semibold text-white mb-1">Sistemas de video vigilancia:</span>
+                                    <a href="tel:221 - 575 - 6956"
+                                        class="text-lg text-text-light hover:text-primary transition-colors duration-300">
+                                        221 - 575 - 6956
+                                    </a>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="font-semibold text-white mb-1">Soporte técnico de TI:</span>
+                                    <a href="tel:221 - 188 - 9976"
+                                        class="text-lg text-text-light hover:text-primary transition-colors duration-300">
+                                        221 - 188 - 9976
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="bg-black/20 rounded-2xl p-6 border border-white/10">
+                            <h3 class="text-2xl font-semibold text-primary mb-4 text-center">
+                                <i class="fas fa-envelope mr-3"></i>
+                                Email
+                            </h3>
+                            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=ventas@soluciontecnologica.net&su=Consulta&body=Hola,%20me%20gustaría%20obtener%20más%20información."
+                                target="_blank" rel="noopener noreferrer"
+                                class="text-lg text-text-light hover:text-primary transition-colors duration-300 break-all">
+                                ventas@soluciontecnologica.net
+                            </a>
+                        </div>
+
+                        <!-- Social Media -->
+                        <div class="bg-black/20 rounded-2xl p-6 border border-white/10">
+                            <h3 class="text-2xl font-semibold text-primary mb-6 text-center">
+                                <i class="fas fa-share-alt mr-3"></i>
+                                Redes Sociales
+                            </h3>
+                            <div class="flex justify-center gap-4 flex-wrap">
+                                <!-- Facebook 1 -->
+                                <a href="https://www.facebook.com/share/1CYBEuwVnL/" target="_blank"
+                                    class="inline-flex items-center justify-center bg-blue-600 text-white text-xl w-12 h-12 rounded-full transition-all duration-300 hover:bg-primary hover:scale-110 shadow-lg hover:shadow-xl"
+                                    title="Facebook">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+
+                                <!-- Facebook 2 -->
+                                <a href="https://www.facebook.com/share/1EpfWuCWJ2/" target="_blank"
+                                    class="inline-flex items-center justify-center bg-blue-600 text-white text-xl w-12 h-12 rounded-full transition-all duration-300 hover:bg-primary hover:scale-110 shadow-lg hover:shadow-xl"
+                                    title="Facebook">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+
+                                <!-- Facebook 3 -->
+                                <a href="https://www.facebook.com/share/16RnHiyyvY/?mibextid=qi2Omg" target="_blank"
+                                    class="inline-flex items-center justify-center bg-blue-600 text-white text-xl w-12 h-12 rounded-full transition-all duration-300 hover:bg-primary hover:scale-110 shadow-lg hover:shadow-xl"
+                                    title="Facebook">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+
+                                <!-- Instagram -->
+                                <a href="https://www.instagram.com/camarasdevigilanciapuebla?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                                    target="_blank"
+                                    class="inline-flex items-center justify-center bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xl w-12 h-12 rounded-full transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-xl"
+                                    title="Instagram">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Location -->
+                        <!-- <div class="bg-black/20 rounded-2xl p-6 border border-white/10">
+              <h3 class="text-2xl font-semibold text-primary mb-4 text-center">
+                <i class="fas fa-map-marker-alt mr-3"></i>
+                Ubicación
+              </h3>
+              <div class="rounded-xl overflow-hidden shadow-lg">
+                <iframe 
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.326647248547!2d-98.24589002582904!3d19.445917641307453!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85cfc02f4709bafd%3A0xc7a5aa2280f10e00!2sCalz.%20Zavaleta%201306A%20Local%2025%2C%20Sta%20Cruz%20Buenavista%2C%2072150%20Puebla%2C%20Pue.!5e0!3m2!1ses-419!2smx!4v1717784057405!5m2!1ses-419!2smx"
+                  width="100%" 
+                  height="200" 
+                  style="border:0;" 
+                  allowfullscreen="" 
+                  loading="lazy"
+                  class="rounded-xl">
+                </iframe>
+              </div>
+            </div> -->
+
+                    </div>
+
+                    <!-- Contact Form -->
+                    <div class="bg-black/20 rounded-2xl p-8 border border-white/10">
+                        <h3 class="text-2xl font-semibold text-primary mb-8 text-center">
+                            <i class="fas fa-envelope mr-3"></i>
+                            Envíanos un mensaje
+                        </h3>
+
+                        <form class="space-y-6">
+                            <div>
+                                <label for="nombre" class="block text-white font-semibold mb-2">
+                                    Nombre
+                                </label>
+                                <input type="text" id="nombre" placeholder="Tu nombre"
+                                    class="w-full px-4 py-3 bg-white/10 border-2 border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-primary focus:bg-white/20 transition-all duration-300">
+                            </div>
+
+                            <div>
+                                <label for="correo" class="block text-white font-semibold mb-2">
+                                    Correo
+                                </label>
+                                <input type="email" id="correo" placeholder="Tu correo"
+                                    class="w-full px-4 py-3 bg-white/10 border-2 border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-primary focus:bg-white/20 transition-all duration-300">
+                            </div>
+
+                            <div>
+                                <label for="mensaje" class="block text-white font-semibold mb-2">
+                                    Mensaje
+                                </label>
+                                <textarea id="mensaje" rows="4" placeholder="Escribe tu mensaje"
+                                    class="w-full px-4 py-3 bg-white/10 border-2 border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-primary focus:bg-white/20 transition-all duration-300 resize-none"></textarea>
+                            </div>
+
+                            <div class="text-center">
+                                <button type="submit"
+                                    class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-primary to-blue-500 text-white font-bold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
+                                    <i class="fas fa-paper-plane mr-2"></i>
+                                    Enviar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+
+    <%- include('../partials/footer.ejs') %>
+
+    <script src="/js/nav.js"></script>
+</body>
+
+</html>

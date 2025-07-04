@@ -65,7 +65,8 @@ class QuoterController {
 
     const id = await QuoterModel.getIdCameraParameterByName(
       parametro_nombre,
-      descripcion
+      descripcion,
+      "cameras"
     );
 
     if (!id) {
@@ -77,7 +78,8 @@ class QuoterController {
     try {
       const result = await QuoterModel.addCameraParameter(
         id,
-        cameraParameter.data
+        cameraParameter.data,
+        "camera"
       );
 
       if (!result.success) {
@@ -118,9 +120,9 @@ class QuoterController {
     try {
       const updatedCameraParameter = await QuoterModel.updateCameraParameter(
         id,
-        cameraParameter.data
+        cameraParameter.data,
+        "camera"
       );
-      console.log(updatedCameraParameter);
 
       if (!updatedCameraParameter.success) {
         return res.status(404).json({
@@ -143,7 +145,7 @@ class QuoterController {
   async deleteCameraParameter(req, res) {
     const { id } = req.params;
     try {
-      const result = await QuoterModel.deleteCameraParameter(id);
+      const result = await QuoterModel.deleteCameraParameter(id, "camera");
       if (result.affectedRows === 0) {
         return res.status(404).json({
           errorMessage: `No se encontró el parámetro con ID ${id}`,
@@ -263,6 +265,159 @@ class QuoterController {
       console.log(`Error in updateCameraParameter ${error}`);
       return res.status(500).json({
         errorMessage: `Error al actualizar el parámetro de la camara`,
+      });
+    }
+  }
+
+  async quoterFenceAdmin(req, res) {
+    try {
+      const quoterCameraData = await QuoterModel.getQuoteFenceData();
+
+      if (quoterCameraData.length === 0) {
+        return res.status(404).json({
+          message: "No se encontrarón los datos de cotización de cercado",
+        });
+      }
+
+      // Grouping the data by parametro_id
+      const groupedData = {};
+      quoterCameraData.forEach((item) => {
+        const key = item.parametro_id;
+        if (!groupedData[key]) {
+          groupedData[key] = {
+            parametro_nombre: item.parametro_nombre,
+            descripcion: item.descripcion,
+            items: [],
+          };
+        }
+        groupedData[key].items.push(item);
+      });
+
+      //Make a array
+      const groupedDataArray = Object.values(groupedData);
+
+      return res.render("admin/quoter-fences", {
+        tittle: "Datos de cotización de cámaras",
+        groupedData: groupedDataArray,
+      });
+    } catch (error) {
+      console.log(`Error in quoterCamera ${error}`);
+      throw error;
+    }
+  }
+
+  async addFenceParameter(req, res) {
+    const fenceParameter = validateQuoterParameter(req.body);
+
+    if (!fenceParameter.success) {
+      const errors = fenceParameter.error.errors.map((err) => {
+        const field = err.path.join(".");
+        return `${field}: ${err.message}`;
+      });
+
+      return res.status(400).json({
+        errorMessage: `Error en la validación de los datos \n`,
+        errors: errors || "Datos inválidos",
+      });
+    }
+    const { parametro_nombre, descripcion } = fenceParameter.data;
+
+    const id = await QuoterModel.getIdCameraParameterByName(
+      parametro_nombre,
+      descripcion,
+      "fences"
+    );
+
+    if (!id) {
+      return res.status(404).json({
+        errorMessage: `No se encontró el parámetro con el nombre ${fenceParameter.parametro_nombre} y descripción ${fenceParameter.descripcion}`,
+      });
+    }
+
+    try {
+      const result = await QuoterModel.addCameraParameter(
+        id,
+        fenceParameter.data,
+        "fence"
+      );
+
+      if (!result.success) {
+        return res.status(404).json({
+          errorMessage: result.errorMessage,
+        });
+      }
+
+      return res.status(201).json({
+        successMessage: result.successMessage,
+        affectedRows: result.affectedRows,
+      });
+    } catch (error) {
+      console.log(`Error in addCameraParameter ${error}`);
+      return res.status(500).json({
+        errorMessage: `Error al agregar el parámetro`,
+      });
+    }
+  }
+
+  async updateFenceParameter(req, res) {
+    const { id } = req.params;
+    const fenceParameter = validateQuoterCamera(req.body);
+
+    if (!fenceParameter.success) {
+      const errors = fenceParameter.error.errors.map((err) => {
+        const field = err.path.join(".");
+        return `${field}: ${err.message}`;
+      });
+
+      return res.status(400).json({
+        errorMessage: `Error en la validación de los datos \n`,
+        errors: errors || "Datos inválidos",
+      });
+    }
+
+    try {
+      const updatedFenceParameter = await QuoterModel.updateCameraParameter(
+        id,
+        fenceParameter.data,
+        "fence"
+      );
+
+      if (!updatedFenceParameter.success) {
+        return res.status(404).json({
+          errorMessage: updatedFenceParameter.errorMessage,
+        });
+      }
+
+      return res.status(200).json({
+        successMessage: updatedFenceParameter.successMessage,
+        affectedRows: updatedFenceParameter.affectedRows,
+      });
+    } catch (error) {
+      console.log(`Error in update fence parameter ${error}`);
+      return res.status(500).json({
+        errorMessage: "Error al actualizar el parametro de cercado",
+      });
+    }
+  }
+
+  async deleteFenceParameter(req, res) {
+    const { id } = req.params;
+    try {
+      const result = await QuoterModel.deleteCameraParameter(id, "fence");
+      if (result.affectedRows === 0) {
+        return res.status(404).json({
+          errorMessage: `No se encontró el parámetro con ID ${id}`,
+        });
+      }
+
+      return res.status(200).json({
+        successMessage: "Parametro eliminado correctamente",
+        affectedRows: result.affectedRows,
+      });
+    } catch (error) {
+      console.log(`Error in deleteCameraParameter ${error}`);
+      return res.status(500).json({
+        errorMessage: `Error al eliminar el parámetro del cercado`,
       });
     }
   }

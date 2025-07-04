@@ -1,0 +1,418 @@
+<%- include('../partials/head.ejs')%>
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #0d1117;
+        color: white;
+    }
+
+    /* Carrusel animations */
+    .slide {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 1s ease-in-out, visibility 1s;
+    }
+
+    .slide.active {
+        opacity: 1;
+        visibility: visible;
+        position: relative;
+        z-index: 1;
+    }
+
+    /* Hover effects */
+    .hero-image:hover {
+        transform: scale(1.5);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        z-index: 10;
+    }
+
+    .transition-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(61, 190, 255, 0.3);
+    }
+
+    @media (max-width: 768px) {
+        .hero-image:hover {
+            transform: scale(1.2);
+        }
+    }
+</style>
+
+<body>
+    <!-- Navigation -->
+    <%- include('../partials/nav-index.ejs') %>
+
+    <div class="pt-32">
+        <!-- Main Title -->
+        <h2 class="text-primary text-4xl font-semibold text-center mb-8">
+            <i class="fas fa-tools"></i> NUESTROS SERVICIOS
+        </h2>
+
+        <!-- Hero Sections -->
+        <div class="px-5 py-3 pb-12 flex justify-center items-center">
+            <div class="bg-card-bg border-2 border-border-color rounded-3xl max-w-6xl w-full p-10
+               flex flex-col lg:flex-row lg:gap-10 relative overflow-visible">
+                <div class="flex-1">
+                    <h1 class="text-4xl font-bold text-primary text-center lg:text-left">POLIZA DE MANTENIMIENTO</h1>
+                    <p class="text-lg mt-5 text-white text-justify">
+                        Una póliza de servicio y mantenimiento es una forma de asegurar el funcionamiento adecuado de su
+                        equipo de cómputo, previniendo problemas y así garantizando el buen funcionamiento y reparación
+                        de forma inmediata y profesional de cualquier tipo de falla.
+                    </p>
+                </div>
+                <div class="flex-shrink-0 w-full mt-8 lg:mt-0 lg:w-80 overflow-visible relative"> <img
+                        src="img/OIP.jpeg" alt="Mantenimiento de equipo"
+                        class="w-full rounded-2xl transition-all duration-500 hero-image mx-auto lg:mx-0"> </div>
+            </div>
+        </div>
+
+        <div class="px-5 pb-12 flex justify-center items-center">
+            <div class="bg-card-bg border-2 border-border-color rounded-3xl max-w-6xl w-full p-10
+               flex flex-col lg:flex-row-reverse lg:gap-10 relative overflow-visible">
+                <div class="flex-1">
+                    <h1 class="text-4xl font-bold text-primary text-center lg:text-left">CABLEADO ESTRUCTURADO</h1>
+                    <p class="text-lg mt-5 text-white text-justify">
+                        Servicio de Instalación de Redes de cable o inalámbricas en organizaciones públicas y privadas
+                        como instituciones educativas, casinos, dependencias gubernamentales, etc.
+                    </p>
+                </div>
+                <div class="flex-shrink-0 w-full mt-8 lg:mt-0 lg:w-80 overflow-visible relative"> <img
+                        src="img/cabelado.jpg" alt="Cableado estructurado"
+                        class="w-full rounded-2xl transition-all duration-500 hero-image mx-auto lg:mx-0"> </div>
+            </div>
+        </div>
+
+        <div class="px-5 pb-12 flex justify-center items-center">
+            <div class="bg-card-bg border-2 border-border-color rounded-3xl max-w-6xl w-full p-10
+               flex flex-col lg:flex-row lg:gap-10 relative overflow-visible">
+                <div class="flex-1">
+                    <h1 class="text-4xl font-bold text-primary text-center lg:text-left">SOPORTE TÉCNICO A EQUIPOS DE
+                        CÓMPUTO</h1>
+                    <p class="text-lg mt-5 text-white text-justify">
+                        Soporte Técnico a equipos de cómputo es el servicio que se encarga de ayudar, diagnosticar,
+                        reparar y mantener computadoras y sus componentes, tanto de hardware como de software, para
+                        asegurar que funcionen correctamente y resolver cualquier problema que puedan presentar los
+                        usuarios.
+                    </p>
+                </div>
+                <div class="flex-shrink-0 w-full mt-8 lg:mt-0 lg:w-80 overflow-visible relative"> <img
+                        src="https://img.freepik.com/fotos-premium/vergroessern-sie-die-einzelheiten-eines-verbindungstechnikers-fi-ad-dc-ee-ff-d-b-e-jpg_1072167-4144.jpg"
+                        alt="Soporte técnico"
+                        class="w-full rounded-2xl transition-all duration-500 hero-image mx-auto lg:mx-0"> </div>
+            </div>
+        </div>
+
+        <!-- First Carousel -->
+        <section class="max-w-7xl w-full mx-auto text-center px-4 mb-8">
+            <div class="slider relative overflow-hidden w-full max-h-96">
+                <div class="slide active">
+                    <img src="https://camarasdevigilanciaip.es/wp-content/uploads/2023/10/los-mejores-videoporteros-para-comunidades.jpg"
+                        alt="Video porteros" class="w-full h-auto max-h-96 object-cover rounded-lg">
+                    <div class="bg-black bg-opacity-60 text-white p-4 text-lg absolute bottom-0 w-full box-border">
+                        <h3 class="text-xl font-bold">Video porteros</h3>
+                        <p>Instalacion de video porteros.</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="https://th.bing.com/th/id/OIP.A_GAqadw-Bu_jVr2e7bADgHaDL?w=1284&h=550&rs=1&pid=ImgDetMain"
+                        alt="Alarmas inalámbricas" class="w-full h-auto max-h-96 object-cover rounded-lg">
+                    <div class="bg-black bg-opacity-60 text-white p-4 text-lg absolute bottom-0 w-full box-border">
+                        <h3 class="text-xl font-bold">Alarmas inalambricas</h3>
+                        <p>Instalacion de Alarmas.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="py-12">
+            <div class="container mx-auto px-4">
+                <h2 class="text-center mb-12 font-bold text-4xl text-primary">MANTENIMIENTOS Y SOPORTE EMPRESARIAL</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                    <div
+                        class="transition-card border-2 border-border-color bg-card-bg text-white rounded-2xl overflow-hidden h-full">
+                        <img src="https://thumbs.dreamstime.com/b/el-t%C3%A9cnico-sostiene-destornillador-para-reparar-ordenador-en-su-mano-hardware-servicio-mejora-y-tecnolog%C3%ADa-reparando-concepto-146946583.jpg"
+                            class="w-full h-56 object-cover" alt="Mantenimiento Preventivo">
+                        <div class="p-6">
+                            <h5 class="font-bold text-center mb-3 text-white">🛡️ Mantenimiento Preventivo</h5>
+                            <ul class="space-y-2 text-white">
+                                <li
+                                    class="relative pl-5 before:content-['✓'] before:absolute before:left-0 before:text-blue-400 before:font-bold">
+                                    Actualizaciones del sistema operativo de alta prioridad</li>
+                                <li
+                                    class="relative pl-5 before:content-['✓'] before:absolute before:left-0 before:text-blue-400 before:font-bold">
+                                    Actualización de antivirus, firewall, antispyware</li>
+                                <li
+                                    class="relative pl-5 before:content-['✓'] before:absolute before:left-0 before:text-blue-400 before:font-bold">
+                                    Instalación de software para videoconferencias</li>
+                                <li
+                                    class="relative pl-5 before:content-['✓'] before:absolute before:left-0 before:text-blue-400 before:font-bold">
+                                    Conexión de escáneres e impresoras</li>
+                                <li
+                                    class="relative pl-5 before:content-['✓'] before:absolute before:left-0 before:text-blue-400 before:font-bold">
+                                    Recuperación de datos y copias de seguridad</li>
+                                <li
+                                    class="relative pl-5 before:content-['✓'] before:absolute before:left-0 before:text-blue-400 before:font-bold">
+                                    Mejoras de velocidad de Internet</li>
+                                <li
+                                    class="relative pl-5 before:content-['✓'] before:absolute before:left-0 before:text-blue-400 before:font-bold">
+                                    Ampliación del PC</li>
+                                <li
+                                    class="relative pl-5 before:content-['✓'] before:absolute before:left-0 before:text-blue-400 before:font-bold">
+                                    Configuración de dispositivos móviles</li>
+                                <li
+                                    class="relative pl-5 before:content-['✓'] before:absolute before:left-0 before:text-blue-400 before:font-bold">
+                                    Limpieza interna y externa de los equipos</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div
+                        class="transition-card border-2 border-border-color bg-card-bg text-white rounded-2xl overflow-hidden h-full">
+                        <img src="https://mantenimiento.win/wp-content/uploads/2018/10/mantenimiento-sistematico-3.jpg"
+                            class="w-full h-56 object-cover" alt="Mantenimiento Correctivo">
+                        <div class="p-6">
+                            <h5 class="font-bold text-center mb-3 text-white">🛠️ Mantenimiento Correctivo</h5>
+                            <ul class="space-y-2 text-white">
+                                <li
+                                    class="relative pl-5 before:content-['✓'] before:absolute before:left-0 before:text-blue-400 before:font-bold">
+                                    Reinstalación de sistemas operativos y software</li>
+                                <li
+                                    class="relative pl-5 before:content-['✓'] before:absolute before:left-0 before:text-blue-400 before:font-bold">
+                                    Asesoría en compra e instalación de partes dañadas</li>
+                                <li
+                                    class="relative pl-5 before:content-['✓'] before:absolute before:left-0 before:text-blue-400 before:font-bold">
+                                    Eliminación de virus, spyware, adware y malware</li>
+                                <li
+                                    class="relative pl-5 before:content-['✓'] before:absolute before:left-0 before:text-blue-400 before:font-bold">
+                                    Corrección de problemas físicos en hardware</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div
+                        class="transition-card border-2 border-border-color bg-card-bg text-white rounded-2xl overflow-hidden h-full">
+                        <img src="https://www.expertos-oracle-apex.com/wp-content/uploads/2016/09/soporte.jpg"
+                            class="w-full h-56 object-cover" alt="Soporte Empresarial y Seguridad">
+                        <div class="p-6">
+                            <h5 class="font-bold text-center mb-3 text-white">🔐 Soporte Empresarial y Seguridad</h5>
+                            <ul class="space-y-2 text-white">
+                                <li
+                                    class="relative pl-5 before:content-['✓'] before:absolute before:left-0 before:text-blue-400 before:font-bold">
+                                    Estructura lógica de red</li>
+                                <li
+                                    class="relative pl-5 before:content-['✓'] before:absolute before:left-0 before:text-blue-400 before:font-bold">
+                                    Configuración de servidores</li>
+                                <li
+                                    class="relative pl-5 before:content-['✓'] before:absolute before:left-0 before:text-blue-400 before:font-bold">
+                                    Instalación de programas críticos</li>
+                                <li
+                                    class="relative pl-5 before:content-['✓'] before:absolute before:left-0 before:text-blue-400 before:font-bold">
+                                    Respaldos de información crítica</li>
+                                <li
+                                    class="relative pl-5 before:content-['✓'] before:absolute before:left-0 before:text-blue-400 before:font-bold">
+                                    Evaluación de riesgos de seguridad</li>
+                                <li
+                                    class="relative pl-5 before:content-['✓'] before:absolute before:left-0 before:text-blue-400 before:font-bold">
+                                    Compra de servidores y equipos</li>
+                                <li
+                                    class="relative pl-5 before:content-['✓'] before:absolute before:left-0 before:text-blue-400 before:font-bold">
+                                    Apoyo a usuarios</li>
+                                <li
+                                    class="relative pl-5 before:content-['✓'] before:absolute before:left-0 before:text-blue-400 before:font-bold">
+                                    Implementación de políticas de seguridad</li>
+                                <li
+                                    class="relative pl-5 before:content-['✓'] before:absolute before:left-0 before:text-blue-400 before:font-bold">
+                                    Seguridad perimetral</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Second Carousel -->
+        <section class="max-w-7xl w-full mx-auto text-center px-4 mb-8">
+            <div class="slider relative overflow-hidden w-full max-h-96">
+                <div class="slide active">
+                    <img src="https://th.bing.com/th/id/R.4b8cf43b507241fe5623bb8d82592346?rik=RRK3bGVTDS6vDQ&riu=http%3a%2f%2fwww.cast.mx%2fExcelltel%2fimagenes%2fExcelltel-desde-1999-crea-y-fabrica-Conmutadores-Profesionales-PBX-de-alta-calidad-y-tecnologia-de-Baja-Media-Alta-y-Muy-Alta-Capacidad.jpg&ehk=kyyra%2fcfuV8jjwMR0upM1NbVTIhR66a5C2VyEPgMn8Y%3d&risl=&pid=ImgRaw&r=0"
+                        alt="Conmutadores" class="w-full h-auto max-h-96 object-cover rounded-lg">
+                    <div class="bg-black bg-opacity-60 text-white p-4 text-lg absolute bottom-0 w-full box-border">
+                        <h3 class="text-xl font-bold">Conmutadores</h3>
+                        <p>Servicio de Instalación y configuración de conmutadores telefónicos.</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="https://mopecsecurity.com/wp-content/uploads/2023/06/Sensores_MopecSecurity1-1024x578.jpg"
+                        alt="Sistema de seguridad" class="w-full h-auto max-h-96 object-cover rounded-lg">
+                    <div class="bg-black bg-opacity-60 text-white p-4 text-lg absolute bottom-0 w-full box-border">
+                        <h3 class="text-xl font-bold">Sistema de seguridad</h3>
+                        <p>Instalación, configuración, reparación y mantenimiento de cámaras de seguridad alámbricas e
+                            inalámbricas. Configuración para acceso vía internet.</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="https://uta.pressbooks.pub/app/uploads/sites/67/2022/10/Neemekh-Mudvari-APC-Operator-1024x629.jpg"
+                        alt="Asistencia Técnica a distancia" class="w-full h-auto max-h-96 object-cover rounded-lg">
+                    <div class="bg-black bg-opacity-60 text-white p-4 text-lg absolute bottom-0 w-full box-border">
+                        <h3 class="text-xl font-bold">Asistencia Técnica a distancia</h3>
+                        <p>Cuando el cliente lo requiera estamos en capacidad de ofrecer asistencia remota, para dar
+                            solución de manera inmediata a los inconvenientes técnicos que se presenten.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Equipment Section -->
+        <section class="text-white py-16">
+            <div class="container mx-auto px-4">
+                <h2 class="text-center mb-10 text-primary font-bold text-4xl">VENTA DE EQUIPO DE CÓMPUTO Y ACCESORIOS
+                </h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+
+                    <div class="product-card bg-card-bg border-2 border-blue-900 rounded-xl text-center p-8 h-full">
+                        <img src="https://s3images.coroflot.com/user_files/individual_files/large_82280_axgnwyovihre8hnkwiqachyj7.jpg"
+                            alt="Equipos de escritorio" class="w-full h-auto mb-5 rounded-lg">
+                        <h5 class="text-lg mb-2 text-white">Equipos de escritorio</h5>
+                    </div>
+
+                    <div class="product-card bg-card-bg border-2 border-blue-900 rounded-xl text-center p-8 h-full">
+                        <img src="https://cdn.mos.cms.futurecdn.net/gnG2Z6pK7CTBJmw4pRUy8i.jpg" alt="Laptops"
+                            class="w-full h-auto mb-5 rounded-lg">
+                        <h5 class="text-lg mb-2 text-white">Laptops</h5>
+                    </div>
+
+                    <div class="product-card bg-card-bg border-2 border-blue-900 rounded-xl text-center p-8 h-full">
+                        <img src="https://th.bing.com/th/id/R.b69339d7fc6fd05bdb019a5e0fda8bab?rik=uM2A0HmYpq0woQ&pid=ImgRaw&r=0"
+                            alt="Tablets" class="w-full h-auto mb-5 rounded-lg">
+                        <h5 class="text-lg mb-2 text-white">Tablets</h5>
+                    </div>
+
+                    <div class="product-card bg-card-bg border-2 border-blue-900 rounded-xl text-center p-8 h-full">
+                        <img src="https://concepto.de/wp-content/uploads/2019/05/servidor-e1557165670831.jpg"
+                            alt="Servidores" class="w-full h-auto mb-5 rounded-lg">
+                        <h5 class="text-lg mb-2 text-white">Servidores</h5>
+                    </div>
+
+                    <div class="product-card bg-card-bg border-2 border-blue-900 rounded-xl text-center p-8 h-full">
+                        <img src="https://www.geekgt.com/wp-content/uploads/2016/03/Epson-L375.jpg" alt="Impresoras"
+                            class="w-full h-auto mb-5 rounded-lg">
+                        <h5 class="text-lg mb-2 text-white">Impresoras</h5>
+                    </div>
+
+                    <div class="product-card bg-card-bg border-2 border-blue-900 rounded-xl text-center p-8 h-full">
+                        <img src="https://th.bing.com/th/id/OIP.VRq_Js-vY2HxJcx31OcFHQHaC0?cb=iwp2&rs=1&pid=ImgDetMain"
+                            alt="Grabadores de video" class="w-full h-auto mb-5 rounded-lg">
+                        <h5 class="text-lg mb-2 text-white">Grabadores de video</h5>
+                    </div>
+
+                    <div class="product-card bg-card-bg border-2 border-blue-900 rounded-xl text-center p-8 h-full">
+                        <img src="https://chudo71.ru/wp-content/uploads/2020/11/cifrovye-chudesa-chernila-raznyh-firm.jpeg"
+                            alt="Consumibles" class="w-full h-auto mb-5 rounded-lg">
+                        <h5 class="text-lg mb-2 text-white">Consumibles</h5>
+                    </div>
+
+                    <div class="product-card bg-card-bg border-2 border-blue-900 rounded-xl text-center p-8 h-full">
+                        <img src="https://www.shutterstock.com/shutterstock/videos/1057234303/thumb/1.jpg?ip=x480"
+                            alt="Switches" class="w-full h-auto mb-5 rounded-lg">
+                        <h5 class="text-lg mb-2 text-white">Switches</h5>
+                    </div>
+
+                    <div class="product-card bg-card-bg border-2 border-blue-900 rounded-xl text-center p-8 h-full">
+                        <img src="https://via.placeholder.com/150x150.png?text=Producto+2" alt="Access point"
+                            class="w-full h-auto mb-5 rounded-lg">
+                        <h5 class="text-lg mb-2 text-white">Access point</h5>
+                    </div>
+
+                    <div class="product-card bg-card-bg border-2 border-blue-900 rounded-xl text-center p-8 h-full">
+                        <img src="https://www.farazit.com/wp-content/uploads/2021/08/Types-network-design-1.jpg"
+                            alt="Racks" class="w-full h-auto mb-5 rounded-lg">
+                        <h5 class="text-lg mb-2 text-white">Racks</h5>
+                    </div>
+
+                    <div class="product-card bg-card-bg border-2 border-blue-900 rounded-xl text-center p-8 h-full">
+                        <img src="https://th.bing.com/th/id/OIP.AhmKUh3sgdP9gzD7vdOPHgAAAA?cb=iwp2&rs=1&pid=ImgDetMain"
+                            alt="Discos duros" class="w-full h-auto mb-5 rounded-lg">
+                        <h5 class="text-lg mb-2 text-white">Discos duros</h5>
+                    </div>
+
+                    <div class="product-card bg-card-bg border-2 border-blue-900 rounded-xl text-center p-8 h-full">
+                        <img src="https://quecomparacion.com/wp-content/uploads/los-10-mejores-proyectores.jpg"
+                            alt="Proyectores" class="w-full h-auto mb-5 rounded-lg">
+                        <h5 class="text-lg mb-2 text-white">Proyectores</h5>
+                    </div>
+
+                    <div class="product-card bg-card-bg border-2 border-blue-900 rounded-xl text-center p-8 h-full">
+                        <img src="https://i.ytimg.com/vi/XvtVTKJf9b0/maxresdefault.jpg"
+                            alt="Checadores con huella digital" class="w-full h-auto mb-5 rounded-lg">
+                        <h5 class="text-lg mb-2 text-white">Checadores con huella digital</h5>
+                    </div>
+
+                    <div class="product-card bg-card-bg border-2 border-blue-900 rounded-xl text-center p-8 h-full">
+                        <img src="https://net2.com/wp-content/uploads/2020/12/gps.jpg" alt="Gps"
+                            class="w-full h-auto mb-5 rounded-lg">
+                        <h5 class="text-lg mb-2 text-white">Gps</h5>
+                    </div>
+
+                    <div class="product-card bg-card-bg border-2 border-blue-900 rounded-xl text-center p-8 h-full">
+                        <img src="https://asusteknikservisim.com/wp-content/uploads/2023/01/asus-monitor-tamiri-nasil-yapilir.jpg"
+                            alt="Pantallas" class="w-full h-auto mb-5 rounded-lg">
+                        <h5 class="text-lg mb-2 text-white">Pantallas</h5>
+                    </div>
+
+                    <div class="product-card bg-card-bg border-2 border-blue-900 rounded-xl text-center p-8 h-full">
+                        <img src="https://mediaserver.goepson.com/ImConvServlet/imconv/886c22383dafe90624814e11bd1e9ed4d64991e7/1200Wx1200H?use=banner&assetDescr=DS-1630_01"
+                            alt="Escáner" class="w-full h-auto mb-5 rounded-lg">
+                        <h5 class="text-lg mb-2 text-white">Escáner</h5>
+                    </div>
+
+                    <div class="product-card bg-card-bg border-2 border-blue-900 rounded-xl text-center p-8 h-full">
+                        <img src="https://www.islabit.com/wp-content/uploads/2018/08/Conmutadores-4-1024x576.jpg"
+                            alt="Conmutadores" class="w-full h-auto mb-5 rounded-lg">
+                        <h5 class="text-lg mb-2 text-white">Conmutadores</h5>
+                    </div>
+
+                    <div class="product-card bg-card-bg border-2 border-blue-900 rounded-xl text-center p-8 h-full">
+                        <img src="https://unicobc.com.mx/wp-content/uploads/2021/11/248329409_1170302280163638_2896906152741364900_n.jpg"
+                            alt="Cámaras" class="w-full h-auto mb-5 rounded-lg">
+                        <h5 class="text-lg mb-2 text-white">Cámaras</h5>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <%- include('../partials/footer.ejs') %>
+    </div>
+
+    <script>
+        // Carrusel animations
+        document.querySelectorAll('.slider').forEach(slider => {
+            const slides = slider.querySelectorAll('.slide');
+            let current = 0;
+
+            function showNextSlide() {
+                slides[current].classList.remove('active');
+                current = (current + 1) % slides.length;
+                slides[current].classList.add('active');
+            }
+
+            setInterval(showNextSlide, 3000);
+        });
+    </script>
+    <script src="/js/nav.js"></script>
+</body>
+
+</html>

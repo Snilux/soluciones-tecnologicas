@@ -1,0 +1,478 @@
+<%- include('../partials/head.ejs') %>
+
+
+
+<body class="min-h-screen bg-dark-bg flex flex-col items-center justify-center p-4 md:p-8">
+
+    <%- include('../partials/nav-index.ejs') %>
+
+    <div class="w-full max-w-4xl mx-auto">
+
+        <div class="flex justify-between mb-4">
+            <a href="/camaras"
+                class="inline-flex items-center px-3 py-1 border border-blue-500 rounded text-sm text-blue-500 hover:bg-blue-800 hover:text-stone-50 transition-colors">
+                <i class="ri-camera-line text-sm mr-2"></i>
+                Cámaras
+            </a>
+            <a href="/admin/quoters/fences"
+                class="inline-flex items-center px-3 py-1 border border-teal-500 rounded text-sm text-teal-500 hover:bg-teal-800 hover:text-stone-50 transition-colors">
+                <i class="ri-settings-3-line mr-2"></i>
+                Panel Admin
+            </a>
+        </div>
+
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-amber-800 mb-2">Cotizador de Cercas Eléctricas</h1>
+            <p class="text-amber-600">Configura y obtén un presupuesto instantáneo para tu cerca eléctrica</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Formulario de Cotización -->
+            <div class="md:col-span-2">
+                <div class="bg-white rounded-lg shadow-lg border-0 overflow-hidden">
+                    <!-- Header -->
+                    <div class="bg-gradient-to-r from-amber-500 to-slate-500 text-white p-6 rounded-t-lg">
+                        <div class="flex items-center gap-2 text-xl font-bold">
+                            <span class="bg-white text-amber-500 p-1 rounded-full flex items-center justify-center">
+                                <i class="ri-flashlight-line text-sm"></i>
+                            </span>
+                            Configura tu Cerca Eléctrica
+                        </div>
+                        <p class="text-amber-50 text-sm mt-1">
+                            Elige las especificaciones que mejor se adapten a tus necesidades de seguridad
+                        </p>
+                    </div>
+
+                    <!-- Contenido -->
+                    <div class="p-6">
+                        <div class="space-y-5">
+                            <h3 class="text-xl font-semibold text-slate-800 mb-4 flex items-center gap-2">
+                                <i class="ri-flashlight-line text-amber-500"></i>
+                                Cercado Eléctrico
+                            </h3>
+                            <hr class="my-4 border-gray-200">
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <!-- Cantidad de bardas -->
+
+
+                                <% cameraData.forEach((group, index) => {%>
+                                <%if(!(group.parametro_nombre === 'Precio base del cercado')) {%>
+                                <div>
+                                    <label for="cantidadBardas" class="text-sm font-medium mb-1.5 block">
+                                        <%= group.descripcion %>
+                                    </label>
+                                    <select d="param_<%= index %>" data-param="<%= group.parametro_nombre %>"
+                                        data-param-id="<%= group.parametro_id %>"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                                        <option value="">Selecciona una opción</option>
+                                        <%group.items.forEach(item => {%>
+                                        <option value="<%= item.valor %>" data-precio="<%= item.precio || 0 %>"
+                                            data-factor="<%= item.factor || 1 %>">
+                                            <%= item.valor %>
+                                        </option>
+                                        <%})%>
+                                    </select>
+                                </div>
+                                <%} %>
+                                <%}) %>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resumen y Precio -->
+            <div class="md:col-span-1">
+                <div class="bg-white rounded-lg shadow-lg border-0 h-full flex flex-col">
+                    <!-- Header -->
+                    <div class="bg-gradient-to-r from-slate-700 to-slate-800 text-white p-6 rounded-t-lg">
+                        <h3 class="text-lg font-bold">Estimado</h3>
+                        <p class="text-slate-300 text-sm">Resumen de tu cotización</p>
+                    </div>
+
+                    <!-- Contenido -->
+                    <div class="p-6 flex-grow flex flex-col">
+                        <div class="bg-slate-50 rounded-lg p-4 mb-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm text-slate-500">Servicio:</span>
+                                <span class="text-xs px-2 py-1 rounded-full border border-slate-200 font-medium">
+                                    Cerca Eléctrica
+                                </span>
+                            </div>
+
+                            <div id="resumenCercas">
+                                <!-- Resumen dinámico se generará aquí -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="p-6 pt-0 flex flex-col gap-2">
+                        <!-- <button id="btnContactar"
+                            class="w-full bg-amber-600 hover:bg-amber-700 text-white py-2 px-4 rounded-md flex items-center justify-center transition-colors">
+                            <i class="ri-phone-line mr-2"></i> Contactar
+                        </button> -->
+                        <button id="btnContactarDatos"
+                            class="w-full bg-amber-600 hover:bg-amber-700 text-white py-2 px-4 rounded-md flex items-center justify-center transition-colors">
+                            <i class="ri-mail-line mr-2"></i> Realizar Cotización
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include('../partials/modals/modal-quoter-fences.ejs') %>
+    <!-- Modal HTML -->
+
+
+    <script>
+        // Función para limpiar el resumen al cargar la página
+        const cotizadorSelects = document.querySelectorAll('select[data-param]');
+        const resumenCercas = document.getElementById('resumenCercas');
+        const btnContactarDatos = document.getElementById('btnContactarDatos');
+
+        const cotizacionActual = {};
+
+        function actualizarCotizacion() {
+            let formularioCompleto = true;
+            resumenCercas.innerHTML = '';
+
+            cotizadorSelects.forEach(select => {
+                const parametro = select.dataset.param;
+                const selectedOption = select.options[select.selectedIndex];
+
+                const valor = selectedOption?.value || '';
+                const precio = parseFloat(selectedOption?.dataset.precio || 0);
+
+                if (!valor) formularioCompleto = false;
+
+                // Guarda objeto con valor, precio y factor
+                cotizacionActual[parametro] = { valor, precio };
+
+                // Muestra resumen
+                if (valor) {
+                    const item = document.createElement('div');
+                    item.className = 'flex items-center justify-between mb-2';
+                    item.innerHTML = `
+            <span class="text-sm text-slate-500">${parametro}:</span>
+            <span class="text-xs px-2 py-1 rounded-full border border-slate-200 font-medium">
+              ${valor}
+            </span>`;
+                    resumenCercas.appendChild(item);
+                }
+            });
+
+            btnContactarDatos.disabled = !formularioCompleto;
+        }
+
+        cotizadorSelects.forEach(select =>
+            select.addEventListener('change', actualizarCotizacion)
+        );
+
+
+        // Variables del modal
+        const modalCotizacion = document.getElementById('modalCotizacion');
+        const cerrarModal = document.getElementById('cerrarModal');
+        const btnNoEsLoQueBuscas = document.getElementById('btnNoEsLoQueBuscas');
+
+
+
+        function llenarDatosModalConAPI(apiResponse) {
+            // Verificar que el modal esté visible antes de llenar datos
+            if (modalCotizacion.classList.contains('hidden')) {
+                return;
+            }
+
+            // Obtener el precio total de la API
+            const precioTotal = parseFloat(apiResponse["Precio estimado"]);
+            const resumenPrecios = apiResponse["Resumen de precios"];
+
+            // Función helper para actualizar elemento de forma segura
+            function actualizarElemento(id, valor) {
+                const elemento = document.getElementById(id);
+                if (elemento) {
+                    elemento.textContent = valor;
+                } else {
+                    console.warn(`Elemento con ID '${id}' no encontrado`);
+                }
+            }
+
+            // Actualizar precios principales de forma segura
+            actualizarElemento('precioTotal', `$${precioTotal.toLocaleString('es-MX')}.00 MXN`);
+            actualizarElemento('totalFinal', `$${precioTotal.toLocaleString('es-MX')}.00 MXN`);
+
+            // Llenar datos específicos del modal según la cotización actual
+            Object.keys(cotizacionActual).forEach(parametro => {
+                const datos = cotizacionActual[parametro];
+                if (datos.valor) {
+                    // Actualizar elementos específicos del modal
+                    switch (parametro) {
+                        case 'Altura de la cerca':
+                        case 'Altura de instalacion':
+                            actualizarElemento('modalAltura', datos.valor + 'm');
+                            actualizarElemento('iconAltura', `Altura ${datos.valor}m`);
+                            break;
+                        case 'Cantidad de bardas':
+                        case 'Numero de bardas':
+                            actualizarElemento('modalBardas', datos.valor);
+                            break;
+                        case 'Metros lineales':
+                        case 'Distancia lineal':
+                            actualizarElemento('modalMetros', datos.valor);
+                            actualizarElemento('iconMetros', datos.valor);
+                            break;
+                        case 'Contacto con alarma':
+                        case 'Contacto cercano':
+                            actualizarElemento('iconContacto', datos.valor === 'Si' ? 'Con alarma' : 'Sin alarma');
+                            break;
+                        case 'Control remoto':
+                            actualizarElemento('modalControl', datos.valor);
+                            actualizarElemento('iconControlRemoto', datos.valor === 'Si' ? 'Con control' : 'Sin control');
+                            break;
+                    }
+                }
+            });
+
+            // Actualizar desglose con los datos de la API
+            const desgloseContainer = document.getElementById('desglosePrecio');
+            if (!desgloseContainer) {
+                console.warn('Contenedor de desglose no encontrado');
+                return;
+            }
+
+            desgloseContainer.innerHTML = '';
+
+            // Mapear los nombres de la API a nombres más amigables
+            const nombresMapeados = {
+                "Costo Base Inicial": "Costo Base de Cerca Eléctrica",
+                "Costo por Altura de Barda": "Costo por Altura",
+                "Costo por Numero de Bardas": "Costo por Número de Bardas",
+                "Costo por Metros Lineales Adicionales": "Costo por Metros Lineales",
+                "Costo por Falta de Contacto Eléctrico": "Costo por Contacto con Alarma",
+                "Costo por Control Remoto": "Costo por Control Remoto"
+            };
+
+            // Crear elementos del desglose
+            Object.keys(resumenPrecios).forEach(concepto => {
+                const precio = parseFloat(resumenPrecios[concepto]);
+                const nombreAmigable = nombresMapeados[concepto] || concepto;
+
+                const div = document.createElement('div');
+                div.className = 'flex justify-between text-sm';
+                div.innerHTML = `
+            <span class="text-gray-600">${nombreAmigable}:</span>
+            <span class="font-medium">$${precio.toLocaleString('es-MX')}.00</span>
+        `;
+                desgloseContainer.appendChild(div);
+            });
+
+            // Agregar línea y total
+            const totalDiv = document.createElement('div');
+            totalDiv.innerHTML = `
+        <hr class="my-2">
+        <div class="flex justify-between font-bold text-lg">
+            <span>Total:</span>
+            <span class="text-blue-600">$${precioTotal.toLocaleString('es-MX')}.00 MXN</span>
+        </div>
+    `;
+            desgloseContainer.appendChild(totalDiv);
+
+            // Actualizar resumen del proyecto con los datos actuales
+            const altura = cotizacionActual['Altura de instalacion']?.valor || cotizacionActual['Altura de la cerca']?.valor || '2';
+            const bardas = cotizacionActual['Numero de bardas']?.valor || cotizacionActual['Cantidad de bardas']?.valor || '1';
+            const metros = cotizacionActual['Distancia lineal']?.valor || cotizacionActual['Metros lineales']?.valor || '0-10';
+
+            const resumenProyecto = document.getElementById('resumenProyecto');
+            if (resumenProyecto) {
+                resumenProyecto.innerHTML = `
+            Sistema de cerca eléctrica profesional con <span class="font-semibold">${bardas} bardas</span> 
+            para instalación de <span class="font-semibold">${metros} metros</span>. 
+            Incluye energizador de alta potencia y altura de <span class="font-semibold">${altura}m</span>.
+        `;
+            }
+        }
+
+        // Función para cerrar el modal
+        function cerrarModalCotizacion() {
+            modalCotizacion.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+
+            // Limpiar cualquier estado de loading del botón
+            if (btnContactarDatos) {
+                btnContactarDatos.disabled = false;
+                btnContactarDatos.innerHTML = '<i class="ri-mail-line mr-2"></i> Realizar Cotización';
+            }
+        }
+
+        // Función para llenar los datos del modal
+        function llenarDatosModal() {
+            // Precio base
+            let precioTotal = 3000; // Precio base
+            let desglose = [];
+
+            // Agregar precio base al desglose
+            desglose.push({
+                concepto: 'Costo Base de Cerca Eléctrica',
+                precio: 3000
+            });
+
+            // Llenar datos según la cotización actual
+            Object.keys(cotizacionActual).forEach(parametro => {
+                const datos = cotizacionActual[parametro];
+                if (datos.valor) {
+                    precioTotal += datos.precio;
+
+                    // Agregar al desglose si tiene precio
+                    if (datos.precio > 0) {
+                        desglose.push({
+                            concepto: `${parametro} (${datos.valor})`,
+                            precio: datos.precio
+                        });
+                    }
+
+                    // Actualizar elementos específicos del modal
+                    switch (parametro) {
+                        case 'Altura de la cerca':
+                            document.getElementById('modalAltura').textContent = datos.valor;
+                            document.getElementById('iconAltura').textContent = `Altura ${datos.valor}`;
+                            break;
+                        case 'Cantidad de bardas':
+                            document.getElementById('modalBardas').textContent = datos.valor;
+                            break;
+                        case 'Metros lineales':
+                            document.getElementById('modalMetros').textContent = datos.valor;
+                            document.getElementById('iconMetros').textContent = datos.valor;
+                            break;
+                        case 'Contacto con alarma':
+                            document.getElementById('iconContacto').textContent = datos.valor === 'Sí' ? 'Con alarma' : 'Sin alarma';
+                            break;
+                        case 'Control remoto':
+                            document.getElementById('modalControl').textContent = datos.valor;
+                            document.getElementById('iconControlRemoto').textContent = datos.valor === 'Sí' ? 'Con control' : 'Sin control';
+                            break;
+                    }
+                }
+            });
+
+            // Actualizar precios
+            document.getElementById('precioTotal').textContent = `$${precioTotal.toLocaleString('es-MX')}.00 MXN`;
+            document.getElementById('totalFinal').textContent = `$${precioTotal.toLocaleString('es-MX')}.00 MXN`;
+
+            // Actualizar desglose
+            const desgloseContainer = document.getElementById('desglosePrecio');
+            desgloseContainer.innerHTML = '';
+
+            desglose.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'flex justify-between text-sm';
+                div.innerHTML = `
+            <span class="text-gray-600">${item.concepto}:</span>
+            <span class="font-medium">$${item.precio.toLocaleString('es-MX')}.00</span>
+        `;
+                desgloseContainer.appendChild(div);
+            });
+
+            // Agregar línea y total
+            desgloseContainer.innerHTML += `
+        <hr class="my-2">
+        <div class="flex justify-between font-bold text-lg">
+            <span>Total:</span>
+            <span class="text-blue-600">$${precioTotal.toLocaleString('es-MX')}.00 MXN</span>
+        </div>
+    `;
+
+            // Actualizar resumen del proyecto
+            const altura = cotizacionActual['Altura de la cerca']?.valor || '2m';
+            const bardas = cotizacionActual['Cantidad de bardas']?.valor || '1';
+            const metros = cotizacionActual['Metros lineales']?.valor || '0-10mts';
+
+            document.getElementById('resumenProyecto').innerHTML = `
+        Sistema de cerca eléctrica profesional con <span class="font-semibold">${bardas} bardas</span> 
+        para instalación de <span class="font-semibold">${metros}</span>. 
+        Incluye energizador de alta potencia y altura de <span class="font-semibold">${altura}</span>.
+    `;
+        }
+
+        // Event listeners
+        cerrarModal.addEventListener('click', cerrarModalCotizacion);
+        btnNoEsLoQueBuscas.addEventListener('click', cerrarModalCotizacion);
+
+        // Cerrar modal al hacer click fuera de él
+        modalCotizacion.addEventListener('click', function (e) {
+            if (e.target === modalCotizacion) {
+                cerrarModalCotizacion();
+            }
+        });
+
+        // Modificar el event listener del botón "Realizar Cotización"
+        btnContactarDatos.addEventListener('click', function () {
+            if (!btnContactarDatos.disabled) {
+                abrirModalCotizacion();
+            }
+        });
+
+        // Función para abrir el modal y llenar los datos
+        async function abrirModalCotizacion() {
+            // Verificar que todos los elementos necesarios existan
+            if (!modalCotizacion || !btnContactarDatos) {
+                console.error('Elementos del modal no encontrados');
+                return;
+            }
+
+            console.log(JSON.stringify(cotizacionActual));
+
+            // Mostrar loading en el botón
+            const originalText = btnContactarDatos.innerHTML;
+            btnContactarDatos.innerHTML = '<i class="ri-loader-4-line animate-spin mr-2"></i> Calculando...';
+            btnContactarDatos.disabled = true;
+
+            try {
+                const response = await fetch('/cercas', {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(cotizacionActual),
+                });
+
+                const result = await response.json();
+                console.log('Respuesta API:', result);
+
+                if (response.ok) {
+                    // Mostrar el modal primero
+                    modalCotizacion.classList.remove('hidden');
+                    document.body.style.overflow = 'hidden';
+
+                    // Esperar un momento para que el modal se renderice
+                    setTimeout(() => {
+                        llenarDatosModalConAPI(result);
+                    }, 100);
+
+                } else {
+                    const errorMessage = result.error || 'Error desconocido';
+                    if (typeof Swal !== 'undefined') {
+                        Swal.fire("Error", errorMessage, "error");
+                    } else {
+                        alert("Error: " + errorMessage);
+                    }
+                }
+
+            } catch (error) {
+                console.error("Error al enviar la solicitud:", error);
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire("Error", "Error de conexión <br> Inténtalo de nuevo.", "error");
+                } else {
+                    alert("Error de conexión. Inténtalo de nuevo.");
+                }
+            } finally {
+                // Restaurar el botón
+                if (btnContactarDatos) {
+                    btnContactarDatos.innerHTML = originalText;
+                    btnContactarDatos.disabled = false;
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
