@@ -1,0 +1,150 @@
+<%- include('../partials/head.ejs') %>
+
+
+<body class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+
+    <%- include('../partials/nav-administration.ejs') %>
+    <div class="p-6">
+        <!-- Modal de Cotización -->
+        <div id="cotizacionModal" class="flex items-center justify-center p-4">
+
+            <div class="bg-slate-800 rounded-xl shadow-2xl w-full max-w-3xl mx-auto border border-slate-700 transform transition-all duration-300 scale-100 opacity-100"
+                id="modalContent">
+                <!-- Encabezado del Modal -->
+                <div class="flex items-center justify-between p-5 border-b border-slate-700 bg-slate-700 rounded-t-xl">
+                    <h3 class="text-2xl font-bold text-white">Detalles de Cotización de Cámaras</h3>
+                    <button id="closeModalBtn" class="text-slate-300 hover:text-white transition-colors duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 6 6 18"></path>
+                            <path d="m6 6 12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Cuerpo del Modal (Datos de la Cotización) -->
+                <div class="p-6 space-y-6">
+                    <!-- Sección de Información General -->
+                    <div class="bg-slate-700 p-5 rounded-lg shadow-inner border border-slate-600">
+                        <h4 class="text-lg font-semibold text-white mb-3 flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="mr-2 text-blue-400">
+                                <path d="M4 13.5V4a2 2 0 0 1 2-2h8.5L22 7.5V20a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-6.5">
+                                </path>
+                                <path d="M2 13.5h6a2 2 0 0 1 2 2V22H2v-6.5a2 2 0 0 1 2-2Z"></path>
+                            </svg>
+                            Información General
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-slate-300">
+                            <div>
+                                <p class="text-sm font-medium text-slate-400">ID Cotización:</p>
+                                <p id="modal-id" class="text-white text-base font-mono"> <%= quoteCamera.id %> </p>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-slate-400">ID Cliente:</p>
+                                <p id="modal-id-cliente" class="text-white text-base font-mono">
+                                    <%= quoteCamera.id_cliente %></p>
+                            </div>
+                            <div class="md:col-span-2">
+                                <p class="text-sm font-medium text-slate-400">Fecha de Cotización:</p>
+                                <p id="modal-fecha" class="text-white text-base"> <%= quoteCamera.fecha %></p>
+                            </div>
+                            <div class="md:col-span-2">
+                                <p class="text-sm font-medium text-slate-400">Total de la Cotización:</p>
+                                <p id="modal-total" class="text-blue-400 text-3xl font-extrabold mt-1">
+                                    $<%= quoteCamera.total%> MXM</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sección de Detalles de Cámaras y Almacenamiento -->
+                    <div class="bg-slate-700 p-5 rounded-lg shadow-inner border border-slate-600">
+                        <h4 class="text-lg font-semibold text-white mb-3 flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="mr-2 text-blue-400">
+                                <path
+                                    d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z">
+                                </path>
+                                <circle cx="12" cy="13" r="3"></circle>
+                            </svg>
+                            Cámaras y Almacenamiento
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-slate-300">
+                            <div class="md:col-span-2">
+                                <p class="text-sm font-medium text-slate-400">Detalle de Cámaras:</p>
+                                <p id="modal-camaras" class="text-white text-base"> <%= quoteCamera.camaras%></p>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-slate-400">Disco Duro:</p>
+                                <p id="modal-disco-duro" class="text-white text-base"> <%= quoteCamera.disco_duro%></p>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-slate-400">Días de Grabación:</p>
+                                <p id="modal-dias-grabacion" class="text-white text-base">
+                                    <%= quoteCamera.dias_grabacion%></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sección de Detalles de Instalación -->
+                    <div class="bg-slate-700 p-5 rounded-lg shadow-inner border border-slate-600">
+                        <h4 class="text-lg font-semibold text-white mb-3 flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="mr-2 text-blue-400">
+                                <path d="M12 18v-6h.01"></path>
+                                <path d="M12 3a6 6 0 0 0 0 12v6H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v3">
+                                </path>
+                            </svg>
+                            Detalles de Instalación
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-slate-300">
+                            <div>
+                                <p class="text-sm font-medium text-slate-400">Distancia de Cableado:</p>
+                                <p id="modal-distancia-cable" class="text-white text-base">
+                                    <%= quoteCamera.distancia_cable%></p>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-slate-400">Altura de Instalación:</p>
+                                <p id="modal-altura" class="text-white text-base"> <%= quoteCamera.altura%></p>
+                            </div>
+                            <div class="md:col-span-2">
+                                <p class="text-sm font-medium text-slate-400">Lugar de Instalación:</p>
+                                <p id="modal-lugar" class="text-white text-base"> <%= quoteCamera.lugar%></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pie del Modal -->
+                <div class="flex justify-around p-2 border-t border-slate-700 bg-slate-700 rounded-b-xl">
+                    <div>
+                        <a id="closeModalBtnBottom" href="/admin/saves"
+                            class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-slate-900 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-slate-600 text-white hover:bg-slate-500 h-9 px-4 py-2 shadow-md">
+                            Volver
+                        </a>
+
+                    </div>
+                    <div>
+                        <a id="closeModalBtnBottom"
+                            class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-slate-900 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-slate-600 text-white hover:bg-slate-500 h-9 px-4 py-2 shadow-md">
+                            Contactar Cliente
+                        </a>
+
+                    </div>
+                    <div>
+                        <a id="closeModalBtnBottom"
+                            class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-slate-900 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-slate-600 text-white hover:bg-slate-500 h-9 px-4 py-2 shadow-md">
+                            Enviar Email
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

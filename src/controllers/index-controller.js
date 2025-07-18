@@ -1,4 +1,11 @@
+import {
+  validateDataEmailSchema,
+  validateCostumerSchema,
+} from "../schemas/users.js";
+
+import nodemailer from "nodemailer";
 import QuoterModel from "../models/quoter-model.js";
+import CostumerModel from "../models/costumer-model.js";
 
 class indexController {
   async renderIndex(req, res) {
@@ -13,11 +20,65 @@ class indexController {
     });
   }
 
+  async sendContactEmail(req, res) {
+    console.log(req.body);
+
+    const dataEmail = validateDataEmailSchema(req.body);
+
+    console.log(dataEmail);
+
+    if (!dataEmail.success) {
+      return res.status(400).json({
+        error: "Datos de contacto inválidos",
+        details: dataEmail.error.errors,
+      });
+    }
+
+    const { name, email, message } = dataEmail.data;
+
+    try {
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.EMAIL_HOST,
+          pass: process.env.EMAIL_PASS,
+        },
+      });
+
+      const mailOptions = {
+        from: `Correo de Soluciones Tecnologicas <${process.env.EMAIL_HOST}>`,
+        to: process.env.EMAIL_HOST,
+        replyTo: email, // permite responder al usuario
+        subject: "Nuevo mensaje de contacto Soluciones Tecnologicas",
+        html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e5e7eb; border-radius: 10px;">
+          <h2 style="color: #3b82f6;">Nuevo mensaje de contacto</h2>
+          <p><strong>Nombre:</strong> ${name}</p>
+          <p><strong>Correo:</strong> <a href="mailto:${email}">${email}</a></p>
+          <p><strong>Mensaje:</strong></p>
+          <div style="background-color: #f3f4f6; padding: 15px; border-radius: 5px; white-space: pre-wrap;">
+            ${message}
+          </div>
+          <p style="margin-top: 20px; font-size: 0.9em; color: #6b7280; text-align: center; ">Mensaje de contacto de web Soluciones Tecnologicas.</p>
+        </div>
+      `,
+      };
+
+      await transporter.sendMail(mailOptions);
+
+      return res.status(200).json({ message: "Correo enviado correctamente" });
+    } catch (error) {
+      console.error("Error al enviar el correo:", error);
+      return res.status(500).json({ error: "Error al enviar el correo" });
+    }
+  }
+
   async renderService(req, res) {
     return res.render("index/service", {
       tittle: "Nuestros servicios",
     });
   }
+
   async renderSupport(req, res) {
     return res.render("index/support", {
       tittle: "Nuestros servicios",
@@ -160,6 +221,8 @@ class indexController {
 
       if (isSpecialized) {
         return res.status(200).json({
+          success: false,
+          error: "Requiere más especialización",
           "Precio estimado": "Requiere más especialización",
           "Tamaño disco duro": "N/A",
         });
@@ -175,26 +238,15 @@ class indexController {
       // As per original cotizador's logic, the base cable cost is derived from interior prices,
       // and an additional surcharge is added for exterior installation.
       let baseCableCostPerCam = cableInteriorPrices[DistanciaCamsGrab] || 0;
-      console.log(
-        `DEBUG: baseCableCostPerCam for ${DistanciaCamsGrab}: ${baseCableCostPerCam}`
-      );
 
       CamsxCable = CantiCams * baseCableCostPerCam;
-      console.log(
-        `DEBUG: CamsxCable after base calculation (${CantiCams} * ${baseCableCostPerCam}): ${CamsxCable}`
-      );
 
       // Add the cost specific to the installation location (Interior/Exterior) from DB.
       // This acts as the "surcharge" for exterior installation, matching original behavior.
       if (LugarInstala === "Exterior") {
         const lugarInstalacionCost = lugarInstalacionPrices[LugarInstala] || 0;
-        console.log(
-          `DEBUG: lugarInstalacionCost for ${LugarInstala}: ${lugarInstalacionCost}`
-        );
+
         CamsxCable += CantiCams * lugarInstalacionCost;
-        console.log(
-          `DEBUG: CamsxCable after exterior surcharge (${CantiCams} * ${lugarInstalacionCost}): ${CamsxCable}`
-        );
       }
 
       // --- 2. Calculate AlturaxCams (Costo de Instalación por Altura) ---
@@ -204,13 +256,13 @@ class indexController {
       } else {
         // Now, priceForHeight should be correctly retrieved from alturaPrices
         const priceForHeight = alturaPrices[AlturaCams] || 0;
-        console.log(
-          `DEBUG: priceForHeight for ${AlturaCams}: ${priceForHeight}`
-        );
+        // console.log(
+        // `DEBUG: priceForHeight for ${AlturaCams}: ${priceForHeight}`
+        // );
         AlturaxCams = CantiCams * priceForHeight;
-        console.log(
-          `DEBUG: AlturaxCams after calculation (${CantiCams} * ${priceForHeight}): ${AlturaxCams}`
-        );
+        // console.log(
+        //   `DEBUG: AlturaxCams after calculation (${CantiCams} * ${priceForHeight}): ${AlturaxCams}`
+        // );
       }
 
       // --- 3. Determine HDD Price and Size based on CantiCams, DiaGrab, MegaPixCams ---
@@ -251,16 +303,11 @@ class indexController {
 
       // --- 4. Calculate CantidadPxCam (Costo de Cámaras + Disco Duro) ---
       const cameraBasePrice = dataPrice["Resolución de cámara"]?.precio || 0;
-      console.log(`DEBUG: cameraBasePrice: ${cameraBasePrice}`);
 
       CantidadPxCam = cameraBasePrice * CantiCams + PrecioDiscSelected;
-      console.log(`DEBUG: CantidadPxCam: ${CantidadPxCam}`);
 
       // --- Final Calculation ---
       PrecioCams = CantidadPxCam + CamsxCable + AlturaxCams;
-      console.log(
-        `DEBUG: Final PrecioCams: ${CantidadPxCam} + ${CamsxCable} + ${AlturaxCams} = ${PrecioCams}`
-      );
       //--- 5. Response ---
       return res.status(200).json({
         "Precio estimado": PrecioCams.toFixed(2),
@@ -278,6 +325,56 @@ class indexController {
         details: error.message,
       });
     }
+  }
+
+  async saveQuoteCameras(req, res) {
+    const customer = {
+      name: req.body.customerName,
+      email: req.body.customerEmail,
+      phone: req.body.customerPhone,
+      address: req.body.customerAddress,
+    };
+    const customerData = validateCostumerSchema(customer);
+
+    if (!customerData.success) {
+      const flatErrors = Object.values(
+        customerData.error.flatten().fieldErrors
+      ).flat();
+
+      return res.status(400).json({
+        error: "Datos del cliente inválidos",
+        messages: flatErrors,
+      });
+    }
+
+    const saveCostumer = await CostumerModel.saveCostumerData(
+      customerData.data
+    );
+
+    if (saveCostumer.success === false) {
+      return res.status(500).json({
+        errorMessage: "Error al guardar los datos del cliente",
+        error: saveCostumer.error,
+      });
+    }
+
+    const saveQuote = await QuoterModel.saveQuoteCameraData(
+      req.body.data,
+      saveCostumer.id
+    );
+
+    if (saveQuote.success === false) {
+      return res.status(500).json({
+        errorMessage: "Error al guardar la cotización de cámaras",
+        error: saveQuote,
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      successMessage:
+        "Hemos recibido tu pedido. Te contactaremos pronto para coordinar la instalación.",
+    });
   }
 
   async getDataFences(req, res) {
@@ -363,18 +460,18 @@ class indexController {
       });
 
       // Log populated price maps for debugging.
-      console.log("DEBUG: baseFencePrice (from DB):", baseFencePrice);
-      console.log("DEBUG: alturaBardaPrices (from DB):", alturaBardaPrices);
-      console.log("DEBUG: numeroBardasPrices (from DB):", numeroBardasPrices);
-      console.log(
-        "DEBUG: metrosLinealesPrices (from DB):",
-        metrosLinealesPrices
-      );
-      console.log(
-        "DEBUG: contactoCercanoPrices (from DB):",
-        contactoCercanoPrices
-      );
-      console.log("DEBUG: controlRemotoPrices (from DB):", controlRemotoPrices);
+      // console.log("DEBUG: baseFencePrice (from DB):", baseFencePrice);
+      // console.log("DEBUG: alturaBardaPrices (from DB):", alturaBardaPrices);
+      // console.log("DEBUG: numeroBardasPrices (from DB):", numeroBardasPrices);
+      // console.log(
+      //   "DEBUG: metrosLinealesPrices (from DB):",
+      //   metrosLinealesPrices
+      // );
+      // console.log(
+      //   "DEBUG: contactoCercanoPrices (from DB):",
+      //   contactoCercanoPrices
+      // );
+      // console.log("DEBUG: controlRemotoPrices (from DB):", controlRemotoPrices);
 
       // Extract user selections from the request body.
       const dataPrice = req.body;
@@ -388,13 +485,13 @@ class indexController {
       const ControlRem = dataPrice["Control remoto"]?.valor;
 
       // Log extracted inputs for debugging.
-      console.log("Extracted Inputs (from dataPrice):", {
-        MetrosBarda,
-        CantiBardas,
-        MetrosLineales,
-        ContactoElec,
-        ControlRem,
-      });
+      // console.log("Extracted Inputs (from dataPrice):", {
+      //   MetrosBarda,
+      //   CantiBardas,
+      //   MetrosLineales,
+      //   ContactoElec,
+      //   ControlRem,
+      // });
 
       // --- Check for "Otro" selections which require specialization ---
       const isSpecialized =
@@ -404,6 +501,8 @@ class indexController {
 
       if (isSpecialized) {
         return res.status(200).json({
+          success: false,
+          error: "Requiere más especialización",
           "Precio estimado": "Requiere más especialización",
           "Resumen de precios": {},
         });
@@ -426,9 +525,9 @@ class indexController {
         );
       }
       PrecioCercado += costoAlturaBarda;
-      console.log(
-        `DEBUG: PrecioCercado after Altura de instalacion (${MetrosBarda}): ${PrecioCercado} (costoAlturaBarda: ${costoAlturaBarda})`
-      );
+      // console.log(
+      //   `DEBUG: PrecioCercado after Altura de instalacion (${MetrosBarda}): ${PrecioCercado} (costoAlturaBarda: ${costoAlturaBarda})`
+      // );
 
       // --- 2. Calculate cost based on 'Numero de bardas' (Number of Walls) ---
       // This now impacts the price based on DB data.
@@ -440,9 +539,9 @@ class indexController {
         );
       }
       PrecioCercado += costoNumeroBardas;
-      console.log(
-        `DEBUG: PrecioCercado after Numero de bardas (${CantiBardas}): ${PrecioCercado} (costoNumeroBardas: ${costoNumeroBardas})`
-      );
+      // console.log(
+      //   `DEBUG: PrecioCercado after Numero de bardas (${CantiBardas}): ${PrecioCercado} (costoNumeroBardas: ${costoNumeroBardas})`
+      // );
 
       // --- 3. Calculate cost based on 'Distancia lineal' (Linear Meters) ---
       // Validate if the value exists in our dynamically loaded prices.
@@ -454,9 +553,9 @@ class indexController {
         );
       }
       PrecioCercado += costoMetrosLineales;
-      console.log(
-        `DEBUG: PrecioCercado after Distancia lineal (${MetrosLineales}): ${PrecioCercado} (costoMetrosLineales: ${costoMetrosLineales})`
-      );
+      // console.log(
+      //   `DEBUG: PrecioCercado after Distancia lineal (${MetrosLineales}): ${PrecioCercado} (costoMetrosLineales: ${costoMetrosLineales})`
+      // );
 
       // --- 4. Calculate cost based on 'Contacto cercano' (Nearby Electrical Contact) ---
       // Apply cost only if 'No' as per original JS logic, taking the 'No' price from DB.
@@ -470,9 +569,9 @@ class indexController {
         }
       }
       PrecioCercado += costoContactoElectrico;
-      console.log(
-        `DEBUG: PrecioCercado after Contacto cercano (${ContactoElec}): ${PrecioCercado} (costoContactoElectrico: ${costoContactoElectrico})`
-      );
+      // console.log(
+      //   `DEBUG: PrecioCercado after Contacto cercano (${ContactoElec}): ${PrecioCercado} (costoContactoElectrico: ${costoContactoElectrico})`
+      // );
 
       // --- 5. Calculate cost based on 'Control remoto' (Remote Control) ---
       // Apply cost only if 'Si' as per original JS logic, taking the 'Si' price from DB.
@@ -486,9 +585,9 @@ class indexController {
         }
       }
       PrecioCercado += costoControlRemoto;
-      console.log(
-        `DEBUG: PrecioCercado after Control remoto (${ControlRem}): ${PrecioCercado} (costoControlRemoto: ${costoControlRemoto})`
-      );
+      // console.log(
+      //   `DEBUG: PrecioCercado after Control remoto (${ControlRem}): ${PrecioCercado} (costoControlRemoto: ${costoControlRemoto})`
+      // );
 
       // Final Return
       return res.status(200).json({
@@ -511,6 +610,67 @@ class indexController {
         details: error.message,
       });
     }
+  }
+
+  async saveQuoteFences(req, res) {
+    const customer = {
+      name: req.body.customerName,
+      email: req.body.customerEmail,
+      phone: req.body.customerPhone,
+      address: req.body.customerAddress,
+    };
+    const customerData = validateCostumerSchema(customer);
+
+    if (!customerData.success) {
+      const flatErrors = Object.values(
+        customerData.error.flatten().fieldErrors
+      ).flat();
+
+      return res.status(400).json({
+        error: "Datos del cliente inválidos",
+        messages: flatErrors,
+      });
+    }
+
+    const costumerExists = await CostumerModel.findCostumerByEmail(
+      customerData.data
+    );
+    let idCostumer;
+    if (costumerExists === null) {
+      //If the customer does not exist, save the customer data
+
+      const saveCostumer = await CostumerModel.saveCostumerData(
+        customerData.data
+      );
+      if (saveCostumer.success === false) {
+        return res.status(500).json({
+          errorMessage: "Error al guardar los datos del cliente",
+          error: saveCostumer.error,
+        });
+      }
+      idCostumer = saveCostumer.id;
+    } else {
+      //If the customer exists, save the quote data with the existing customer ID
+      idCostumer = costumerExists.id;
+    }
+
+    const saveQuote = await QuoterModel.saveQuoteFenceData(
+      req.body.data,
+      idCostumer
+    );
+
+    if (saveQuote.success === false) {
+      return res.status(500).json({
+        errorMessage: "Error al guardar la cotización de cámaras",
+        error: saveQuote,
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      successMessage:
+        "Hemos recibido tu pedido. Te contactaremos pronto para coordinar la instalación.",
+    });
   }
 }
 

@@ -34,7 +34,7 @@ class QuoterController {
 
       //Make a array
       const groupedDataArray = Object.values(groupedData);
-      console.log(drvData);
+      // console.log(drvData);
 
       return res.render("admin/quoter-cameras", {
         tittle: "Datos de cotización de cámaras",

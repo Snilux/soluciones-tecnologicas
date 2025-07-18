@@ -13,8 +13,6 @@
             </div>
         </div>
 
-
-
         <!-- Precio Principal -->
         <div class="p-3 bg-blue-50 text-center mb-2">
             <div class="text-4xl font-bold text-blue-600" id="precioTotal">$8,500.00 MXN</div>
@@ -68,8 +66,7 @@
                     <p class="text-gray-700" id="resumenProyecto">
                         Sistema de cerca eléctrica profesional con <span class="font-semibold">2 bardas</span>
                         para instalación de <span class="font-semibold">11-20 metros lineales</span>.
-                        Incluye energizador de alta potencia y altura de <span class="font-semibold">2.5
-                            metros</span>.
+                        Incluye energizador de alta potencia y altura de <span class="font-semibold">2.5 metros</span>.
                     </p>
                 </div>
             </div>
@@ -86,7 +83,7 @@
                 </div>
                 <div class="flex items-center text-sm text-gray-600">
                     <i class="ri-alarm-warning-line mr-2"></i>
-                    <span id="iconContacto">Sin alarma</span>
+                    <span id="iconContacto">Contacto cercano</span>
                 </div>
                 <div class="flex items-center text-sm text-gray-600">
                     <i class="ri-remote-control-line mr-2"></i>
@@ -118,11 +115,10 @@
                         <span class="text-gray-600">Control Remoto:</span>
                         <span class="font-medium">$600.00</span>
                     </div>
-
                     <hr class="my-3">
                     <div class="flex justify-between font-bold text-lg">
                         <span>Total:</span>
-                        <span class="text-blue-600" id="totalFinal">$8,500.00 MXN</span>
+                        <span class="text-blue-600" id="totalFinalFences">$8,500.00 MXN</span>
                     </div>
                 </div>
             </div>
@@ -130,14 +126,299 @@
 
         <!-- Footer -->
         <div class="p-6 border-t bg-gray-50 flex flex-col sm:flex-row gap-3">
-            <button id="btnNoEsLoQueBuscas"
+            <button id="btnNoEsLoQueBuscas" onclick="openContactModal()"
                 class="flex-1 px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100 transition-colors">
                 ¿No es lo que buscas?
             </button>
-            <button id="btnConfirmarPedido"
+            <button id="btnConfirmarPedido" onclick="openOrderModal()"
                 class="flex-1 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors">
                 Confirmar Pedido
             </button>
         </div>
     </div>
+
+    <div id="contactModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center p-4 z-60">
+        <div class="bg-white rounded-lg max-w-md w-full">
+            <div class="p-6">
+                <div class="text-center mb-6">
+                    <div class="mx-auto flex items-center justify-center w-12 h-12 rounded-full bg-blue-100 mb-4">
+                        <i data-lucide="help-circle" class="w-6 h-6 text-blue-600"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">¿Necesitas algo diferente?</h3>
+                    <p class="text-gray-600 text-sm">
+                        No te preocupes, nuestro equipo puede ayudarte a encontrar la solución perfecta para tus
+                        necesidades
+                        específicas.
+                    </p>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <h4 class="font-medium text-gray-900 mb-2">¿Qué puedes hacer?</h4>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Solicitar una cotización personalizada</li>
+                            <li>• Hablar con un especialista</li>
+                            <li>• Explorar otras opciones de seguridad</li>
+                            <li>• Obtener asesoría técnica gratuita</li>
+                        </ul>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <button onclick="closeContactModal()"
+                            class="flex-1 border border-gray-300 text-gray-700 font-medium py-2 px-4 rounded-md hover:bg-gray-50 transition-colors">
+                            Cancelar
+                        </button>
+                        <button onclick="redirectToContact()"
+                            class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors">
+                            Ir a Contacto
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="orderModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center p-4 z-60">
+        <div class="bg-white rounded-lg max-w-lg w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="text-center mb-6">
+                    <div class="mx-auto flex items-center justify-center w-12 h-12 rounded-full bg-green-100 mb-4">
+                        <i class="ri-shopping-cart-line w-6 h-6 text-green-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Confirmar Pedido</h3>
+                    <p class="text-gray-600 text-sm">
+                        Completa tus datos para procesar tu pedido de cerca eléctrica
+                    </p>
+                </div>
+
+                <!-- Formulario -->
+                <form id="orderForm" class="space-y-4">
+                    <div>
+                        <label for="customerName" class="block text-sm font-medium text-gray-700 mb-1">
+                            Nombre completo *
+                        </label>
+                        <input type="text" id="customerName" name="customerName" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                            placeholder="Ingresa tu nombre completo">
+                    </div>
+
+                    <div>
+                        <label for="customerEmail" class="block text-sm font-medium text-gray-700 mb-1">
+                            Correo electrónico *
+                        </label>
+                        <input type="email" id="customerEmail" name="customerEmail" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                            placeholder="ejemplo@correo.com">
+                    </div>
+
+                    <div>
+                        <label for="customerPhone" class="block text-sm font-medium text-gray-700 mb-1">
+                            Teléfono *
+                        </label>
+                        <input type="tel" id="customerPhone" name="customerPhone" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                            placeholder="+52 (555) 123-4567">
+                    </div>
+
+                    <div>
+                        <label for="customerAddress" class="block text-sm font-medium text-gray-700 mb-1">
+                            Dirección de instalación *
+                        </label>
+                        <textarea id="customerAddress" name="customerAddress" required rows="3"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                            placeholder="Ingresa la dirección completa donde se instalará el sistema"></textarea>
+                    </div>
+
+                    <!-- Resumen del pedido -->
+                    <div class="bg-gray-50 rounded-lg p-4 mt-6">
+                        <h4 class="font-medium text-gray-900 mb-2">Resumen del pedido</h4>
+                        <div class="text-sm text-gray-600 space-y-1">
+                            <div class="flex justify-between">
+                                <span>Sistema de cerca eléctrica:</span>
+                                <span id="orderSummarySystem">2 bardas, 11-20mts</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Altura:</span>
+                                <span id="orderSummaryInstallation">2.5m</span>
+                            </div>
+                            <div class="flex justify-between font-medium text-gray-900 pt-2 border-t">
+                                <span>Total:</span>
+                                <span id="orderSummaryTotal">$8,500.00 MXN</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botones -->
+                    <div class="flex gap-3 pt-4">
+                        <button type="button" onclick="closeOrderModal()"
+                            class="flex-1 border border-gray-300 text-gray-700 font-medium py-2 px-4 rounded-md hover:bg-gray-50 transition-colors">
+                            Cancelar
+                        </button>
+                        <button type="submit" id="submitOrderBtn"
+                            class="flex-1 bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md transition-colors">
+                            Enviar Pedido
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
 </div>
+
+
+<script>
+    function openContactModal() {
+        document.getElementById('contactModal').classList.remove('hidden');
+        document.getElementById('contactModal').classList.add('flex');
+    }
+
+    function closeContactModal() {
+        document.getElementById('contactModal').classList.add('hidden');
+        document.getElementById('contactModal').classList.remove('flex');
+    }
+
+    function redirectToContact() {
+        // Cambia esta URL por la ruta de tu formulario de contacto
+        window.location.href = '/contacto';
+    }
+
+    function openOrderModal() {
+        // Actualizar resumen del pedido antes de abrir        
+        updateOrderSummary();
+        document.getElementById('orderModal').classList.remove('hidden');
+        document.getElementById('orderModal').classList.add('flex');
+    }
+
+    function closeOrderModal() {
+        document.getElementById('orderModal').classList.add('hidden');
+        document.getElementById('orderModal').classList.remove('flex');
+        // Limpiar formulario        
+        document.getElementById('orderForm').reset();
+    }
+
+    function updateOrderSummary() {
+        // Obtener datos actuales del modal principal - CORREGIDO para cerca eléctrica
+        const bardas = document.getElementById('modalBardas')?.textContent || '2';
+        const metros = document.getElementById('modalMetros')?.textContent || '11-20mts';
+        const altura = document.getElementById('modalAltura')?.textContent || '2.5m';
+        const total = document.getElementById('totalFinalFences')?.textContent || '$8,500.00 MXN';
+
+        // Actualizar resumen en el modal de pedido        
+        const systemElement = document.getElementById('orderSummarySystem');
+        const installationElement = document.getElementById('orderSummaryInstallation');
+        const totalElement = document.getElementById('orderSummaryTotal');
+
+        if (systemElement) systemElement.textContent = `${bardas} bardas, ${metros}`;
+        if (installationElement) installationElement.textContent = altura;
+        if (totalElement) totalElement.textContent = total;
+    }
+
+    // Manejar envío del formulario de pedido    
+    document.getElementById('orderForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const submitBtn = document.getElementById('submitOrderBtn');
+        const originalText = submitBtn.innerHTML;
+
+        // Mostrar loading        
+        submitBtn.innerHTML = '<i class="ri-loader-4-line animate-spin mr-2"></i>Enviando...';
+        submitBtn.disabled = true;
+
+        try {
+            // Recopilar datos del formulario  
+            let total = document.getElementById('precioTotal').textContent;
+            total = total.replace(/[^0-9.-]+/g, ''); // Eliminar símbolos de moneda
+            total = parseFloat(total).toFixed(2); // Asegurar que sea un número con dos decimales
+
+            const formData = {
+                customerName: document.getElementById('customerName').value,
+                customerEmail: document.getElementById('customerEmail').value,
+                customerPhone: document.getElementById('customerPhone').value,
+                customerAddress: document.getElementById('customerAddress').value,
+                // Agregar datos de la cotización                
+                data: {
+                    totalPrice: total,
+                    wire: document.getElementById('modalMetros')?.textContent || '',
+                    height: document.getElementById('modalAltura')?.textContent || '',
+                    walls: document.getElementById('modalBardas')?.textContent || '',
+                    electricContact: document.getElementById('iconContacto')?.textContent || '',
+                    remoteControl: document.getElementById('iconControlRemoto')?.textContent || '',
+                }
+            };
+
+            console.log('Enviando pedido:', formData);
+
+            // Aquí harías la llamada a tu API            
+            const response = await fetch('/pedidos', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                // Éxito                
+                Swal.fire({
+                    title: '¡Pedido Enviado!',
+                    text: result.successMessage || 'Hemos recibido tu pedido. Te contactaremos pronto para coordinar la instalación.',
+                    icon: 'success',
+                    confirmButtonText: 'Entendido',
+                    confirmButtonColor: '#16a34a'
+                }).then(() => {
+                    closeOrderModal();
+                    // Cerrar modal principal si la función existe
+                    if (typeof closeQuotationModal === 'function') {
+                        closeQuotationModal();
+                    } else {
+                        document.getElementById('modalCotizacion').classList.add('hidden');
+                    }
+                });
+            } else {
+                throw new Error(result.message || 'Error al enviar el pedido');
+            }
+        } catch (error) {
+            console.error('Error al enviar pedido:', error);
+            Swal.fire({
+                title: 'Error',
+                text: 'Hubo un problema al enviar tu pedido. Por favor, inténtalo de nuevo.',
+                icon: 'error',
+                confirmButtonText: 'Entendido',
+                confirmButtonColor: '#dc2626'
+            });
+        } finally {
+            // Restaurar botón            
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        }
+    });
+
+    // Cerrar modales al hacer clic fuera    
+    document.getElementById('contactModal').addEventListener('click', function (e) {
+        if (e.target === this) {
+            closeContactModal();
+        }
+    });
+
+    document.getElementById('orderModal').addEventListener('click', function (e) {
+        if (e.target === this) {
+            closeOrderModal();
+        }
+    });
+
+    // Cerrar modales con tecla Escape    
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+            if (!document.getElementById('contactModal').classList.contains('hidden')) {
+                closeContactModal();
+            }
+            if (!document.getElementById('orderModal').classList.contains('hidden')) {
+                closeOrderModal();
+            }
+        }
+    });
+</script>

@@ -1,7 +1,6 @@
 import getConnection from "../db.js";
 import bcrypt from "bcrypt";
 
-
 class UserModel {
   constructor() {
     this.table = "users";
@@ -13,6 +12,8 @@ class UserModel {
       return results[0];
     } catch (error) {
       console.log(`Error in getUsers: ${error}`);
+    } finally {
+      connection.release();
     }
   }
 
@@ -25,6 +26,8 @@ class UserModel {
     } catch (error) {
       console.log(`Error in find user by username: ${error}`);
       throw error;
+    } finally {
+      connection.release();
     }
   }
 
@@ -60,6 +63,8 @@ class UserModel {
     } catch (error) {
       console.log(`Error in createUser: ${error}`);
       throw error;
+    } finally {
+      connection.release();
     }
   }
 
@@ -91,7 +96,12 @@ class UserModel {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     try {
-      const results = await connection.query(query, [this.table, username, hashedPassword, id])
+      const results = await connection.query(query, [
+        this.table,
+        username,
+        hashedPassword,
+        id,
+      ]);
       if (results.affectedRows === 0) {
         return {
           errorMessage: "No se pudo actualizar el usuario",
@@ -104,11 +114,11 @@ class UserModel {
         id: id,
         username: username,
       };
-
     } catch (error) {
       console.log(`Error in updateUser: ${error}`);
       throw error;
-      
+    } finally {
+      connection.release();
     }
   }
 }

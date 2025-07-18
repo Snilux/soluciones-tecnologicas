@@ -19,7 +19,7 @@
 
                 <!-- Desktop Navigation Links -->
                 <div class="hidden sm:ml-8 sm:flex sm:space-x-8">
-                    <a href="/admin/users" onclick="showPanel('users')" id="nav-users"
+                    <a href="/admin/users" id="nav-users"
                         class="nav-link border-transparent text-gray-300 hover:border-gray-300 hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
                         <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -28,7 +28,7 @@
                         </svg>
                         Usuarios
                     </a>
-                    <a href="/admin/quoters/cameras" onclick="showPanel('products')" id="nav-products"
+                    <a href="/admin/quoters/cameras" id="nav-products"
                         class="nav-link border-transparent text-gray-300 hover:border-gray-300 hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -38,7 +38,7 @@
                         </svg>
                         Cámaras
                     </a>
-                    <a href="/admin/quoters/fences" onclick="showPanel('reports')" id="nav-reports"
+                    <a href="/admin/quoters/fences" id="nav-reports"
                         class="nav-link border-transparent text-gray-300 hover:border-gray-300 hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
 
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 24 24" fill="none"
@@ -47,6 +47,19 @@
                         </svg>
 
                         Cercas eléctricas
+                    </a>
+                    <a href="/admin/saves" id="nav-reports"
+                        class="nav-link border-transparent text-gray-300 hover:border-gray-300 hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 14h6m-6 3h6" />
+                        </svg>
+
+
+                        Cotizaciones
                     </a>
                 </div>
             </div>
@@ -115,6 +128,20 @@
                     </svg>
 
                     Cercas eléctricas
+                </div>
+            </a>
+            <a href="/admin/saves" onclick="showPanel('reports'); toggleMobileMenu()"
+                class="mobile-nav-link border-transparent text-gray-300 hover:bg-gray-600 hover:border-gray-300 hover:text-white block pl-3 pr-4 py-2 border-l-4 text-base font-medium transition-colors">
+                <div class="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 14h6m-6 3h6" />
+                    </svg>
+
+
+                    Cotizaciones
                 </div>
             </a>
         </div>

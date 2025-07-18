@@ -8,6 +8,9 @@ class QuoterModel {
 
     this.parametros_cercado = "parametros_cercado";
     this.valores_parametro_cercado = "valores_parametro_cercado";
+
+    this.cotizacion_camaras = "cotizacion_camaras";
+    this.cotizacion_cercado = "cotizacion_cercas";
   }
 
   async getQuoteCameraData() {
@@ -34,6 +37,8 @@ class QuoterModel {
     } catch (error) {
       console.error("Error in getQuoteCameraData:", error);
       throw error;
+    } finally {
+      connection.release();
     }
   }
 
@@ -48,6 +53,8 @@ class QuoterModel {
     } catch (error) {
       console.log(`Error el get drv data ${error}`);
       throw error;
+    } finally {
+      connection.release();
     }
   }
 
@@ -94,6 +101,8 @@ class QuoterModel {
     } catch (error) {
       console.log(`Error in try update camera parameter ${error}`);
       throw error;
+    } finally {
+      connection.release();
     }
   }
 
@@ -130,6 +139,8 @@ class QuoterModel {
     } catch (error) {
       console.log(`Error in delete camera parameter ${error}`);
       throw error;
+    } finally {
+      connection.release();
     }
   }
 
@@ -157,6 +168,8 @@ class QuoterModel {
     } catch (error) {
       console.error(`Error in getIdCameraParameterByName: ${error}`);
       throw error;
+    } finally {
+      connection.release();
     }
   }
 
@@ -195,6 +208,8 @@ class QuoterModel {
     } catch (error) {
       console.error(`Error in addCameraParameter: ${error}`);
       throw error;
+    } finally {
+      connection.release();
     }
   }
 
@@ -219,6 +234,8 @@ class QuoterModel {
     } catch (error) {
       console.log(`Error in model trying delete drv ${error}`);
       throw error;
+    } finally {
+      connection.release();
     }
   }
 
@@ -249,6 +266,8 @@ class QuoterModel {
     } catch (error) {
       console.log(`Error in model trying insert drv option ${error}`);
       throw error;
+    } finally {
+      connection.release();
     }
   }
 
@@ -279,6 +298,8 @@ class QuoterModel {
     } catch (error) {
       console.log(`Error in try update camera parameter ${error}`);
       throw error;
+    } finally {
+      connection.release();
     }
   }
 
@@ -305,9 +326,92 @@ class QuoterModel {
     } catch (error) {
       console.error("Error in getQuoteCameraData:", error);
       throw error;
+    } finally {
+      connection.release();
     }
   }
 
+  async saveQuoteCameraData(dataQuote, id) {
+    const connection = await getConnection();
+    const query = `
+    INSERT INTO ?? 
+    (id_cliente, total, disco_duro, camaras, distancia_cable, altura, lugar, dias_grabacion, fecha)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `;
+    const params = [
+      this.cotizacion_camaras,
+      id,
+      dataQuote.totalPrice,
+      dataQuote.hdd,
+      dataQuote.cameras,
+      dataQuote.wire,
+      dataQuote.height,
+      dataQuote.location,
+      dataQuote.recordingDays,
+      new Date(),
+    ];
+
+    try {
+      const result = await connection.query(query, params);
+      if (result[0].affectedRows === 0) {
+        return {
+          errorMessage: "No se pudo guardar la cotización de cámaras",
+          success: false,
+        };
+      }
+
+      return {
+        success: true,
+        affectedRows: result[0].affectedRows,
+      };
+    } catch (error) {
+      console.error("Error in saveQuoteCameraData:", error);
+      throw error;
+    } finally {
+      connection.release();
+    }
+  }
+
+  async saveQuoteFenceData(dataQuote, id) {
+    const connection = await getConnection();
+    const query = `
+      INSERT INTO ?? 
+      (id_cliente, total, distancia_cable, altura, numero_bardas, contacto_electrico, control_remoto ,fecha)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+
+    const params = [
+      this.cotizacion_cercado,
+      id,
+      dataQuote.totalPrice,
+      dataQuote.wire,
+      dataQuote.walls,
+      dataQuote.height,
+      dataQuote.electricContact,
+      dataQuote.remoteControl,
+      new Date(),
+    ];
+
+    try {
+      const result = await connection.query(query, params);
+      if (result[0].affectedRows === 0) {
+        return {
+          errorMessage: "No se pudo guardar la cotización de cámaras",
+          success: false,
+        };
+      }
+
+      return {
+        success: true,
+        affectedRows: result[0].affectedRows,
+      };
+    } catch (error) {
+      console.error("Error in saveQuoteCameraData:", error);
+      throw error;
+    } finally {
+      connection.release();
+    }
+  }
 }
 
 export default new QuoterModel();

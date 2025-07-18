@@ -61,7 +61,7 @@ document.querySelector("form").addEventListener("submit", async (e) => {
 
     const result = await response.json();
     button.disabled = true;
-    console.log(result);
+    
     if (response.ok) {
       button.disabled = false;
       Swal.fire("Éxito", result.successMessage, "success").then(() => {

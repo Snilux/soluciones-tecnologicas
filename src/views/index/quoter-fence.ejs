@@ -8,6 +8,13 @@
 
     <div class="w-full max-w-4xl mx-auto">
 
+
+
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-white mb-2">Cotizador de Cercas Eléctricas</h1>
+            <p class="text-white">Configura y obtén un presupuesto instantáneo para tu cerca eléctrica</p>
+        </div>
+
         <div class="flex justify-between mb-4">
             <a href="/camaras"
                 class="inline-flex items-center px-3 py-1 border border-blue-500 rounded text-sm text-blue-500 hover:bg-blue-800 hover:text-stone-50 transition-colors">
@@ -21,10 +28,6 @@
             </a>
         </div>
 
-        <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-amber-800 mb-2">Cotizador de Cercas Eléctricas</h1>
-            <p class="text-amber-600">Configura y obtén un presupuesto instantáneo para tu cerca eléctrica</p>
-        </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <!-- Formulario de Cotización -->
@@ -72,6 +75,9 @@
                                             <%= item.valor %>
                                         </option>
                                         <%})%>
+
+                                        <option value="Otro">Otro</option>
+
                                     </select>
                                 </div>
                                 <%} %>
@@ -121,13 +127,17 @@
                     </div>
                 </div>
             </div>
+            <%- include('../partials/modals/modal-quoter-fences.ejs') %>
+
+
+            <%- include('../partials/modals/modal-quoter-other.ejs') %>
         </div>
     </div>
-    <%- include('../partials/modals/modal-quoter-fences.ejs') %>
     <!-- Modal HTML -->
 
 
     <script>
+        lucide.createIcons();
         // Función para limpiar el resumen al cargar la página
         const cotizadorSelects = document.querySelectorAll('select[data-param]');
         const resumenCercas = document.getElementById('resumenCercas');
@@ -201,7 +211,7 @@
 
             // Actualizar precios principales de forma segura
             actualizarElemento('precioTotal', `$${precioTotal.toLocaleString('es-MX')}.00 MXN`);
-            actualizarElemento('totalFinal', `$${precioTotal.toLocaleString('es-MX')}.00 MXN`);
+            actualizarElemento('totalFinalFences', `$${precioTotal.toLocaleString('es-MX')}.00 MXN`);
 
             // Llenar datos específicos del modal según la cotización actual
             Object.keys(cotizacionActual).forEach(parametro => {
@@ -225,7 +235,7 @@
                             break;
                         case 'Contacto con alarma':
                         case 'Contacto cercano':
-                            actualizarElemento('iconContacto', datos.valor === 'Si' ? 'Con alarma' : 'Sin alarma');
+                            actualizarElemento('iconContacto', datos.valor === 'Si' ? 'Con contacto' : 'Sin contacto');
                             break;
                         case 'Control remoto':
                             actualizarElemento('modalControl', datos.valor);
@@ -250,7 +260,7 @@
                 "Costo por Altura de Barda": "Costo por Altura",
                 "Costo por Numero de Bardas": "Costo por Número de Bardas",
                 "Costo por Metros Lineales Adicionales": "Costo por Metros Lineales",
-                "Costo por Falta de Contacto Eléctrico": "Costo por Contacto con Alarma",
+                "Costo por Falta de Contacto Eléctrico": "Costo por Falta de Contacto Eléctrico",
                 "Costo por Control Remoto": "Costo por Control Remoto"
             };
 
@@ -358,7 +368,7 @@
 
             // Actualizar precios
             document.getElementById('precioTotal').textContent = `$${precioTotal.toLocaleString('es-MX')}.00 MXN`;
-            document.getElementById('totalFinal').textContent = `$${precioTotal.toLocaleString('es-MX')}.00 MXN`;
+            document.getElementById('totalFinalFences').textContent = `$${precioTotal.toLocaleString('es-MX')}.00 MXN`;
 
             // Actualizar desglose
             const desgloseContainer = document.getElementById('desglosePrecio');
@@ -397,7 +407,7 @@
 
         // Event listeners
         cerrarModal.addEventListener('click', cerrarModalCotizacion);
-        btnNoEsLoQueBuscas.addEventListener('click', cerrarModalCotizacion);
+        // btnNoEsLoQueBuscas.addEventListener('click', cerrarModalCotizacion);
 
         // Cerrar modal al hacer click fuera de él
         modalCotizacion.addEventListener('click', function (e) {
@@ -421,7 +431,7 @@
                 return;
             }
 
-            console.log(JSON.stringify(cotizacionActual));
+            // console.log(JSON.stringify(cotizacionActual));
 
             // Mostrar loading en el botón
             const originalText = btnContactarDatos.innerHTML;
@@ -436,17 +446,21 @@
                 });
 
                 const result = await response.json();
-                console.log('Respuesta API:', result);
-
                 if (response.ok) {
                     // Mostrar el modal primero
-                    modalCotizacion.classList.remove('hidden');
-                    document.body.style.overflow = 'hidden';
 
-                    // Esperar un momento para que el modal se renderice
-                    setTimeout(() => {
-                        llenarDatosModalConAPI(result);
-                    }, 100);
+                    if (result.success === false) {
+                        abrirModalOtroSimple()
+
+                    } else {
+
+                        modalCotizacion.classList.remove('hidden');
+                        document.body.style.overflow = 'hidden';
+
+                        setTimeout(() => {
+                            llenarDatosModalConAPI(result);
+                        }, 100);
+                    }
 
                 } else {
                     const errorMessage = result.error || 'Error desconocido';

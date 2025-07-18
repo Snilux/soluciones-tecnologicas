@@ -32,6 +32,8 @@ class LoginModel {
     } catch (error) {
       console.log(`Error in find user by username: ${error}`);
       throw error;
+    } finally {
+      connection.release();
     }
   }
 
