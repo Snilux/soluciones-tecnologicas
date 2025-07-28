@@ -1,0 +1,236 @@
+<%- include('../partials/head.ejs')%>
+<style>
+    /* Estilos para simular ScrollArea */
+    .scroll-area {
+        overflow-y: auto;
+        scrollbar-width: thin;
+        /* Para Firefox */
+        scrollbar-color: #cbd5e1 transparent;
+        /* Para Firefox */
+    }
+
+    .scroll-area::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .scroll-area::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .scroll-area::-webkit-scrollbar-thumb {
+        background-color: #cbd5e1;
+        /* gray-300 */
+        border-radius: 4px;
+        border: 2px solid transparent;
+    }
+</style>
+
+
+
+<!-- Icono flotante para abrir/cerrar el chatbot -->
+<button id="chat-toggle-button"
+    class="fixed bottom-4 left-4 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 z-50 transition-transform duration-300 ease-in-out transform hover:scale-105"
+    aria-label="Abrir o cerrar chatbot">
+    <!-- Icono de burbuja de chat (Lucide React icon equivalent) -->
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle">
+        <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+    </svg>
+</button>
+
+<!-- Contenedor del Chatbot (inicialmente oculto) -->
+<div id="chatbot-container"
+    class="fixed bottom-20 left-4 w-full max-w-md h-[70vh] flex flex-col bg-white rounded-lg shadow-xl z-40 hidden transition-all duration-300 ease-in-out">
+    <!-- Card Header -->
+    <div class="p-6 border-b border-gray-200">
+        <h2 class="text-2xl font-semibold text-slate-800">Chatbot de Preguntas Frecuentes</h2>
+    </div>
+
+    <!-- Card Content (Chat Messages) -->
+    <div class="flex-1 overflow-hidden p-6">
+        <div id="messages-container" class="scroll-area h-full pr-4">
+            <!-- Mensaje inicial del bot -->
+            <div class="mb-4 text-left" data-message-id="initial">
+                <span class="inline-block p-3 rounded-lg bg-gray-200 text-black">
+                    ¡Hola! Soy tu asistente de preguntas frecuentes. ¿En qué puedo ayudarte hoy sobre cercas
+                    eléctricas o
+                    cámaras de seguridad?
+                </span>
+            </div>
+
+            <!-- Sección de preguntas sugeridas (siempre visible) -->
+            <div id="suggested-questions-section" class="mt-6 p-4 bg-gray-50 rounded-lg">
+                <p class="text-sm text-gray-600 mb-3">Puedes empezar preguntando:</p>
+                <div id="suggested-questions-buttons" class="flex flex-wrap gap-2">
+                    <!-- Los botones se insertarán aquí con JavaScript -->
+                </div>
+            </div>
+
+            <div id="messages-end-ref"></div>
+        </div>
+    </div>
+
+    <!-- Card Footer (Input and Send Button) -->
+    <div class="p-6 border-t border-gray-200">
+        <form id="chat-form" class="flex w-full space-x-2">
+            <input type="text" id="chat-input" placeholder="Escribe tu pregunta..."
+                class="flex-grow px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-800" />
+            <button type="submit"
+                class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                Enviar
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+    let faqData;
+    (async () => {
+        try {
+            const response = await fetch('/data/questions.json');
+            if (!response.ok) {
+                throw new Error(`Error al obtener los datos: ${response.status}`);
+            }
+            faqData = await response.json();
+            console.log(faqData); // Para verificar que los datos se han cargado correctamente
+            renderSuggestedQuestions();
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    })();
+
+
+    // Referencias a elementos del DOM
+    const chatToggleButton = document.getElementById("chat-toggle-button");
+    const chatbotContainer = document.getElementById("chatbot-container");
+    const messagesContainer = document.getElementById("messages-container");
+    const chatInput = document.getElementById("chat-input");
+    const chatForm = document.getElementById("chat-form");
+    const messagesEndRef = document.getElementById("messages-end-ref");
+    const suggestedQuestionsSection = document.getElementById("suggested-questions-section");
+    const suggestedQuestionsButtons = document.getElementById("suggested-questions-buttons");
+
+    // Función para normalizar cadenas (quitar tildes y convertir a minúsculas)
+    const normalizeString = (str) => {
+        return str
+            .normalize("NFD") // Descompone caracteres acentuados en su base y diacrítico
+            .replace(/[\u0300-\u036f]/g, "") // Elimina los diacríticos
+            .toLowerCase(); // Convierte a minúsculas
+    };
+
+    // Función para obtener 3 preguntas sugeridas aleatorias
+    const getRandomSuggestedQuestions = () => {
+        const shuffled = [...faqData].sort(() => 0.5 - Math.random()); // Mezcla el array
+        return shuffled.slice(0, 3).map(faq => faq.question); // Toma las primeras 3 preguntas
+    };
+
+    // Función para desplazarse al final de los mensajes
+    const scrollToBottom = () => {
+        messagesEndRef.scrollIntoView({ behavior: "smooth" });
+    };
+
+    // Función para añadir un mensaje al contenedor
+    const addMessage = (role, content) => {
+        const messageDiv = document.createElement("div");
+        messageDiv.className = `mb-4 ${role === "user" ? "text-right" : "text-left"}`;
+        messageDiv.innerHTML = `
+          <span class="inline-block p-3 rounded-lg max-w-[70%] ${role === "user" ? "bg-blue-500 text-white" : "bg-gray-200 text-black"
+            }">
+            ${content}
+          </span>
+        `;
+        messagesContainer.insertBefore(messageDiv, messagesEndRef); // Insertar antes del div de referencia
+        scrollToBottom();
+    };
+
+    // Función para obtener la respuesta del bot
+    const getBotResponse = (userMessage) => {
+        const normalizedUserMessage = normalizeString(userMessage);
+
+        // 1. Buscar coincidencia exacta con la pregunta completa
+        for (const faq of faqData) {
+            if (normalizedUserMessage === normalizeString(faq.question)) {
+                return faq.answer;
+            }
+        }
+
+        // 2. Buscar similitud parcial con la pregunta
+        for (const faq of faqData) {
+            const normalizedFaqQuestion = normalizeString(faq.question);
+            const similarity = normalizedFaqQuestion.includes(normalizedUserMessage) || normalizedUserMessage.includes(normalizedFaqQuestion);
+            if (similarity) {
+                return faq.answer;
+            }
+        }
+
+        // 3. Contar cuántas keywords coinciden y tomar la que tenga más
+        let bestMatch = null;
+        let maxMatches = 0;
+        for (const faq of faqData) {
+            const matchCount = faq.keywords.reduce((count, keyword) => {
+                return normalizedUserMessage.includes(normalizeString(keyword)) ? count + 1 : count;
+            }, 0);
+            if (matchCount > maxMatches) {
+                maxMatches = matchCount;
+                bestMatch = faq;
+            }
+        }
+
+        if (bestMatch && maxMatches > 0) {
+            return bestMatch.answer;
+        }
+
+        // 4. Si no se encuentra nada
+        return "Lo siento, no pude encontrar una respuesta a tu pregunta. Por favor, intenta reformularla o pregunta sobre otro tema.";
+    };
+
+    // Manejar el envío del formulario
+    chatForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const userMessageContent = chatInput.value.trim();
+        if (!userMessageContent) return;
+
+        addMessage("user", userMessageContent);
+        chatInput.value = ""; // Limpiar el input
+
+        // Obtener respuesta del bot después de un pequeño retraso para simular "pensamiento"
+        setTimeout(() => {
+            const botResponseContent = getBotResponse(userMessageContent);
+            addMessage("bot", botResponseContent);
+        }, 500); // Retraso de 0.5 segundos
+    });
+
+    // Manejar clic en una pregunta sugerida
+    const handleSuggestedQuestionClick = (question) => {
+        chatInput.value = question; // Establecer la pregunta en el input
+        chatForm.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true })); // Simular el envío
+    };
+
+    // Renderizar las preguntas sugeridas al cargar la página
+    const renderSuggestedQuestions = () => {
+        if (suggestedQuestionsButtons) {
+            suggestedQuestionsButtons.innerHTML = ""; // Limpiar antes de añadir
+            const currentSuggestedQuestions = getRandomSuggestedQuestions(); // Obtener 3 preguntas aleatorias
+            currentSuggestedQuestions.forEach((q) => {
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className =
+                    "px-3 py-2 text-sm bg-transparent text-black border border-gray-300 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200";
+                button.textContent = q;
+                button.onclick = () => handleSuggestedQuestionClick(q);
+                suggestedQuestionsButtons.appendChild(button);
+            });
+        }
+    };
+
+    // Lógica para mostrar/ocultar el chatbot
+    chatToggleButton.addEventListener("click", () => {
+        chatbotContainer.classList.toggle("hidden");
+        if (!chatbotContainer.classList.contains("hidden")) {
+            scrollToBottom(); // Desplazarse al final al abrir
+        }
+    });
+
+    // Llamar a renderSuggestedQuestions al cargar el DOM
+    // document.addEventListener("DOMContentLoaded", renderSuggestedQuestions);
+</script>

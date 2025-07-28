@@ -25,8 +25,6 @@ class indexController {
 
     const dataEmail = validateDataEmailSchema(req.body);
 
-    console.log(dataEmail);
-
     if (!dataEmail.success) {
       return res.status(400).json({
         error: "Datos de contacto inválidos",
@@ -87,6 +85,11 @@ class indexController {
 
   async getDataCameras(req, res) {
     const quoterCameraData = await QuoterModel.getQuoteCameraData();
+    const token = req.cookies.access_token;
+    let login = false;
+    if (token) {
+      login = true;
+    }
 
     if (quoterCameraData.length === 0 || !quoterCameraData) {
       return res.render("index", {
@@ -122,6 +125,7 @@ class indexController {
     return res.render("index/quoter-cameras", {
       tittle: "Cotizador de camaras",
       cameraData: groupedDataArray,
+      login,
     });
   }
 
@@ -340,6 +344,7 @@ class indexController {
       const flatErrors = Object.values(
         customerData.error.flatten().fieldErrors
       ).flat();
+      console.log(flatErrors);
 
       return res.status(400).json({
         error: "Datos del cliente inválidos",
@@ -347,20 +352,31 @@ class indexController {
       });
     }
 
-    const saveCostumer = await CostumerModel.saveCostumerData(
+    const costumerExists = await CostumerModel.findCostumerByEmail(
       customerData.data
     );
+    let idCostumer;
+    if (costumerExists === null) {
+      //If the customer does not exist, save the customer data
 
-    if (saveCostumer.success === false) {
-      return res.status(500).json({
-        errorMessage: "Error al guardar los datos del cliente",
-        error: saveCostumer.error,
-      });
+      const saveCostumer = await CostumerModel.saveCostumerData(
+        customerData.data
+      );
+      if (saveCostumer.success === false) {
+        return res.status(500).json({
+          errorMessage: "Error al guardar los datos del cliente",
+          error: saveCostumer.error,
+        });
+      }
+      idCostumer = saveCostumer.id;
+    } else {
+      //If the customer exists, save the quote data with the existing customer ID
+      idCostumer = costumerExists.id;
     }
 
     const saveQuote = await QuoterModel.saveQuoteCameraData(
       req.body.data,
-      saveCostumer.id
+      idCostumer
     );
 
     if (saveQuote.success === false) {
@@ -379,6 +395,12 @@ class indexController {
 
   async getDataFences(req, res) {
     const quoterFenceData = await QuoterModel.getQuoteFenceData();
+
+    const token = req.cookies.access_token;
+    let login = false;
+    if (token) {
+      login = true;
+    }
 
     if (quoterFenceData.length === 0 || !quoterFenceData) {
       return res.render("index", {
@@ -414,6 +436,7 @@ class indexController {
     return res.render("index/quoter-fence", {
       tittle: "Cotizador de camaras",
       cameraData: groupedDataArray,
+      login,
     });
   }
 

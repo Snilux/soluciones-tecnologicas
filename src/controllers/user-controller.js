@@ -1,22 +1,19 @@
 import UserModel from "../models/user-model.js";
 import { validateUser } from "../schemas/users.js";
-import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
 
 class UserController {
   async getUsers(req, res) {
+    const { id } = req.user;
     try {
       const users = await UserModel.getUsers();
 
-      const { username, id } = req.user;
       return res.render("admin/users", {
         title: "Usuarios",
         users: users,
-        username: username,
         id: id,
       });
-      
     } catch (error) {
       console.log(`Error in get users controller: ${error}`);
       return res.status(403).json({

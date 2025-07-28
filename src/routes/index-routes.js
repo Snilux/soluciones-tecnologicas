@@ -25,6 +25,5 @@ router.post("/cercas", indexController.calculatePriceFences);
 
 router.post("/cercas/guardar", indexController.saveQuoteFences)
 
-// router.post("/cercas/guardar", indexController.saveQuoteFences);
 
 export default router;

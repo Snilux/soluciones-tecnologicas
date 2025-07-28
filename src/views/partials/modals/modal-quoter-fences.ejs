@@ -351,7 +351,7 @@
             console.log('Enviando pedido:', formData);
 
             // Aquí harías la llamada a tu API            
-            const response = await fetch('/pedidos', {
+            const response = await fetch('/cercas/guardar', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -379,7 +379,15 @@
                     }
                 });
             } else {
-                throw new Error(result.message || 'Error al enviar el pedido');
+                const errorMessages = result.messages?.join('\n') || result.message || 'Error al enviar el pedido';
+
+                Swal.fire({
+                    title: 'Error',
+                    icon: 'error',
+                    html: `<ul style="text-align:left;">${result.messages?.map(msg => `<li>${msg}</li>`).join('') || errorMessages}</ul>`,
+                    confirmButtonText: 'Revisar',
+                    confirmButtonColor: '#dc2626'
+                });
             }
         } catch (error) {
             console.error('Error al enviar pedido:', error);

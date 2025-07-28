@@ -1,0 +1,110 @@
+[
+  {
+    "id": "faq1",
+    "question": "¿Qué es una cerca eléctrica?",
+    "keywords": ["cerca eléctrica", "que es cerca", "definicion cerca"],
+    "answer": "Una cerca eléctrica es un sistema de seguridad que utiliza pulsos de alto voltaje para disuadir intrusos. Es una barrera física y psicológica muy efectiva."
+  },
+  {
+    "id": "faq2",
+    "question": "¿Cómo funciona una cerca eléctrica?",
+    "keywords": [
+      "como funciona cerca",
+      "funcionamiento cerca",
+      "principio cerca"
+    ],
+    "answer": "Funciona enviando pulsos eléctricos de corta duración a través de los hilos. Si alguien toca la cerca, recibe una descarga no letal pero muy desagradable, activando una alarma."
+  },
+  {
+    "id": "faq3",
+    "question": "¿Es segura una cerca eléctrica para personas y mascotas?",
+    "keywords": [
+      "seguridad cerca",
+      "peligro cerca",
+      "mascotas cerca",
+      "niños cerca"
+    ],
+    "answer": "Sí, son seguras. Los pulsos son de alto voltaje pero de muy baja corriente y corta duración, lo que las hace disuasorias pero no letales. Se instalan con señalización de advertencia."
+  },
+  {
+    "id": "faq4",
+    "question": "¿Cuál es el costo de instalación de una cerca eléctrica?",
+    "keywords": ["costo cerca", "precio cerca", "instalacion cerca"],
+    "answer": "El costo varía según la longitud, el tipo de terreno y los componentes adicionales. Te recomendamos solicitar una cotización personalizada para tu propiedad. Puedo cotizar gratuitamente aqui: <a href= '/cercas' class='text-blue-600'>Cotizador de cercas<a/>"
+  },
+  {
+    "id": "faq5",
+    "question": "¿Qué tipos de cámaras de seguridad ofrecen?",
+    "keywords": ["tipos camaras", "modelos camaras", "camaras disponibles"],
+    "answer": "Ofrecemos cámaras domo, bullet, PTZ (Pan-Tilt-Zoom), inalámbricas y con visión nocturna, adaptadas a diversas necesidades de vigilancia."
+  },
+  {
+    "id": "faq6",
+    "question": "¿Cómo se instalan las cámaras de seguridad?",
+    "keywords": ["instalacion camaras", "proceso camaras", "montaje camaras"],
+    "answer": "Nuestros técnicos profesionales realizan la instalación, asegurando la ubicación óptima, el cableado (si aplica) y la configuración del sistema para un rendimiento máximo."
+  },
+  {
+    "id": "faq7",
+    "question": "¿Puedo ver las cámaras de forma remota?",
+    "keywords": ["ver camaras remoto", "acceso remoto camaras", "app camaras"],
+    "answer": "Sí, la mayoría de nuestros sistemas permiten la visualización en tiempo real desde tu smartphone, tablet o computadora a través de una aplicación dedicada."
+  },
+  {
+    "id": "faq8",
+    "question": "¿Qué opciones de almacenamiento tienen las grabaciones?",
+    "keywords": [
+      "almacenamiento camaras",
+      "grabaciones camaras",
+      "nube camaras",
+      "disco duro camaras"
+    ],
+    "answer": "Las grabaciones se pueden almacenar localmente en un DVR/NVR con disco duro, o en la nube, dependiendo del sistema que elijas."
+  },
+  {
+    "id": "faq9",
+    "question": "¿Ofrecen garantía en sus productos?",
+    "keywords": ["garantia", "soporte", "problemas"],
+    "answer": "Sí, todos nuestros productos y servicios de instalación cuentan con garantía. Consulta los términos específicos al momento de la compra."
+  },
+  {
+    "id": "faq10",
+    "question": "¿Cómo puedo solicitar una cotización?",
+    "keywords": ["cotizacion", "presupuesto", "solicitar precio"],
+    "answer": "Puedes solicitar una cotización a través de nuestro formulario de contacto en la web, por teléfono o visitando nuestras oficinas."
+  },
+  {
+    "id": "faq11",
+    "question": "¿Ofrecen servicio de mantenimiento para cercas eléctricas y cámaras?",
+    "keywords": ["mantenimiento", "servicio", "reparacion", "soporte"],
+    "answer": "Sí, ofrecemos planes de mantenimiento preventivo y correctivo para asegurar el óptimo funcionamiento de sus cercas eléctricas y sistemas de cámaras de seguridad."
+  },
+  {
+    "id": "faq12",
+    "question": "¿Realizan instalaciones de cableado estructurado?",
+    "keywords": [
+      "cableado estructurado",
+      "redes",
+      "instalacion red",
+      "fibra optica"
+    ],
+    "answer": "Sí, somos especialistas en diseño e instalación de redes de cableado estructurado para voz, datos y video, garantizando una infraestructura de comunicación eficiente y escalable."
+  },
+  {
+    "id": "faq13",
+    "question": "¿Ofrecen soporte técnico para equipos de cómputo?",
+    "keywords": [
+      "soporte computo",
+      "ayuda pc",
+      "reparacion computadoras",
+      "asistencia tecnica"
+    ],
+    "answer": "Brindamos soporte técnico integral para equipos de cómputo, incluyendo diagnóstico, reparación de hardware y software, optimización de rendimiento y eliminación de virus."
+  },
+  {
+    "id": "faq14",
+    "question": "¿Venden equipos de cómputo?",
+    "keywords": ["venta computadoras", "equipo computo", "laptops", "pcs"],
+    "answer": "Sí, contamos con una amplia gama de equipos de cómputo de las mejores marcas, desde laptops y desktops hasta servidores y periféricos, adaptados a sus necesidades empresariales o personales."
+  }
+]

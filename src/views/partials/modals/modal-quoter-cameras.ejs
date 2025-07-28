@@ -207,7 +207,7 @@
                         </label>
                         <input type="tel" id="customerPhone" name="customerPhone" required
                             class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                            placeholder="+1 (555) 123-4567">
+                            placeholder="241 244 12 12">
                     </div>
 
                     <div>
@@ -334,7 +334,6 @@
 
             };
 
-            console.log('Enviando pedido:', formData);
 
             // Aquí harías la llamada a tu API
             const response = await fetch('/camaras/guardar', {
@@ -360,7 +359,15 @@
                     closeQuotationModal();
                 });
             } else {
-                throw new Error(result.message || 'Error al enviar el pedido');
+                const errorMessages = result.messages?.join('\n') || result.message || 'Error al enviar el pedido';
+
+                Swal.fire({
+                    title: 'Error',
+                    icon: 'error',
+                    html: `<ul style="text-align:left;">${result.messages?.map(msg => `<li>${msg}</li>`).join('') || errorMessages}</ul>`,
+                    confirmButtonText: 'Revisar',
+                    confirmButtonColor: '#dc2626'
+                });
             }
 
         } catch (error) {

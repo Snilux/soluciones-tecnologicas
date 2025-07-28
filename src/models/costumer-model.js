@@ -6,12 +6,13 @@ class CostumerModel {
   }
   async saveCostumerData(dataCostumer) {
     const connection = await getConnection();
+    const cleanedPhone = dataCostumer.phone.replace(/[^\d]/g, "");
     const query = `INSERT INTO ?? (nombre, email, telefono, direccion) VALUES (?, ?, ?, ?)`;
     const params = [
       this.clientes,
       dataCostumer.name,
       dataCostumer.email,
-      dataCostumer.phone,
+      cleanedPhone,
       dataCostumer.address,
     ];
 
@@ -37,7 +38,7 @@ class CostumerModel {
     }
   }
 
-  async findCostumerByEmail(dataCostumer){
+  async findCostumerByEmail(dataCostumer) {
     const connection = await getConnection();
     const query = `SELECT * FROM ?? WHERE email = ?`;
     const params = [this.clientes, dataCostumer.email];

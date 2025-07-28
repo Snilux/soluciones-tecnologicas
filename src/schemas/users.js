@@ -54,8 +54,12 @@ const customerSchema = z.object({
   name: z
     .string()
     .trim()
-    .min(2, "El nombre debe tener al menos 2 caracteres")
-    .max(100, "El nombre no puede tener más de 100 caracteres"),
+    .min(3, "El nombre debe tener al menos 3 caracteres")
+    .max(100, "El nombre no puede tener más de 100 caracteres")
+    .regex(
+      /^[A-Za-zÁÉÍÓÚÑáéíóúñ\s]+$/,
+      "El nombre solo debe contener letras y espacios"
+    ),
 
   email: z.string().trim().email("El correo electrónico no es válido"),
 
@@ -63,15 +67,16 @@ const customerSchema = z.object({
     .string()
     .trim()
     .regex(
-      /^[0-9\s()+-]{7,20}$/,
+      /^[0-9+\-()\s]{7,20}$/,
       "El teléfono debe tener entre 7 y 20 caracteres y solo números, espacios o símbolos (+, -, () )"
     ),
 
   address: z
     .string()
     .trim()
-    .min(5, "La dirección debe tener al menos 5 caracteres")
-    .max(200, "La dirección no puede tener más de 200 caracteres"),
+    .min(10, "La dirección debe tener al menos 10 caracteres")
+    .max(200, "La dirección no puede tener más de 200 caracteres")
+    .regex(/^[\w\s\.,#\-ºª]+$/, "La dirección contiene caracteres no válidos"),
 });
 
 const validateCostumerSchema = (data) => {

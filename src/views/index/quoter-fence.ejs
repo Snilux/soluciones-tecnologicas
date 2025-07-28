@@ -2,30 +2,55 @@
 
 
 
-<body class="min-h-screen bg-dark-bg flex flex-col items-center justify-center p-4 md:p-8">
-
+<body class="bg-dark-bg">
     <%- include('../partials/nav-index.ejs') %>
 
-    <div class="w-full max-w-4xl mx-auto">
+    <div class="mt-20 flex justify-end p-2">
+        <%if(login === true) {%>
+        <a class="text-white font-normal text-lg transition-all duration-300 hover:text-primary hover:drop-shadow-lg"
+            href="/admin/quoters/fences">
+            <svg class="h-6 w-6 text-stone-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                </path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+        </a>
+        <%}else{%>
+        <a class="text-white font-normal text-lg transition-all duration-300 hover:text-primary hover:drop-shadow-lg"
+            href="/login">
+            <svg class="h-6 w-6 text-stone-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                </path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+        </a>
+        <%}%>
+    </div>
 
+    <div class="bg-dark-bg flex flex-col items-center justify-center md:p-8">
+        <div class="w-full max-w-4xl mx-auto">
+            <div class="text-center mb-4">
+                <h1 class="text-3xl font-bold text-white mb-2">Cotizador de Cercas Eléctricas</h1>
+                <p class="text-white">Configura y obtén un presupuesto instantáneo para tu cerca eléctrica</p>
+            </div>
 
-
-        <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-white mb-2">Cotizador de Cercas Eléctricas</h1>
-            <p class="text-white">Configura y obtén un presupuesto instantáneo para tu cerca eléctrica</p>
-        </div>
-
-        <div class="flex justify-between mb-4">
-            <a href="/camaras"
-                class="inline-flex items-center px-3 py-1 border border-blue-500 rounded text-sm text-blue-500 hover:bg-blue-800 hover:text-stone-50 transition-colors">
-                <i class="ri-camera-line text-sm mr-2"></i>
-                Cámaras
-            </a>
-            <a href="/admin/quoters/fences"
-                class="inline-flex items-center px-3 py-1 border border-teal-500 rounded text-sm text-teal-500 hover:bg-teal-800 hover:text-stone-50 transition-colors">
-                <i class="ri-settings-3-line mr-2"></i>
-                Panel Admin
-            </a>
+            <div class="flex justify-between mb-2">
+                <a href="/camaras"
+                    class="inline-flex items-center px-3 py-1 border border-blue-500 rounded text-sm text-blue-500 hover:bg-blue-800 hover:text-stone-50 transition-colors">
+                    <i class="ri-camera-line text-sm mr-2"></i>
+                    Cámaras
+                </a>
+                <%if(login === true) {%>
+        <a href="/admin/quoters/fences"
+            class="inline-flex items-center px-3 py-1 border border-teal-500 rounded text-sm text-teal-500 hover:bg-teal-800 hover:text-stone-50">
+            <i class="ri-settings-3-line mr-2"></i>
+            Panel Admin
+        </a>
+        <%}%>
         </div>
 
 
@@ -60,78 +85,78 @@
 
 
                                 <% cameraData.forEach((group, index) => {%>
-                                <%if(!(group.parametro_nombre === 'Precio base del cercado')) {%>
-                                <div>
-                                    <label for="cantidadBardas" class="text-sm font-medium mb-1.5 block">
-                                        <%= group.descripcion %>
-                                    </label>
-                                    <select d="param_<%= index %>" data-param="<%= group.parametro_nombre %>"
-                                        data-param-id="<%= group.parametro_id %>"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
-                                        <option value="">Selecciona una opción</option>
-                                        <%group.items.forEach(item => {%>
-                                        <option value="<%= item.valor %>" data-precio="<%= item.precio || 0 %>"
-                                            data-factor="<%= item.factor || 1 %>">
-                                            <%= item.valor %>
-                                        </option>
-                                        <%})%>
+        <%if(!(group.parametro_nombre === 'Precio base del cercado')) {%>
+        <div>
+            <label for="cantidadBardas" class="text-sm font-medium mb-1.5 block">
+                <%= group.descripcion %>
+            </label>
+            <select d="param_<%= index %>" data-param="<%= group.parametro_nombre %>"
+                data-param-id="<%= group.parametro_id %>"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                <option value="">Selecciona una opción</option>
+                <%group.items.forEach(item => {%>
+                <option value="<%= item.valor %>" data-precio="<%= item.precio || 0 %>"
+                    data-factor="<%= item.factor || 1 %>">
+                    <%= item.valor %>
+                </option>
+                <%})%>
 
-                                        <option value="Otro">Otro</option>
+                <option value="Otro">Otro</option>
 
-                                    </select>
-                                </div>
-                                <%} %>
-                                <%}) %>
+            </select>
+        </div>
+        <%} %>
+        <%}) %>
 
-                            </div>
-                        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+
+    <!-- Resumen y Precio -->
+    <div class="md:col-span-1">
+        <div class="bg-white rounded-lg shadow-lg border-0 h-full flex flex-col">
+            <!-- Header -->
+            <div class="bg-gradient-to-r from-slate-700 to-slate-800 text-white p-6 rounded-t-lg">
+                <h3 class="text-lg font-bold">Estimado</h3>
+                <p class="text-slate-300 text-sm">Resumen de tu cotización</p>
+            </div>
+
+            <!-- Contenido -->
+            <div class="p-6 flex-grow flex flex-col">
+                <div class="bg-slate-50 rounded-lg p-4 mb-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-slate-500">Servicio:</span>
+                        <span class="text-xs px-2 py-1 rounded-full border border-slate-200 font-medium">
+                            Cerca Eléctrica
+                        </span>
+                    </div>
+
+                    <div id="resumenCercas">
+                        <!-- Resumen dinámico se generará aquí -->
                     </div>
                 </div>
             </div>
 
-            <!-- Resumen y Precio -->
-            <div class="md:col-span-1">
-                <div class="bg-white rounded-lg shadow-lg border-0 h-full flex flex-col">
-                    <!-- Header -->
-                    <div class="bg-gradient-to-r from-slate-700 to-slate-800 text-white p-6 rounded-t-lg">
-                        <h3 class="text-lg font-bold">Estimado</h3>
-                        <p class="text-slate-300 text-sm">Resumen de tu cotización</p>
-                    </div>
-
-                    <!-- Contenido -->
-                    <div class="p-6 flex-grow flex flex-col">
-                        <div class="bg-slate-50 rounded-lg p-4 mb-4">
-                            <div class="flex items-center justify-between mb-2">
-                                <span class="text-sm text-slate-500">Servicio:</span>
-                                <span class="text-xs px-2 py-1 rounded-full border border-slate-200 font-medium">
-                                    Cerca Eléctrica
-                                </span>
-                            </div>
-
-                            <div id="resumenCercas">
-                                <!-- Resumen dinámico se generará aquí -->
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Footer -->
-                    <div class="p-6 pt-0 flex flex-col gap-2">
-                        <!-- <button id="btnContactar"
+            <!-- Footer -->
+            <div class="p-6 pt-0 flex flex-col gap-2">
+                <!-- <button id="btnContactar"
                             class="w-full bg-amber-600 hover:bg-amber-700 text-white py-2 px-4 rounded-md flex items-center justify-center transition-colors">
                             <i class="ri-phone-line mr-2"></i> Contactar
                         </button> -->
-                        <button id="btnContactarDatos"
-                            class="w-full bg-amber-600 hover:bg-amber-700 text-white py-2 px-4 rounded-md flex items-center justify-center transition-colors">
-                            <i class="ri-mail-line mr-2"></i> Realizar Cotización
-                        </button>
-                    </div>
-                </div>
+                <button id="btnContactarDatos"
+                    class="w-full bg-amber-600 hover:bg-amber-700 text-white py-2 px-4 rounded-md flex items-center justify-center transition-colors">
+                    <i class="ri-mail-line mr-2"></i> Realizar Cotización
+                </button>
             </div>
-            <%- include('../partials/modals/modal-quoter-fences.ejs') %>
-
-
-            <%- include('../partials/modals/modal-quoter-other.ejs') %>
         </div>
+    </div>
+    <%- include('../partials/modals/modal-quoter-fences.ejs') %>
+
+
+    <%- include('../partials/modals/modal-quoter-other.ejs') %>
+    </div>
     </div>
     <!-- Modal HTML -->
 
@@ -487,6 +512,7 @@
             }
         }
     </script>
+    </div>
 </body>
 
 </html>
