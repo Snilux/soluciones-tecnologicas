@@ -59,7 +59,7 @@
       "nube camaras",
       "disco duro camaras"
     ],
-    "answer": "Las grabaciones se pueden almacenar localmente en un DVR/NVR con disco duro, o en la nube, dependiendo del sistema que elijas."
+    "answer": "Las grabaciones se pueden almacenar localmente en un DVR/NVR con disco duro dependiendo del sistema que elijas."
   },
   {
     "id": "faq9",
@@ -71,7 +71,7 @@
     "id": "faq10",
     "question": "¿Cómo puedo solicitar una cotización?",
     "keywords": ["cotizacion", "presupuesto", "solicitar precio"],
-    "answer": "Puedes solicitar una cotización a través de nuestro formulario de contacto en la web, por teléfono o visitando nuestras oficinas."
+    "answer": "Puedes solicitar una cotización a través de nuestro cotizadores <br> <a href= '/cercas' class='text-amber-500'>Cotizador de cercas<a/> <br> <a href= '/camaras' class='text-blue-600'>Cotizador de cámaras de seguridad <a/> <br> <a href= '#' class='text-amber-400'>Cotizador de paneles solares<a/> <br> o contactándonos directamente por teléfono o correo electrónico. Nuestro equipo te atenderá a la brevedad."
   },
   {
     "id": "faq11",
@@ -106,5 +106,142 @@
     "question": "¿Venden equipos de cómputo?",
     "keywords": ["venta computadoras", "equipo computo", "laptops", "pcs"],
     "answer": "Sí, contamos con una amplia gama de equipos de cómputo de las mejores marcas, desde laptops y desktops hasta servidores y periféricos, adaptados a sus necesidades empresariales o personales."
+  },
+  {
+    "id": "faq15",
+    "question": "¿Qué servicios de paneles solares ofrecen?",
+    "keywords": [
+      "paneles solares",
+      "energia solar",
+      "instalacion paneles",
+      "solar"
+    ],
+    "answer": "Ofrecemos instalación y mantenimiento de paneles solares. Puedes obtener una cotizacion aquí: <br> <a href= '#' class='text-amber-400'>Cotizador de paneles solares<a/>"
+  },
+  {
+    "id": "faq16",
+    "question": "¿Cuánto cuesta instalar paneles solares?",
+    "keywords": [
+      "costo paneles solares",
+      "precio instalacion solar",
+      "presupuesto solar"
+    ],
+    "answer": "El costo depende del consumo energético, la ubicación y el tipo de sistema. "
+  },
+  {
+    "id": "faq17",
+    "question": "¿Qué incluye el mantenimiento preventivo de equipos?",
+    "keywords": [
+      "mantenimiento preventivo",
+      "servicio preventivo",
+      "mantenimiento pc"
+    ],
+    "answer": "Incluye actualizaciones del sistema operativo, antivirus, instalación de software para videoconferencias, conexión de periféricos, recuperación de datos, mejora de velocidad de internet, ampliación del PC, configuración de dispositivos móviles y limpieza interna y externa."
+  },
+  {
+    "id": "faq18",
+    "question": "¿Ofrecen servicio de mantenimiento correctivo?",
+    "keywords": [
+      "mantenimiento correctivo",
+      "reparacion pc",
+      "soporte correctivo"
+    ],
+    "answer": "Sí, realizamos reinstalación de sistemas operativos y software, asesoría en compra e instalación de partes dañadas, eliminación de virus y corrección de problemas físicos en hardware."
+  },
+  {
+    "id": "faq19",
+    "question": "¿Qué equipos de cómputo venden?",
+    "keywords": [
+      "equipos computo",
+      "venta equipos",
+      "laptops desktops",
+      "servidores"
+    ],
+    "answer": "Vendemos equipos de escritorio, laptops, tablets, servidores, impresoras, grabadores de video, consumibles, switches, access points, racks, discos duros, proyectores, checadores con huella digital, GPS, pantallas, escáneres, conmutadores y cámaras."
+  },
+  {
+    "id": "faq20",
+    "question": "¿Ofrecen soporte empresarial y seguridad?",
+    "keywords": [
+      "soporte empresarial",
+      "seguridad empresarial",
+      "redes empresa"
+    ],
+    "answer": "Sí, ofrecemos estructura lógica de red, configuración de servidores, instalación de programas críticos, respaldos de información, evaluación de riesgos de seguridad, compra de servidores y equipos, apoyo a usuarios e implementación de políticas de seguridad."
+  },
+  {
+    "id": "faq21",
+    "question": "¿Instalan video porteros?",
+    "keywords": ["video porteros", "portero electrico", "instalacion portero"],
+    "answer": "Sí, realizamos instalación de video porteros para comunidades y residencias, proporcionando sistemas de comunicación y control de acceso seguros."
+  },
+  {
+    "id": "faq22",
+    "question": "¿Ofrecen instalación de alarmas inalámbricas?",
+    "keywords": [
+      "alarmas inalambricas",
+      "sistema alarma",
+      "instalacion alarma"
+    ],
+    "answer": "Sí, instalamos sistemas de alarmas inalámbricas para hogares y negocios, proporcionando protección integral con sensores de movimiento, contactos magnéticos y notificaciones remotas."
+  },
+  {
+    "id": "faq23",
+    "question": "¿Instalan y configuran conmutadores telefónicos?",
+    "keywords": ["conmutadores telefonicos", "pbx", "telefonia empresarial"],
+    "answer": "Sí, ofrecemos servicio de instalación y configuración de conmutadores telefónicos profesionales para empresas, incluyendo sistemas PBX de baja, media, alta y muy alta capacidad."
+  },
+  {
+    "id": "faq24",
+    "question": "¿Ofrecen asistencia técnica a distancia?",
+    "keywords": ["asistencia remota", "soporte remoto", "ayuda distancia"],
+    "answer": "Sí, cuando el cliente lo requiera, estamos en capacidad de ofrecer asistencia remota para dar solución de manera inmediata a los inconvenientes técnicos que se presenten."
+  },
+  {
+    "id": "faq25",
+    "question": "¿Cuáles son sus años de experiencia?",
+    "keywords": ["experiencia", "años empresa", "tiempo mercado"],
+    "answer": "Contamos con 17 años de experiencia desarrollando soluciones tecnológicas de alto valor. La innovación y mejora continua nos definen como empresa."
+  },
+  {
+    "id": "faq26",
+    "question": "¿Dónde están ubicados?",
+    "keywords": ["ubicacion", "direccion", "oficinas", "puebla"],
+    "answer": "Nos encontramos en Calz. Zavaleta 1306A Local 25, Sta Cruz Buenavista, 72150 Heroica Puebla de Zaragoza, Pue. Puedes visitarnos o contactarnos por teléfono."
+  },
+  {
+    "id": "faq27",
+    "question": "¿Qué marcas corporativas manejan?",
+    "keywords": ["marcas", "fabricantes", "proveedores", "partners"],
+    "answer": "Trabajamos con marcas como Compaq, HP, Acer, Dell, Toshiba, Lenovo, Sony VAIO, D-Link, TP-Link, Ansel Communications, Manhattan y otras marcas importantes del sector tecnológico."
+  },
+  {
+    "id": "faq28",
+    "question": "¿Cuáles son sus socios de negocios?",
+    "keywords": [
+      "socios",
+      "partners",
+      "colaboradores",
+      "intellinet",
+      "microsoft",
+      "cisco"
+    ],
+    "answer": "Nuestros socios incluyen Intellinet Network Solutions (soluciones de redes), Microsoft (software y servicios en la nube), Linksys (equipos de redes) y Cisco (soluciones de redes y telecomunicaciones)."
+  },
+  {
+    "id": "faq29",
+    "question": "¿Ofrecen servicio de seguridad perimetral?",
+    "keywords": [
+      "seguridad perimetral",
+      "proteccion perimetro",
+      "vigilancia perimetral"
+    ],
+    "answer": "Sí, implementamos soluciones de seguridad perimetral que incluyen cámaras de vigilancia, sensores de movimiento y sistemas de detección para proteger el perímetro de tu propiedad."
+  },
+  {
+    "id": "faq30",
+    "question": "¿Realizan respaldos de información crítica?",
+    "keywords": ["respaldos", "backup", "informacion critica", "datos"],
+    "answer": "Sí, ofrecemos servicios de respaldo de información crítica para empresas, incluyendo copias de seguridad automáticas, recuperación de datos y sistemas de almacenamiento seguros."
   }
 ]

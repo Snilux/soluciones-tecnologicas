@@ -1,4 +1,3 @@
-import { name } from "ejs";
 import { z } from "zod";
 
 const UserSchema = z.object({
@@ -9,6 +8,17 @@ const UserSchema = z.object({
 const validateUser = (data) => {
   return UserSchema.safeParse(data);
 };
+
+const UserSchemaEmail = z.object({
+  username: z.string().min(3, "El usuario de debe tener al menos 3 caracteres"),
+  email: z.string().trim().email("El correo electrónico no es válido"),
+  password: z.string().min(6, "La contraseña debe tener al menos 6 caracteres"),
+});
+
+const validateUserEmail = (data) => {
+  return UserSchemaEmail.safeParse(data);
+};
+
 
 const quoterCameraSchema = z.object({
   valor: z.string().min(1, "El valor es requerido"),
@@ -90,4 +100,5 @@ export {
   validateParameterDrv,
   validateDataEmailSchema,
   validateCostumerSchema,
+  validateUserEmail,
 };

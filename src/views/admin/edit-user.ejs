@@ -36,8 +36,7 @@
                         </label>
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <svg class="h-5 w-5 text-gray-500" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
+                                <svg class="h-5 w-5 text-gray-500" fill="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                                 </svg>
@@ -45,6 +44,22 @@
                             <input type="text" id="user" name="usuario" value="<%= user.username %>"
                                 class="block w-full pl-10 pr-3 py-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 bg-gray-700 focus:bg-gray-600 text-white placeholder-gray-400"
                                 placeholder="Ingresa el nuevo usuario" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="usuario" class="block text-sm font-medium text-gray-300 mb-2">
+                            Email
+                        </label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="w-4 h-4 text-white/60" viewBox="0 0 24 24" fill="currentColor">
+                                    <path
+                                        d="M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z" />
+                                </svg>
+                            </div>
+                            <input type="email" id="email" name="email" value="<%= user.email %>"
+                                class="block w-full pl-10 pr-3 py-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 bg-gray-700 focus:bg-gray-600 text-white placeholder-gray-400"
+                                placeholder="Ingresa el nuevo email" required>
                         </div>
                     </div>
 
@@ -55,18 +70,16 @@
                         </label>
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <svg class="h-5 w-5 text-gray-500" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
-                                    </path>
+                                <svg class="w-4 h-4 text-white/60" viewBox="0 0 24 24" fill="currentColor">
+                                    <path
+                                        d="M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z" />
                                 </svg>
                             </div>
                             <input type="password" id="password" name="password"
                                 class="block w-full pl-10 pr-10 py-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 bg-gray-700 focus:bg-gray-600 text-white placeholder-gray-400"
-                                placeholder="Ingresa la nueva contraseña" required>
+                                placeholder="Ingresa la nueva contraseña">
 
-                            <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center"
+                            <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center "
                                 onclick="togglePassword()">
                                 <svg id="eye-icon" class="h-5 w-5 text-gray-500 hover:text-gray-300 transition-colors"
                                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -89,9 +102,10 @@
                             Guardar cambios
                         </button>
                         <a href="/admin/users"
-                            class="group relative w-full flex justify-center py-3 px-4 mt-3 border border-transparent text-sm font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:ring-offset-gray-800 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-blue-500/25">
-                            <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-                            </span>
+                            class="mt-6 w-full bg-transparent border border-white/30 text-white/90 font-medium py-3.5 px-4 rounded-lg transition-all duration-300 hover:bg-white/10 hover:border-white/50 focus:outline-none focus:ring-3 focus:ring-white/20 flex items-center justify-center gap-2">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" />
+                            </svg>
                             Volver
                         </a>
                     </div>
@@ -129,6 +143,7 @@
         const form = document.getElementById('update-user-form');
         const userIdInput = document.getElementById('id');
         const usernameInput = document.getElementById('user');
+        const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
 
         form.addEventListener('submit', async (event) => {
@@ -137,13 +152,14 @@
             const userId = userIdInput.value;
             const username = usernameInput.value;
             const password = passwordInput.value;
+            const email = emailInput.value;
 
             const data = {
                 id: userId,
                 username: username,
+                email: email,
                 password: password
             };
-            console.log(data);
             try {
 
                 const response = await fetch(`/admin/users/${userId}`, {

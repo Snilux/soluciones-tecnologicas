@@ -1,3 +1,4 @@
+import { email } from "zod/v4";
 import getConnection from "../db.js";
 import bcrypt from "bcrypt";
 
@@ -32,7 +33,7 @@ class UserModel {
   }
 
   async createUser(data) {
-    const { username, password } = data;
+    const { username, password, email } = data;
 
     // Check if the user already exists
     const userExists = await this.validateUser(username);
@@ -43,7 +44,7 @@ class UserModel {
       };
     }
 
-    const query = `INSERT INTO ?? (username, pass) VALUES (?, ? )`;
+    const query = `INSERT INTO ?? (username, pass, email) VALUES (?, ?, ?)`;
     const connection = await getConnection();
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -53,6 +54,7 @@ class UserModel {
         this.table,
         username,
         hashedPassword,
+        email,
       ]);
 
       return {
@@ -79,6 +81,7 @@ class UserModel {
       }
       const user = {
         username: results[0][0].username,
+        email: results[0][0].email,
         id: results[0][0].id,
       };
       console.log(user);
@@ -90,8 +93,11 @@ class UserModel {
   }
 
   async updateUser(id, data) {
-    const { username, password } = data;
-    const query = `UPDATE ?? SET username = ? , pass = ? WHERE id = ? `;
+    const { username, email, password } = data;
+    console.log(data);
+    console.log(id);
+
+    const query = `UPDATE ?? SET username = ?, pass = ?, email = ? WHERE id = ? `;
     const connection = await getConnection();
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -100,6 +106,7 @@ class UserModel {
         this.table,
         username,
         hashedPassword,
+        email,
         id,
       ]);
       if (results.affectedRows === 0) {

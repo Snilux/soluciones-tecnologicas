@@ -1,5 +1,5 @@
 import UserModel from "../models/user-model.js";
-import { validateUser } from "../schemas/users.js";
+import { validateUserEmail } from "../schemas/users.js";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -25,7 +25,7 @@ class UserController {
 
   async addUser(req, res) {
     try {
-      const user = validateUser(req.body);
+      const user = validateUserEmail(req.body);
 
       if (!user.success) {
         return res.status(400).json({
@@ -64,7 +64,9 @@ class UserController {
       const user = await UserModel.getUserById(id);
 
       if (!user) {
-        return res.status(404).json({ error: "User not found" });
+        res.render("error", {
+          tittle: "Error",
+        });
       }
 
       res.render("admin/edit-user", {
@@ -76,10 +78,10 @@ class UserController {
       res.status(500).json({ error: "Internal Server Error" });
     }
   }
-
+  
   async updateUser(req, res) {
     const { id } = req.params;
-    const user = validateUser(req.body);
+    const user = validateUserEmail(req.body);
 
     if (!user.success) {
       const errors = user.error.errors.map((err) => {

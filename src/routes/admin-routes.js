@@ -7,7 +7,6 @@ const router = express.Router();
 
 router.use("/users", userRoutes);
 router.use("/quoters", quoterRoutes);
-
 router.use("/saves", quoterSavesRoutes)
 
 export default router;

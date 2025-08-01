@@ -21,6 +21,11 @@ export default {
         "slide-down": "slideDown 0.3s ease-out",
         "hover-lift": "hoverLift 0.3s ease-out",
         "glow-pulse": "glowPulse 2s ease-in-out infinite",
+        "bounce-gentle": "bounceGentle 0.3s ease-in-out",
+        float: "float 4s ease-in-out infinite",
+        "rotate-slow": "rotateSlow 8s linear infinite",
+        "pulse-soft": "pulseSoft 3s ease-in-out infinite",
+        "slide-up": "slideUp 0.6s ease-out",
       },
       keyframes: {
         fadeIn: {
@@ -42,6 +47,27 @@ export default {
         glowPulse: {
           "0%, 100%": { boxShadow: "0 0 20px rgba(61, 190, 255, 0.3)" },
           "50%": { boxShadow: "0 0 30px rgba(61, 190, 255, 0.6)" },
+        },
+        bounceGentle: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-2px)" },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0px) rotate(0deg)" },
+          "33%": { transform: "translateY(-10px) rotate(2deg)" },
+          "66%": { transform: "translateY(-5px) rotate(-1deg)" },
+        },
+        rotateSlow: {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
+        pulseSoft: {
+          "0%, 100%": { opacity: "0.6" },
+          "50%": { opacity: "1" },
+        },
+        slideUp: {
+          "0%": { opacity: "0", transform: "translateY(20px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
         },
       },
       colors: {

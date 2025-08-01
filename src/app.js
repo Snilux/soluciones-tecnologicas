@@ -29,7 +29,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRoutes);
 app.use("/login", loginRoutes);
 app.use("/admin", verifyToken, adminRouter);
-// app.use("/admin",  adminRouter);
+// app.use("/admin", adminRouter);
 
 app.use((req, res) => {
   res.status(404).render("error", { title: "Error" });

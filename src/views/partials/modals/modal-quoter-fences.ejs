@@ -347,10 +347,7 @@
                     remoteControl: document.getElementById('iconControlRemoto')?.textContent || '',
                 }
             };
-
-            console.log('Enviando pedido:', formData);
-
-            // Aquí harías la llamada a tu API            
+      
             const response = await fetch('/cercas/guardar', {
                 method: 'POST',
                 headers: {
