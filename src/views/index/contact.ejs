@@ -105,26 +105,6 @@
                                 </a>
                             </div>
                         </div>
-
-                        <!-- Location -->
-                        <!-- <div class="bg-black/20 rounded-2xl p-6 border border-white/10">
-              <h3 class="text-2xl font-semibold text-primary mb-4 text-center">
-                <i class="fas fa-map-marker-alt mr-3"></i>
-                Ubicación
-              </h3>
-              <div class="rounded-xl overflow-hidden shadow-lg">
-                <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.326647248547!2d-98.24589002582904!3d19.445917641307453!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85cfc02f4709bafd%3A0xc7a5aa2280f10e00!2sCalz.%20Zavaleta%201306A%20Local%2025%2C%20Sta%20Cruz%20Buenavista%2C%2072150%20Puebla%2C%20Pue.!5e0!3m2!1ses-419!2smx!4v1717784057405!5m2!1ses-419!2smx"
-                  width="100%" 
-                  height="200" 
-                  style="border:0;" 
-                  allowfullscreen="" 
-                  loading="lazy"
-                  class="rounded-xl">
-                </iframe>
-              </div>
-            </div> -->
-
                     </div>
 
                     <!-- Contact Form -->
@@ -134,7 +114,7 @@
                             Envíanos un mensaje
                         </h3>
 
-                        <form class="space-y-6">
+                        <form class="space-y-6" id="contact-form">
                             <div>
                                 <label for="nombre" class="block text-white font-semibold mb-2">
                                     Nombre
@@ -158,7 +138,7 @@
                                 <textarea id="message" rows="4" placeholder="Escribe tu mensaje" required
                                     class="w-full px-4 py-3 bg-white/10 border-2 border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-primary focus:bg-white/20 transition-all duration-300 resize-none"></textarea>
                             </div>
-
+                            <div class="g-recaptcha" data-sitekey="6Lez-J0rAAAAAAGYAOjZZxjPugCODSqz87aNqr7G"></div>
                             <div class="text-center">
                                 <button type="submit"
                                     class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-primary to-blue-500 text-white font-bold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
@@ -177,64 +157,48 @@
     </div>
 
     <%- include('../partials/footer.ejs') %>
-
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script src="/js/nav.js"></script>
     <script>
-        document.querySelector('form').addEventListener('submit', async () => {
-            let name = document.getElementById('name').value;
-            let email = document.getElementById('email').value
-            let message = document.getElementById('message').value
+        document.getElementById("contact-form").addEventListener("submit", async (e) => {
+            e.preventDefault();
 
-            const data = {
-                name,
-                email,
-                message
+            const token = grecaptcha.getResponse();
+
+            if (!token) {
+                return Swal.fire("Error", "Por favor, completa el reCAPTCHA", "error");
             }
+
+            const formData = {
+                name: document.getElementById("name").value,
+                email: document.getElementById("email").value,
+                message: document.getElementById("message").value,
+                "g-recaptcha-response": token,
+            };
 
             try {
-                const response = await fetch('/contacto', {
-                    method: 'POST',
+                const res = await fetch("/contacto", {
+                    method: "POST",
                     headers: {
-                        'Content-Type': 'application/json'
+                        "Content-Type": "application/json",
                     },
-                    body: JSON.stringify(data)
+                    body: JSON.stringify(formData),
+                });
 
-                })
+                const result = await res.json();
 
-                console.log(response);
-
-
-                const result = await response.json();
-
-                if (response.ok) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: "Éxito",
-                        text: result.message,
-                        confirmButtonText: 'Aceptar',
-                    })
+                if (res.ok) {
+                    Swal.fire("Éxito", result.message, "success");
+                    grecaptcha.reset(); // resetea el captcha
+                    e.target.reset(); // limpia el formulario
                 } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: "Error",
-                        text: result.error || 'Ocurrió un error al enviar el mensaje.',
-                        confirmButtonText: 'Aceptar',
-                    })
+                    Swal.fire("Error", result.error || "Ocurrió un error", "error");
                 }
-
-            } catch (error) {
-                console.error("Error al enviar la solicitud:", error);
-                Swal.fire(
-                    "Error",
-                    "Error de conexión o inesperado. Inténtalo de nuevo.",
-                    "error"
-                );
+            } catch (err) {
+                console.error(err);
+                Swal.fire("Error", "Error al enviar el formulario", "error");
             }
-
-
-
-
-        })
+        });
     </script>
 </body>
 

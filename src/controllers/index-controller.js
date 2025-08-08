@@ -21,20 +21,45 @@ class indexController {
   }
 
   async sendContactEmail(req, res) {
-    console.log(req.body);
+    console.log("Hola");
 
-    const dataEmail = validateDataEmailSchema(req.body);
+    const captchaToken = req.body["g-recaptcha-response"];
 
-    if (!dataEmail.success) {
+    if (!captchaToken) {
       return res.status(400).json({
-        error: "Datos de contacto inválidos",
-        details: dataEmail.error.errors,
+        error: "Por favor, completa el reCAPTCHA.",
       });
     }
 
-    const { name, email, message } = dataEmail.data;
+    const secretKey = process.env.RECAPTCHA_SECRET_KEY;
 
     try {
+      const verificationRes = await fetch(
+        `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${captchaToken}`,
+        {
+          method: "POST",
+        }
+      );
+
+      const captchaResult = await verificationRes.json();
+
+      if (!captchaResult.success) {
+        return res.status(403).json({
+          error: "Falló la verificación del reCAPTCHA. Inténtalo de nuevo.",
+        });
+      }
+
+      const dataEmail = validateDataEmailSchema(req.body);
+
+      if (!dataEmail.success) {
+        return res.status(400).json({
+          error: "Datos de contacto inválidos",
+          details: dataEmail.error.errors,
+        });
+      }
+
+      const { name, email, message } = dataEmail.data;
+
       const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
@@ -46,7 +71,7 @@ class indexController {
       const mailOptions = {
         from: `Correo de Soluciones Tecnologicas <${process.env.EMAIL_HOST}>`,
         to: process.env.EMAIL_HOST,
-        replyTo: email, // permite responder al usuario
+        replyTo: email,
         subject: "Nuevo mensaje de contacto Soluciones Tecnologicas",
         html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e5e7eb; border-radius: 10px;">
@@ -57,7 +82,7 @@ class indexController {
           <div style="background-color: #f3f4f6; padding: 15px; border-radius: 5px; white-space: pre-wrap;">
             ${message}
           </div>
-          <p style="margin-top: 20px; font-size: 0.9em; color: #6b7280; text-align: center; ">Mensaje de contacto de web Soluciones Tecnologicas.</p>
+          <p style="margin-top: 20px; font-size: 0.9em; color: #6b7280; text-align: center;">Mensaje de contacto de web Soluciones Tecnologicas.</p>
         </div>
       `,
       };
@@ -66,8 +91,8 @@ class indexController {
 
       return res.status(200).json({ message: "Correo enviado correctamente" });
     } catch (error) {
-      console.error("Error al enviar el correo:", error);
-      return res.status(500).json({ error: "Error al enviar el correo" });
+      console.error("Error en reCAPTCHA o al enviar correo:", error);
+      return res.status(500).json({ error: "Error interno del servidor" });
     }
   }
 
