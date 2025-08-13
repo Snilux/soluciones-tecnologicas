@@ -421,6 +421,162 @@ class QuoterController {
       });
     }
   }
+
+  async quoterPanelsAdmin(req, res) {
+    try {
+      const panelsData = await QuoterModel.getQuotePanelData();
+
+      if (panelsData.length === 0) {
+        return res.render("admin/quoter-panels", {
+          tittle: "Datos de cotización de paneles",
+          panelsData: [],
+        });
+      }
+
+      const groupedData = {};
+      panelsData.forEach((item) => {
+        const key = item.parametro_id;
+        if (!groupedData[key]) {
+          groupedData[key] = {
+            parametro_nombre: item.parametro_nombre,
+            descripcion: item.descripcion,
+            items: [],
+          };
+        }
+        groupedData[key].items.push(item);
+      });
+
+      //Make a array
+      const groupedDataArray = Object.values(groupedData);
+
+      return res.render("admin/quoter-panels", {
+        tittle: "Datos de cotización de paneles",
+        groupedData: groupedDataArray,
+      });
+    } catch (error) {
+      console.log(`Error in deleteCameraParameter ${error}`);
+      return res.render("error", {
+        tittle: "Error",
+      });
+    }
+  }
+
+  async addPanelParameter(req, res) {
+    const panelParameter = validateQuoterParameter(req.body);
+
+    if (!panelParameter.success) {
+      const errors = panelParameter.error.errors.map((err) => {
+        const field = err.path.join(".");
+        return `${field}: ${err.message}`;
+      });
+
+      return res.status(400).json({
+        errorMessage: `Error en la validación de los datos \n`,
+        errors: errors || "Datos inválidos",
+      });
+    }
+    const { parametro_nombre, descripcion } = panelParameter.data;
+
+    const id = await QuoterModel.getIdCameraParameterByName(
+      parametro_nombre,
+      descripcion,
+      "panels"
+    );
+
+    if (!id) {
+      return res.status(404).json({
+        errorMessage: `No se encontró el parámetro con el nombre ${panelParameter.parametro_nombre} y descripción ${panelParameter.descripcion}`,
+      });
+    }
+
+    try {
+      const result = await QuoterModel.addCameraParameter(
+        id,
+        panelParameter.data,
+        "panel"
+      );
+
+      if (!result.success) {
+        return res.status(404).json({
+          errorMessage: result.errorMessage,
+        });
+      }
+
+      return res.status(201).json({
+        successMessage: result.successMessage,
+        affectedRows: result.affectedRows,
+      });
+    } catch (error) {
+      console.log(`Error in addCameraParameter ${error}`);
+      return res.status(500).json({
+        errorMessage: `Error al agregar el parámetro`,
+      });
+    }
+  }
+
+  async updatePanelParameter(req, res) {
+    console.log(req.body);
+
+    const { id } = req.params;
+    const panelParameter = validateQuoterCamera(req.body);
+    if (!panelParameter.success) {
+      const errors = panelParameter.error.errors.map((err) => {
+        const field = err.path.join(".");
+        return `${field}: ${err.message}`;
+      });
+
+      return res.status(400).json({
+        errorMessage: `Error en la validación de los datos \n`,
+        errors: errors || "Datos inválidos",
+      });
+    }
+
+    try {
+      const updatedPanelParameter = await QuoterModel.updateCameraParameter(
+        id,
+        panelParameter.data,
+        "panel"
+      );
+
+      if (!updatedPanelParameter.success) {
+        return res.status(404).json({
+          errorMessage: updatedPanelParameter.errorMessage,
+        });
+      }
+
+      return res.status(200).json({
+        successMessage: updatedPanelParameter.successMessage,
+        affectedRows: updatedPanelParameter.affectedRows,
+      });
+    } catch (error) {
+      console.log(`Error in update panel parameter ${error}`);
+      return res.status(500).json({
+        errorMessage: "Error al actualizar el parametro de panel",
+      });
+    }
+  }
+
+  async deletePanelParameter(req, res) {
+    const { id } = req.params;
+    try {
+      const result = await QuoterModel.deleteCameraParameter(id, "panel");
+      if (result.affectedRows === 0) {
+        return res.status(404).json({
+          errorMessage: `No se encontró el parámetro con ID ${id}`,
+        });
+      }
+
+      return res.status(200).json({
+        successMessage: "Parametro eliminado correctamente",
+        affectedRows: result.affectedRows,
+      });
+    } catch (error) {
+      console.log(`Error in deletePanelParameter ${error}`);
+      return res.status(500).json({
+        errorMessage: `Error al eliminar el parámetro de panel `,
+      });
+    }
+  }
 }
 
 export default new QuoterController();

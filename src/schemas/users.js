@@ -19,7 +19,6 @@ const validateUserEmail = (data) => {
   return UserSchemaEmail.safeParse(data);
 };
 
-
 const quoterCameraSchema = z.object({
   valor: z.string().min(1, "El valor es requerido"),
   precio: z.number().min(0, "El precio debe ser un número positivo"),
@@ -31,7 +30,7 @@ const validateQuoterCamera = (data) => {
 
 const parameterSchema = z.object({
   parametro_nombre: z.string().min(1, "El nombre del parámetro es requerido"),
-  descripcion: z.string().min(1, "El nombre del parámetro es requerido"),
+  descripcion: z.string().min(1, "La descripcion del parámetro es requerido"),
   valor: z.string().min(1, "El valor es requerido"),
   precio: z.number().min(0, "El precio debe ser un número positivo"),
 });

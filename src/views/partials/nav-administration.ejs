@@ -18,7 +18,7 @@
                 </div>
 
                 <!-- Desktop Navigation Links -->
-                <div class="hidden sm:ml-8 sm:flex sm:space-x-8">
+                <div class="hidden lg:ml-8 lg:flex lg:space-x-8">
                     <a href="/admin/users" id="nav-users"
                         class="nav-link border-transparent text-gray-300 hover:border-gray-300 hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
                         <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -48,6 +48,23 @@
 
                         Cercas eléctricas
                     </a>
+                    <a href="/admin/quoters/panels" id="nav-reports"
+                        class="nav-link border-transparent text-gray-300 hover:border-gray-300 hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="1" x2="12" y2="3" />
+                            <line x1="12" y1="21" x2="12" y2="23" />
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                            <line x1="1" y1="12" x2="3" y2="12" />
+                            <line x1="21" y1="12" x2="23" y2="12" />
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                            <circle cx="12" cy="12" r="5" />
+                        </svg>
+
+                        Paneles solares
+                    </a>
                     <a href="/admin/saves" id="nav-reports"
                         class="nav-link border-transparent text-gray-300 hover:border-gray-300 hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
 
@@ -61,7 +78,7 @@
 
                         Cotizaciones
                     </a>
-                    <a href="/" id="nav-reports"
+                    <!-- <a href="/" id="nav-reports"
                         class="nav-link border-transparent text-gray-300 hover:border-gray-300 hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
 
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24"
@@ -70,17 +87,13 @@
                                 d="M3 10.5L12 3l9 7.5M4.5 10.5V20a1 1 0 001 1h13a1 1 0 001-1v-9.5" />
                         </svg>
 
-
-
                         Inicio
-                    </a>
+                    </a> -->
                 </div>
             </div>
 
             <!-- User Menu and Logout -->
-            <div class="hidden sm:ml-6 sm:flex sm:items-center">
-
-
+            <div class="hidden lg:ml-6 lg:flex lg:items-center">
                 <!-- Logout Button -->
                 <button onclick="logout()"
                     class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
@@ -94,7 +107,7 @@
             </div>
 
             <!-- Mobile menu button -->
-            <div class="sm:hidden flex items-center">
+            <div class="lg:hidden flex items-center">
                 <button onclick="toggleMobileMenu()"
                     class="text-gray-400 hover:text-white focus:outline-none focus:text-white p-2">
                     <svg id="mobile-menu-icon" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -107,7 +120,7 @@
     </div>
 
     <!-- Mobile menu -->
-    <div id="mobile-menu" class="sm:hidden hidden">
+    <div id="mobile-menu" class="lg:hidden hidden">
         <div class="pt-2 pb-3 space-y-1 bg-gray-700">
             <a href="/admin/users" onclick="showPanel('users'); toggleMobileMenu()"
                 class="mobile-nav-link bg-gray-800 border-blue-500 text-white block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
@@ -143,6 +156,29 @@
                     Cercas eléctricas
                 </div>
             </a>
+            <a href="/admin/quoters/panels" onclick="showPanel('reports'); toggleMobileMenu()"
+                class="mobile-nav-link border-transparent text-gray-300 hover:bg-gray-600 hover:border-gray-300 hover:text-white block pl-3 pr-4 py-2 border-l-4 text-base font-medium transition-colors">
+                <div class="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <!-- Rayos del sol -->
+                        <line x1="12" y1="1" x2="12" y2="3" />
+                        <line x1="12" y1="21" x2="12" y2="23" />
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                        <line x1="1" y1="12" x2="3" y2="12" />
+                        <line x1="21" y1="12" x2="23" y2="12" />
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+
+                        <!-- Círculo del sol -->
+                        <circle cx="12" cy="12" r="5" />
+                    </svg>
+
+
+                    Paneles solares
+                </div>
+            </a>
             <a href="/admin/saves" onclick="showPanel('reports'); toggleMobileMenu()"
                 class="mobile-nav-link border-transparent text-gray-300 hover:bg-gray-600 hover:border-gray-300 hover:text-white block pl-3 pr-4 py-2 border-l-4 text-base font-medium transition-colors">
                 <div class="flex items-center">
@@ -157,7 +193,7 @@
                     Cotizaciones
                 </div>
             </a>
-            <a href="/" onclick="showPanel('reports'); toggleMobileMenu()"
+            <!-- <a href="/" onclick="showPanel('reports'); toggleMobileMenu()"
                 class="mobile-nav-link border-transparent text-gray-300 hover:bg-gray-600 hover:border-gray-300 hover:text-white block pl-3 pr-4 py-2 border-l-4 text-base font-medium transition-colors">
                 <div class="flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24"
@@ -168,7 +204,7 @@
 
                     Inicio
                 </div>
-            </a>
+            </a> -->
         </div>
         <div class="pt-4 pb-3 border-t border-gray-600">
 

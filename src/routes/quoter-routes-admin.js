@@ -1,5 +1,6 @@
 import express from "express";
 import QuoterController from "../controllers/quoter-controller.js";
+import quoterController from "../controllers/quoter-controller.js";
 
 const router = express.Router();
 
@@ -26,5 +27,15 @@ router.post("/fences", QuoterController.addFenceParameter);
 router.put("/fences/:id", QuoterController.updateFenceParameter);
 
 router.delete("/fences/:id", QuoterController.deleteFenceParameter);
+
+/* =================== Routes for panel quoter in admin panel */
+
+router.get("/panels", quoterController.quoterPanelsAdmin);
+
+router.post("/panels", quoterController.addPanelParameter);
+
+router.put("/panels/:id", quoterController.updatePanelParameter);
+
+router.delete("/panels/:id", quoterController.deletePanelParameter);
 
 export default router;

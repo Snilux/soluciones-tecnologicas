@@ -9,6 +9,9 @@ class QuoterModel {
     this.parametros_cercado = "parametros_cercado";
     this.valores_parametro_cercado = "valores_parametro_cercado";
 
+    this.parametros_paneles = "parametros_paneles";
+    this.valores_parametro_paneles = "valores_parametro_paneles";
+
     this.cotizacion_camaras = "cotizacion_camaras";
     this.cotizacion_cercado = "cotizacion_cercas";
   }
@@ -74,6 +77,13 @@ class QuoterModel {
         cameraData.precio,
         id,
       ];
+    } else if (table === "panel") {
+      params = [
+        this.valores_parametro_paneles,
+        cameraData.valor,
+        cameraData.precio,
+        id,
+      ];
     } else {
       return {
         errorMessage: `No se encontró la tabla ${table}`,
@@ -112,6 +122,8 @@ class QuoterModel {
       params = [this.valores_parametro_camaras, id];
     } else if (table === "fence") {
       params = [this.valores_parametro_cercado, id];
+    } else if (table === "panel") {
+      params = [this.valores_parametro_paneles, id];
     } else {
       return {
         errorMessage: `No se encontró la tabla ${table}`,
@@ -150,6 +162,8 @@ class QuoterModel {
       params = [this.parametros_cercado, name, description];
     } else if (table === "cameras") {
       params = [this.parametros_camaras, name, description];
+    } else if (table === "panels") {
+      params = [this.parametros_paneles, name, description];
     } else {
       return {
         errorMessage: `No se encontró la tabla ${table}`,
@@ -179,6 +193,8 @@ class QuoterModel {
       params = [this.valores_parametro_cercado, id, data.valor, data.precio];
     } else if (table === "camera") {
       params = [this.valores_parametro_camaras, id, data.valor, data.precio];
+    } else if (table === "panel") {
+      params = [this.valores_parametro_paneles, id, data.valor, data.precio];
     } else {
       return {
         errorMessage: `No se encontró la tabla ${table}`,
@@ -407,6 +423,33 @@ class QuoterModel {
       };
     } catch (error) {
       console.error("Error in saveQuoteCameraData:", error);
+      throw error;
+    } finally {
+      connection.release();
+    }
+  }
+
+  async getQuotePanelData() {
+    const connection = await getConnection();
+    const queryPanelData = `SELECT 
+      p.id AS parametro_id,
+      p.nombre AS parametro_nombre,
+      p.descripcion,
+      v.id AS valor_id,
+      v.valor,
+      v.precio
+      FROM 
+      ${this.parametros_paneles} p
+      LEFT JOIN 
+      ${this.valores_parametro_paneles} v ON p.id = v.parametro_id
+      ORDER BY 
+      p.id, v.id;`;
+
+    try {
+      const result = await connection.query(queryPanelData);
+      return result[0];
+    } catch (error) {
+      console.error("Error in getQuotePanelData:", error);
       throw error;
     } finally {
       connection.release();

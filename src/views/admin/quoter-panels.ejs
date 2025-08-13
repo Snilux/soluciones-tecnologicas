@@ -1,0 +1,492 @@
+<%- include('../partials/head.ejs') %>
+
+<body class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+    <!-- Main Content -->
+    <%- include('../partials/nav-administration.ejs') %>
+
+    <div class="p-6">
+        <div class="max-w-7xl mx-auto">
+            <!-- Header -->
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 mb-8">
+                <div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="p-2 bg-blue-500/20 rounded-lg">
+                            <svg class="h-6 w-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                                </path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                        </div>
+                        <h1 class="text-2xl sm:text-3xl font-bold text-white">Panel De Administración Para Panles
+                            Solares</h1>
+                    </div>
+                    <p class="text-gray-400 text-sm sm:text-base">Configura los parámetros del cotizador de servicios
+                    </p>
+                </div>
+
+                <a href="/cercas"
+                    class="bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white px-3 py-2 sm:px-4 sm:py-2 rounded-lg flex items-center justify-center gap-2 transition-colors duration-200 border border-gray-600 text-sm sm:text-base w-full sm:w-auto">
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    <span class="sm:inline">Volver al Cotizador</span>
+                </a>
+            </div>
+
+
+            <!-- Tabs -->
+            <div class="mb-8">
+                <div class="border-b border-gray-700">
+                    <nav class="-mb-px flex space-x-8">
+                        <button
+                            class="tab-button active border-b-2 border-blue-500 py-2 px-1 text-sm font-medium text-blue-400">
+                            Opciones de Formulario
+                        </button>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Tab Content -->
+            <div id="formulario-tab" class="tab-content">
+                <!-- Configuration Cards Grid -->
+                <div class="p-4 sm:p-6 lg:p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <% groupedData.forEach(group => { %>
+
+                    <div class="bg-gray-900 border border-gray-600 rounded-lg overflow-hidden shadow-lg">
+
+                        <div class="p-4 bg-gray-800 border-b border-gray-700">
+                            <div class="flex justify-between items-start gap-3 mb-3">
+                                <div class="flex-1 min-w-0">
+                                    <h3 class="text-lg font-semibold text-white mb-1 truncate">
+                                        <%= group.parametro_nombre %></h3>
+                                    <p class="text-sm text-gray-400 line-clamp-2"><%= group.descripcion %></p>
+                                </div>
+
+                                <button
+                                    onclick="abrirModalAgregar('<%= group.parametro_nombre %>', '<%= group.descripcion %>')"
+                                    class="bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded text-xs flex items-center gap-1 transition-colors flex-shrink-0">
+                                    <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                    </svg>
+                                    <span class="hidden sm:inline">Agregar</span>
+                                </button>
+                            </div>
+                        </div>
+
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-xs">
+                                <thead class="bg-gray-700">
+                                    <tr>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-300 uppercase">
+                                            Valor
+                                        </th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-300 uppercase">
+                                            Precio
+                                        </th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-300 uppercase">
+                                            Acciones
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-600">
+                                    <% group.items.forEach(item => { %>
+
+                                    <tr class="hover:bg-gray-800 transition-colors">
+                                        <td class="px-4 py-2 whitespace-nowrap">
+                                            <div class="text-sm font-medium text-white"><%= item.valor %></div>
+                                        </td>
+                                        <td class="px-4 py-2 whitespace-nowrap">
+                                            <div class="text-sm text-gray-300">$<%= item.precio %></div>
+                                        </td>
+                                        <td class="px-4 py-2 whitespace-nowrap">
+                                            <div class="flex gap-2">
+                                                <button
+                                                    onclick="abrirModalEditar('<%= item.valor_id %>', '<%= item.valor %>', '<%= item.precio %>', '<%= item.parametro_nombre %>')"
+                                                    class="text-blue-400 hover:text-blue-300 hover:bg-blue-500/20 p-2 rounded transition-colors"
+                                                    title="Editar">
+                                                    <svg class="h-4 w-4" fill="none" stroke="currentColor"
+                                                        viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+                                                        </path>
+                                                    </svg>
+                                                </button>
+                                                <button
+                                                    onclick="abrirModalEliminar('<%= item.valor_id %>', '<%= item.valor %>')"
+                                                    class="text-red-400 hover:text-red-300 hover:bg-red-500/20 p-2 rounded transition-colors"
+                                                    title="Eliminar">
+                                                    <svg class="h-4 w-4" fill="none" stroke="currentColor"
+                                                        viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                                        </path>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <% }) %>
+                </div>
+
+            </div>
+        </div>
+        <!-- Modal para Agregar -->
+        <div id="modalAgregar"
+            class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+            <div class="bg-gray-800 rounded-lg shadow-xl w-full max-w-md mx-4">
+                <!-- Header del Modal -->
+                <div class="flex justify-between items-center p-6 border-b border-gray-700">
+                    <h3 id="tituloAgregar" class="text-lg font-semibold text-white">
+                        Agregar valor de: Altura de instalación
+                    </h3>
+                    <button onclick="cerrarModal('modalAgregar')"
+                        class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Contenido del Modal -->
+                <div class="p-6">
+                    <form id="formAgregar">
+                        <div class="mb-4">
+                            <label for="valorAgregar" class="block text-sm font-medium text-gray-300 mb-2">
+                                Valor:
+                            </label>
+                            <input type="text" id="valorAgregar" name="valor" placeholder="Ej: 2, 3, 4"
+                                class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                required>
+                        </div>
+
+                        <div class="mb-6">
+                            <label for="precioAgregar" class="block text-sm font-medium text-gray-300 mb-2">
+                                Precio:
+                            </label>
+                            <input type="number" id="precioAgregar" name="precio" placeholder="0.00" step="0.01" min="0"
+                                class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                required>
+                        </div>
+
+                        <!-- Botones -->
+                        <div class="flex justify-end gap-3">
+                            <button type="button" onclick="cerrarModal('modalAgregar')"
+                                class="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-md transition-colors">
+                                Cancelar
+                            </button>
+                            <button type="submit"
+                                class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors">
+                                Guardar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para Editar -->
+        <div id="modalEditar" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+            <div class="bg-gray-800 rounded-lg shadow-xl w-full max-w-md mx-4">
+                <!-- Header del Modal -->
+                <div class="flex justify-between items-center p-6 border-b border-gray-700">
+                    <h3 id="tituloEditar" class="text-lg font-semibold text-white">
+                        Editar valor de: Altura de instalación
+                    </h3>
+                    <button onclick="cerrarModal('modalEditar')"
+                        class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Contenido del Modal -->
+                <div class="p-6">
+                    <form id="formEditar">
+                        <input type="hidden" id="idEditar" name="id">
+
+                        <div class="mb-4">
+                            <label for="valorEditar" class="block text-sm font-medium text-gray-300 mb-2">
+                                Valor:
+                            </label>
+                            <input type="text" id="valorEditar" name="valor" placeholder="Ej: 2, 3, 4"
+                                class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                required>
+                        </div>
+
+                        <div class="mb-6">
+                            <label for="precioEditar" class="block text-sm font-medium text-gray-300 mb-2">
+                                Precio:
+                            </label>
+                            <input type="number" id="precioEditar" name="precio" placeholder="0.00" step="0.01" min="0"
+                                class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                required>
+                        </div>
+
+                        <!-- Botones -->
+                        <div class="flex justify-end gap-3">
+                            <button type="button" onclick="cerrarModal('modalEditar')"
+                                class="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-md transition-colors">
+                                Cancelar
+                            </button>
+                            <button type="submit"
+                                class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors">
+                                Guardar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para Eliminar -->
+        <div id="modalEliminar"
+            class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+            <div class="bg-gray-800 rounded-lg shadow-xl w-full max-w-md mx-4">
+                <!-- Header del Modal -->
+                <div class="flex justify-between items-center p-6 border-b border-gray-700">
+                    <h3 class="text-lg font-semibold text-white">
+                        Confirmar eliminación
+                    </h3>
+                    <button onclick="cerrarModal('modalEliminar')"
+                        class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Contenido del Modal -->
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div
+                            class="flex-shrink-0 w-10 h-10 mx-auto bg-red-100 rounded-full flex items-center justify-center">
+                            <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z">
+                                </path>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="text-center mb-6">
+                        <h4 class="text-lg font-medium text-white mb-2">¿Estás seguro?</h4>
+                        <p class="text-gray-400">
+                            ¿Estás seguro de que deseas eliminar el valor "<span id="valorEliminar"
+                                class="font-semibold text-white"></span>"?
+                            Esta acción no se puede deshacer.
+                        </p>
+                    </div>
+
+                    <form id="formEliminar">
+                        <input type="hidden" id="idEliminar" name="id">
+
+                        <!-- Botones -->
+                        <div class="flex justify-end gap-3">
+                            <button type="button" onclick="cerrarModal('modalEliminar')"
+                                class="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-md transition-colors">
+                                Cancelar
+                            </button>
+                            <button type="submit"
+                                class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md transition-colors">
+                                Eliminar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- JavaScript para manejar los modales -->
+        <script>
+            // Funciones para abrir modales
+            function abrirModalAgregar(parametro, descripcion) {
+                document.getElementById('tituloAgregar').textContent = `Agregar valor de: ${parametro}`;
+                document.getElementById('modalAgregar').classList.remove('hidden');
+                document.getElementById('formAgregar').dataset.parametro = parametro;
+                document.getElementById('formAgregar').dataset.descripcion = descripcion;
+            }
+
+            function abrirModalEditar(id, valor, precio, parametro) {
+                document.getElementById('tituloEditar').textContent = `Editar valor de: ${parametro}`;
+                document.getElementById('idEditar').value = id;
+                document.getElementById('valorEditar').value = valor;
+                document.getElementById('precioEditar').value = precio;
+                document.getElementById('modalEditar').classList.remove('hidden');
+                document.getElementById('formEditar').dataset.parametro = parametro;
+            }
+
+            function abrirModalEliminar(id, valor) {
+                document.getElementById('idEliminar').value = id;
+                document.getElementById('valorEliminar').textContent = valor;
+                document.getElementById('modalEliminar').classList.remove('hidden');
+            }
+
+            // Función para cerrar modales
+            function cerrarModal(modalId) {
+                document.getElementById(modalId).classList.add('hidden');
+                // Limpiar formularios
+                if (modalId === 'modalAgregar') {
+                    document.getElementById('formAgregar').reset();
+                } else if (modalId === 'modalEditar') {
+                    document.getElementById('formEditar').reset();
+                }
+            }
+
+            // Cerrar modal al hacer clic fuera de él
+            document.addEventListener('click', function (event) {
+                const modales = ['modalAgregar', 'modalEditar', 'modalEliminar'];
+                modales.forEach(modalId => {
+                    const modal = document.getElementById(modalId);
+                    if (event.target === modal) {
+                        cerrarModal(modalId);
+                    }
+                });
+            });
+
+            // Cerrar modal con tecla Escape
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape') {
+                    const modales = ['modalAgregar', 'modalEditar', 'modalEliminar'];
+                    modales.forEach(modalId => {
+                        const modal = document.getElementById(modalId);
+                        if (!modal.classList.contains('hidden')) {
+                            cerrarModal(modalId);
+                        }
+                    });
+                }
+            });
+
+            // Manejar envío de formularios
+            document.getElementById('formAgregar').addEventListener('submit', async function (e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+                const parametro = this.dataset.parametro;
+                const descripcion = this.dataset.descripcion;
+
+                // Aquí puedes agregar la lógica para enviar los datos al servidor
+
+                const data = {
+                    parametro_nombre: parametro,
+                    descripcion,
+                    valor: formData.get('valor'),
+                    precio: parseFloat(formData.get('precio'))
+                }
+
+                try {
+                    const response = await fetch('/admin/quoters/panels', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    });
+
+                    const result = await response.json();
+
+                    if (!response.ok) {
+                        Swal.fire("Error", result.errorMessage, "error");
+                        throw new Error('Error al agregar el valor');
+                    }
+                    Swal.fire("Éxito", result.successMessage || "Valor agregado correctamente", "success").then(() => {
+                        cerrarModal('modalAgregar');
+                        window.location.reload();
+                    });
+
+
+                } catch (error) {
+                    console.error('Error al agregar el valor:', error);
+                    Swal.fire("Error", "No se pudo agregar el valor. Inténtalo de nuevo más tarde.", "error");
+                }
+
+            });
+
+            document.getElementById('formEditar').addEventListener('submit', async function (e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+                const parametro = this.dataset.parametro;
+
+                const data = {
+                    id: parseInt(formData.get('id')),
+                    valor: formData.get('valor'),
+                    precio: parseFloat(formData.get('precio'))
+                }
+                try {
+                    const response = await fetch(`/admin/quoters/panels/${data.id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    });
+
+                    const result = await response.json();
+
+                    if (!response.ok) {
+                        Swal.fire("Error", result.errorMessage, "error");
+                        throw new Error('Error al editar el valor');
+                    }
+                    Swal.fire("Éxito", result.successMessage || "Valor editado correctamente", "success").then(() => {
+                        cerrarModal('modalEditar');
+                        window.location.reload();
+                    });
+
+
+                } catch (error) {
+                    console.error('Error al aditar el valor:', error);
+                    Swal.fire("Error", "No se pudo editar el valor <br> Inténtalo de nuevo más tarde.", "error");
+                }
+            });
+
+            document.getElementById('formEliminar').addEventListener('submit', async function (e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+                let id = parseInt(formData.get('id'))
+                // Aquí puedes agregar la lógica para enviar los datos al servidor
+                try {
+                    const response = await fetch(`/admin/quoters/panels/${id}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                    });
+
+                    const result = await response.json();
+
+                    if (!response.ok) {
+                        Swal.fire("Error", result.errorMessage, "error");
+                        throw new Error('Error al eliminar el valor');
+                    }
+                    Swal.fire("Éxito", result.successMessage || "Valor Eliminado correctamente", "success").then(() => {
+                        cerrarModal('modalEliminar');
+                        window.location.reload();
+                    });
+
+
+                } catch (error) {
+                    console.error('Error al eliminar el valor:', error);
+                    Swal.fire("Error", "No pudo eliminar el valor <br> Inténtalo de nuevo más tarde.", "error");
+                }
+
+                cerrarModal('modalEliminar');
+            });
+        </script>
+        <script src="/js/panel-administration.js"></script>
+</body>
+
+</html>
