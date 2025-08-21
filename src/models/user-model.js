@@ -94,8 +94,6 @@ class UserModel {
 
   async updateUser(id, data) {
     const { username, email, password } = data;
-    console.log(data);
-    console.log(id);
 
     const query = `UPDATE ?? SET username = ?, pass = ?, email = ? WHERE id = ? `;
     const connection = await getConnection();
@@ -120,6 +118,33 @@ class UserModel {
         successMessage: "Usuario actualizado correctamente",
         id: id,
         username: username,
+      };
+    } catch (error) {
+      console.log(`Error in updateUser: ${error}`);
+      throw error;
+    } finally {
+      connection.release();
+    }
+  }
+
+  async deleteUser(id) {
+    const query = `DELETE FROM ?? WHERE id = ?`;
+    const connection = await getConnection();
+
+    try {
+      const results = await connection.query(query, [
+        this.table,
+        id,
+      ]);
+      if (results.affectedRows === 0) {
+        return {
+          errorMessage: "No se pudo eliminar el usuario",
+          success: false,
+        };
+      }
+      return {
+        success: true,
+        successMessage: "Usuario eliminado correctamente",
       };
     } catch (error) {
       console.log(`Error in updateUser: ${error}`);

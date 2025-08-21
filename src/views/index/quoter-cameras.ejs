@@ -228,10 +228,10 @@
             document.getElementById('diskSizeText').textContent = tamañoDisco;
 
             // Actualizar desglose de precios
-            const resumenPrecios = apiData["Resumen de precios"];
-            document.getElementById('camerasAndDiskCost').textContent = `$${parseFloat(resumenPrecios["Costo de Cámaras y Disco Duro"]).toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
-            document.getElementById('cablingCost').textContent = `$${parseFloat(resumenPrecios["Costo de Cableado"]).toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
-            document.getElementById('installationCost').textContent = `$${parseFloat(resumenPrecios["Costo de Instalación por Altura"]).toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+            // const resumenPrecios = apiData["Resumen de precios"];
+            // document.getElementById('camerasAndDiskCost').textContent = `$${parseFloat(resumenPrecios["Costo de Cámaras y Disco Duro"]).toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+            // document.getElementById('cablingCost').textContent = `$${parseFloat(resumenPrecios["Costo de Cableado"]).toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+            // document.getElementById('installationCost').textContent = `$${parseFloat(resumenPrecios["Costo de Instalación por Altura"]).toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
 
             // Obtener valores de la cotización actual
             const getConfigValue = (paramName) => {

@@ -1,7 +1,6 @@
 <%- include('../partials/head.ejs') %>
 
 
-
 <body class="bg-dark-bg">
     <%- include('../partials/nav-index.ejs') %>
 
@@ -290,27 +289,26 @@
             };
 
             // Crear elementos del desglose
-            Object.keys(resumenPrecios).forEach(concepto => {
-                const precio = parseFloat(resumenPrecios[concepto]);
-                const nombreAmigable = nombresMapeados[concepto] || concepto;
+            //     Object.keys(resumenPrecios).forEach(concepto => {
+            //         const precio = parseFloat(resumenPrecios[concepto]);
+            //         const nombreAmigable = nombresMapeados[concepto] || concepto;
 
-                const div = document.createElement('div');
-                div.className = 'flex justify-between text-sm';
-                div.innerHTML = `
-            <span class="text-gray-600">${nombreAmigable}:</span>
-            <span class="font-medium">$${precio.toLocaleString('es-MX')}.00</span>
-        `;
-                desgloseContainer.appendChild(div);
-            });
+            //         const div = document.createElement('div');
+            //         div.className = 'flex justify-between text-sm';
+            //         div.innerHTML = `
+            //     <span class="text-gray-600">${nombreAmigable}:</span>
+            //     <span class="font-medium">$${precio.toLocaleString('es-MX')}.00</span>
+            // `;
+            //         desgloseContainer.appendChild(div);
+            //     });
 
             // Agregar línea y total
             const totalDiv = document.createElement('div');
             totalDiv.innerHTML = `
-        <hr class="my-2">
-        <div class="flex justify-between font-bold text-lg">
-            <span>Total:</span>
-            <span class="text-blue-600">$${precioTotal.toLocaleString('es-MX')}.00 MXN</span>
-        </div>
+                    <div class="flex justify-between font-bold text-2xl">
+                    <span>Total:</span>
+                    <span class="text-blue-600">$${precioTotal.toLocaleString('es-MX')}.00 MXN</span>
+                </div>
     `;
             desgloseContainer.appendChild(totalDiv);
 
@@ -411,8 +409,8 @@
 
             // Agregar línea y total
             desgloseContainer.innerHTML += `
-        <hr class="my-2">
-        <div class="flex justify-between font-bold text-lg">
+        
+        <div class="flex justify-between font-bold text-4xl">
             <span>Total:</span>
             <span class="text-blue-600">$${precioTotal.toLocaleString('es-MX')}.00 MXN</span>
         </div>

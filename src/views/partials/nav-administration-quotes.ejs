@@ -1,31 +1,91 @@
-<nav class="flex space-x-2 p-1 bg-slate-800 rounded-lg border border-slate-700 mb-6 shadow-lg">
-    <a href="/admin/saves" id="tab-clientes"
-        class="tab-button px-6 py-2 rounded-md text-slate-300 hover:text-white hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-800 transition-colors duration-200 flex items-center active">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
-            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-            <circle cx="9" cy="7" r="4"></circle>
-            <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
-            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-        </svg>
-        Clientes
-    </a>
-    <a id="tab-cercas" href="/admin/saves/fences"
-        class="tab-button px-6 py-2 rounded-md text-slate-300 hover:text-white hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-800 transition-colors duration-200 flex items-center ">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-        </svg>
-        Cercas
-    </a>
-    <a id="tab-camaras" href="/admin/saves/camera"
-        class="tab-button px-6 py-2 rounded-md text-slate-300 hover:text-white hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-800 transition-colors duration-200 flex items-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
-            <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z">
-            </path>
-            <circle cx="12" cy="13" r="3"></circle>
-        </svg>
-        Cámaras
-    </a>
+<nav
+    class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 p-4 bg-slate-800 rounded-lg border border-slate-700 mb-6 shadow-lg">
+    <!-- Tabs Container -->
+    <div class="flex flex-wrap gap-2 justify-center lg:justify-start">
+        <a href="/admin/saves" id="tab-clientes"
+            class="tab-button min-w-[80px] sm:min-w-[100px] px-3 py-2 sm:px-4 sm:py-2 lg:px-6 rounded-md text-slate-300 hover:text-white hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-800 transition-colors duration-200 flex items-center justify-center active bg-slate-700 text-white text-sm lg:text-base font-medium">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="mr-1 sm:mr-2 flex-shrink-0">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            <span class="whitespace-nowrap">Clientes</span>
+        </a>
+
+        <a id="tab-cercas" href="/admin/saves/fences"
+            class="tab-button min-w-[80px] sm:min-w-[100px] px-3 py-2 sm:px-4 sm:py-2 lg:px-6 rounded-md text-slate-300 hover:text-white hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-800 transition-colors duration-200 flex items-center justify-center text-sm lg:text-base font-medium">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="mr-1 sm:mr-2 flex-shrink-0">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+            <span class="whitespace-nowrap">Cercas</span>
+        </a>
+
+        <a id="tab-camaras" href="/admin/saves/camera"
+            class="tab-button min-w-[80px] sm:min-w-[100px] px-3 py-2 sm:px-4 sm:py-2 lg:px-6 rounded-md text-slate-300 hover:text-white hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-800 transition-colors duration-200 flex items-center justify-center text-sm lg:text-base font-medium">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="mr-1 sm:mr-2 flex-shrink-0">
+                <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z">
+                </path>
+                <circle cx="12" cy="13" r="3"></circle>
+            </svg>
+            <span class="whitespace-nowrap">Cámaras</span>
+        </a>
+
+        <a id="tab-paneles" href="/admin/saves/panels"
+            class="tab-button min-w-[80px] sm:min-w-[120px] px-3 py-2 sm:px-4 sm:py-2 lg:px-6 rounded-md text-slate-300 hover:text-white hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-800 transition-colors duration-200 flex items-center justify-center text-sm lg:text-base font-medium">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 sm:mr-2 flex-shrink-0" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="1" x2="12" y2="3" />
+                <line x1="12" y1="21" x2="12" y2="23" />
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                <line x1="1" y1="12" x2="3" y2="12" />
+                <line x1="21" y1="12" x2="23" y2="12" />
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                <circle cx="12" cy="12" r="5" />
+            </svg>
+            <span class="whitespace-nowrap hidden sm:inline">Paneles</span>
+            <span class="whitespace-nowrap sm:hidden">Pan</span>
+        </a>
+    </div>
+
+    <!-- Search Form -->
+    <form action="/admin/saves/searchUser" method="get"
+        class="flex flex-col sm:flex-row gap-2 lg:gap-3 w-full lg:w-auto lg:min-w-[300px]">
+        <div class="relative min-w-[100px]">
+            <select name="searchType" id="searchType"
+                class="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:bg-slate-600 transition-colors duration-200 appearance-none cursor-pointer pr-8">
+                <option value="id">ID</option>
+                <option value="email">Email</option>
+                <option value="telefono">Teléfono</option>
+            </select>
+            <!-- Custom dropdown arrow -->
+            <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </div>
+        </div>
+
+        <div class="flex gap-2 flex-1 lg:flex-initial">
+            <input type="text" name="searchValue" id="searchValue" placeholder="Buscar Usuario..."
+                class="flex-1 lg:w-40 px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-slate-200 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:bg-slate-600 transition-colors duration-200">
+
+            <button type="submit"
+                class="px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-800 transition-colors duration-200 flex items-center justify-center min-w-[44px]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+            </button>
+        </div>
+    </form>
 </nav>

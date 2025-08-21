@@ -27,16 +27,16 @@
                     </div>
                     <p class="text-gray-400">Lista de usuarios registrados en el sistema</p>
                 </div>
-                <!-- <div class="mb-6 flex justify-end">
-                    <button
+                <div class="mb-6 flex justify-end">
+                    <a href="/admin/users/add"
                         class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors duration-200">
                         <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                         </svg>
                         Nuevo Usuario
-                    </button>
-                </div> -->
+                    </a>
+                </div>
 
                 <!-- Users Table -->
                 <div class="bg-gray-800 border border-gray-700 rounded-lg overflow-hidden">
@@ -89,13 +89,29 @@
                                                     </path>
                                                 </svg>
                                             </a>
+                                            <%if(user.id !== 1){%>
+
+                                            <button class="delete-btn text-red-400 hover:text-red-300"
+                                                data-id="<%= user.id %>">
+                                                <!-- Icono SVG -->
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M3 6h18" />
+                                                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                                                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                                                    <line x1="10" x2="10" y1="11" y2="17" />
+                                                    <line x1="14" x2="14" y1="11" y2="17" />
+                                                </svg>
+                                            </button>
+                                            <%}%>
                                         </div>
                                     </td>
                                 </tr>
                                 <% }); %>
 
 
-                                <%  } %>
+                                            <%  } %>
                             </tbody>
                         </table>
                     </div>
@@ -117,6 +133,45 @@
     </div>
 
     <script src="/js/panel-administration.js"></script>
+
+    <script>
+        document.addEventListener('click', async e => {
+            const btn = e.target.closest('.delete-btn');
+            if (!btn) return;
+
+            const id = btn.dataset.id;
+            console.log(id);
+
+
+            const { isConfirmed } = await Swal.fire({
+                title: '¿Estás seguro?',
+                text: 'Se eliminará el cliente y todas sus cotizaciones. Esta acción no se puede deshacer.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            });
+
+            if (!isConfirmed) return;
+
+            try {
+                const res = await fetch(`/admin/users/${id}`, { method: 'DELETE' });
+                const data = await res.json();          // <-- leemos la respuesta JSON
+                console.log(data);
+
+                if (!res.ok) {                          // 404 o 500
+                    throw new Error(data.message || 'Error desconocido');
+                }
+
+                Swal.fire('¡Eliminado!', data.successMessage, 'success');
+                btn.closest('tr').remove();
+            } catch (err) {
+                Swal.fire('Error', err.message, 'error');
+            }
+        });
+    </script>
 
 
 

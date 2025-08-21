@@ -5,11 +5,15 @@ const router = express.Router();
 
 router.get("/", UserController.getUsers);
 
+router.get('/add', UserController.renderAddUsers)
+
+router.post("/", UserController.addUser);
+
 router.get("/:id", UserController.getUserById);
 
+router.delete("/:id", UserController.deleteUser)
 /* Update user with id */
 router.put("/:id", UserController.updateUser);
 
-router.post("/", UserController.addUser);
 
 export default router;

@@ -16,13 +16,17 @@
                 <!-- Información General -->
                 <div class="bg-slate-700/50 rounded-lg p-6 flex-1">
                     <div class="flex items-center gap-2 mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="mr-2 text-blue-400">
-                            <path
-                                d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z">
-                            </path>
-                            <circle cx="12" cy="13" r="3"></circle>
+                        <svg class="text-yellow-400" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <path d="M12 1v2"></path>
+                            <path d="M12 21v2"></path>
+                            <path d="M4.22 4.22l1.42 1.42"></path>
+                            <path d="M18.36 18.36l1.42 1.42"></path>
+                            <path d="M1 12h2"></path>
+                            <path d="M21 12h2"></path>
+                            <path d="M4.22 19.78l1.42-1.42"></path>
+                            <path d="M18.36 5.64l1.42-1.42"></path>
                         </svg>
                         <h3 class="text-lg font-medium text-white">Información General</h3>
                     </div>
@@ -42,6 +46,10 @@
                         <div>
                             <p class="text-gray-400 text-sm mb-1">Fecha de Cotización:</p>
                             <p class="text-white font-medium">15:17:52</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-400 text-sm mb-1">Tarifa:</p>
+                            <p class="text-white font-medium"><%= data.quoteData.tarifa%> </p>
                         </div>
                     </div>
 
@@ -66,37 +74,55 @@
 
                     <div class="grid grid-cols-2 gap-6">
                         <div>
-                            <p class="text-gray-400 text-sm mb-1">Detalles de Cámaras:</p>
-                            <p class="text-white font-medium"><%= data.quoteData.camaras%> </p>
+                            <p class="text-gray-400 text-sm mb-1">Número de Paneles:</p>
+                            <p class="text-white font-medium"><%= data.quoteData.numero_paneles%> </p>
                         </div>
                         <div>
-                            <p class="text-gray-400 text-sm mb-1">Disco Duro:</p>
-                            <p class="text-white font-medium"> <%= data.quoteData.disco_duro%></p>
+                            <p class="text-gray-400 text-sm mb-1">Tipo de Paneles:</p>
+                            <p class="text-white font-medium"> <%= data.quoteData.tipo_panel%>W </p>
                         </div>
                     </div>
 
                     <div class="grid grid-cols-2 gap-6 mt-4">
                         <div>
-                            <p class="text-gray-400 text-sm mb-1">Días de Grabación:</p>
-                            <p class="text-white font-medium"><%= data.quoteData.dias_grabacion%></p>
+                            <p class="text-gray-400 text-sm mb-1">Dimensiones Estructura:</p>
+                            <p class="text-white font-medium"><%= data.quoteData.ancho_estructura%>M x
+                                <%= data.quoteData.alto_estructura%>M </p>
                         </div>
                         <div>
-                            <p class="text-gray-400 text-sm mb-1">Distancia de Cableado:</p>
-                            <p class="text-white font-medium"><%= data.quoteData.distancia_cable%></p>
+                            <p class="text-gray-400 text-sm mb-1">Capacidad Inversor:</p>
+                            <p class="text-white font-medium"><%= data.quoteData.inversor%></p>
                         </div>
                     </div>
 
                     <div class="grid grid-cols-2 gap-6 mt-4">
                         <div>
-                            <p class="text-gray-400 text-sm mb-1">Altura de Instalación:</p>
-                            <p class="text-white font-medium"><%= data.quoteData.altura%></p>
+                            <p class="text-gray-400 text-sm mb-1">Tipo de Tubería:</p>
+                            <p class="text-white font-medium"><%= data.quoteData.tuberia%> "</p>
                         </div>
                         <div>
-                            <p class="text-gray-400 text-sm mb-1">Lugar de Instalación:</p>
-                            <p class="text-white font-medium"><%= data.quoteData.lugar%> </p>
+                            <p class="text-gray-400 text-sm mb-1">Distancia:</p>
+                            <p class="text-white font-medium"><%= data.quoteData.distancia%> </p>
                         </div>
                     </div>
 
+
+                    <div class="grid grid-cols-2 gap-6 mt-4">
+                        <div>
+                            <p class="text-gray-400 text-sm mb-1">Total Cable:</p>
+                            <p class="text-white font-medium"><%= data.quoteData.cable%></p>
+                        </div>
+                        <div>
+                            <p class="text-gray-400 text-sm mb-1">Promedio Contumo:</p>
+                            <p class="text-white font-medium"> <%= data.quoteData.promedio %> </p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-6 mt-4">
+                        <div>
+                            <p class="text-gray-400 text-sm mb-1">Hilos:</p>
+                            <p class="text-white font-medium"><%= data.quoteData.hilos%></p>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Información del Cliente -->
@@ -143,7 +169,7 @@
                     Volver
                 </a>
 
-                <a href="https://wa.me/<%= data.costumer.telefono %>?text=¡Hola <%= data.costumer.nombre %>! 👋 %0A%0ATe comparto el resumen de tu cotización:%0A%0A📸 *Sistema de Cámaras*%0A• Cámaras: <%= data.quoteData.camaras %>%0A• Disco duro: <%= data.quoteData.disco_duro %>%0A• Distancia de cable: <%= data.quoteData.distancia_cable %>%0A• Altura de instalación: <%= data.quoteData.altura %>%0A• Tipo de lugar: <%= data.quoteData.lugar %>%0A• Días de grabación: <%= data.quoteData.dias_grabacion %>%0A%0A💰 *Total cotizado:* $<%= parseFloat(data.quoteData.total).toLocaleString('es-MX') %>%0A%0A¿Te gustaría agendar la instalación? ¡Estoy listo para ayudarte! 😊"
+                <a href="https://wa.me/<%= data.costumer.telefono %>?text=¡Hola <%= data.costumer.nombre %>! 👋%0A%0ATe comparto el resumen de tu cotización de paneles solares:%0A%0A🔆 *Detalles de la instalación*%0A• Número de paneles: <%= data.quoteData.numero_paneles %> de <%= data.quoteData.tipo_panel %>W%0A• Dimensiones de estructura: <%= data.quoteData.ancho_estructura %>m x <%= data.quoteData.alto_estructura %>m%0A• Inversor: <%= data.quoteData.inversor %>%0A• Tubería: <%= data.quoteData.tuberia %> pulgadas%0A• Distancia: <%= data.quoteData.distancia %> m%0A• Total cable: <%= data.quoteData.cable %> m%0A• Hilos: <%= data.quoteData.hilos %>%0A• Tarifa: <%= data.quoteData.tarifa %>%0A• Consumo promedio: <%= data.quoteData.promedio %> kWh%0A%0A💰 *Total cotizado:* $<%= parseFloat(data.quoteData.total).toLocaleString('es-MX') %>%0A%0A¿Quieres que agendemos la instalación? Estaré encantado de ayudarte. ⚡😊"
                     target="_blank"
                     class="flex items-center justify-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md transition-colors w-full sm:w-auto">
                     <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" class="h-4 w-4 m-2" viewBox="0,0,256,256">
@@ -161,30 +187,8 @@
                     Contactar Cliente
                 </a>
 
-                <a <a href="https://mail.google.com/mail/?view=cm&fs=1&to=<%= encodeURIComponent(data.costumer.email) %>&su=Cotización&body=<%= encodeURIComponent(`Hola ${data.costumer.nombre},
-
-¡Gracias por tu interés en nuestros servicios!
-
-Aquí tienes el resumen de tu cotización:
-
-------------------------------
-🧾 *Cotización de Cámaras de Seguridad*
-------------------------------
-
-📦 TOTAL:            $${parseFloat(data.quoteData.total).toLocaleString('es-MX')}
-📷 Cámaras:        ${data.quoteData.camaras}
-💾 Disco duro:       ${data.quoteData.disco_duro}
-🔌 Cable:              ${data.quoteData.distancia_cable}
-📏 Altura:          ${data.quoteData.altura}
-🏠 Lugar:            ${data.quoteData.lugar}
-📅 Grabación:      ${data.quoteData.dias_grabacion} días
-
-------------------------------
-
-Por favor, revisa los detalles y no dudes en contactar si tienes alguna pregunta.
-
-Saludos cordiales,  
-Tu equipo de Soluciones Tecnológicas .NET`) %>" target="_blank"
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=<%= encodeURIComponent(data.costumer.email) %>&su=Cotización de Paneles Solares&body=Hola <%= encodeURIComponent(data.costumer.nombre) %>,%0A%0AGracias por tu interés en nuestros servicios.%0A%0ATe comparto un resumen de tu cotización:%0A%0A🔆 Paneles: <%= encodeURIComponent(data.quoteData.numero_paneles) %> de <%= encodeURIComponent(data.quoteData.tipo_panel) %>W%0A⚡ Inversor: <%= encodeURIComponent(data.quoteData.inversor) %>%0A📊 Tarifa: <%= encodeURIComponent(data.quoteData.tarifa) %>%0A💰 Total: $<%= parseFloat(data.quoteData.total).toLocaleString('es-MX') %>%0A%0A¿Deseas agendar la instalación?%0A%0ASaludos,%0ASoluciones Tecnológicas .NET"
+                    target="_blank"
                     class="flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors w-full sm:w-auto">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">

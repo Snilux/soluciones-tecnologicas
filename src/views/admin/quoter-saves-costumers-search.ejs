@@ -184,25 +184,6 @@
                     </table>
                 </div>
             </div>
-            <div class="flex justify-center p-4 border-t border-slate-700 bg-slate-700 rounded-b-xl mt-2">
-
-                <% if (currentPage > 1) { %>
-                <a href="?page=<%= currentPage - 1 %> "
-                    class="bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white px-3 py-2 sm:px-4 sm:py-2 rounded-lg flex items-center justify-center gap-2 transition-colors duration-200 border border-gray-600 text-sm sm:text-base w-full sm:w-auto">Anterior</a>
-                <% } %>
-
-
-                <p class="text-gray-400 text-sm sm:text-base ml-5 mr-5">Página <%= currentPage %> de <%= totalPages %>
-                </p>
-
-
-
-                <% if (currentPage < totalPages) { %>
-                <a href="?page=<%= currentPage + 1 %>"
-                    class="bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white px-3 py-2 sm:px-4 sm:py-2 rounded-lg flex items-center justify-center gap-2 transition-colors duration-200 border border-gray-600 text-sm sm:text-base w-full sm:w-auto">Siguiente</a>
-                <% } %>
-
-            </div>
         </div>
     </div>
     <% } %>

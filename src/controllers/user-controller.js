@@ -23,6 +23,12 @@ class UserController {
     }
   }
 
+  async renderAddUsers(req, res) {
+    return res.render("admin/add-user", {
+      tittle: "Agregar Usuario",
+    });
+  }
+
   async addUser(req, res) {
     try {
       const user = validateUserEmail(req.body);
@@ -78,7 +84,7 @@ class UserController {
       res.status(500).json({ error: "Internal Server Error" });
     }
   }
-  
+
   async updateUser(req, res) {
     const { id } = req.params;
     const user = validateUserEmail(req.body);
@@ -88,8 +94,6 @@ class UserController {
         const field = err.path.join(".");
         return `${field}: ${err.message}`;
       });
-
-      console.log(errors[0]);
 
       return res.status(400).json({
         errorMessage: `Error en la validación de los datos \n`,
@@ -111,6 +115,28 @@ class UserController {
         username: updateUser.username,
       },
     });
+  }
+
+  async deleteUser(req, res) {
+    const { id } = req.params;
+    if (id === 1) {
+      return res
+        .status(404)
+        .json({ message: "Este usuario no se puede eliminar" });
+    }
+    try {
+      const result = await UserModel.deleteUser(id);
+      if (result.success === false) {
+        return res.status(404).json({ message: "Usuario no encontrado" });
+      }
+      return res.status(200).json({
+        success: true,
+        successMessage: result.message || "Usuario eliminado correctamente",
+      });
+    } catch (error) {
+      console.error("Error al eliminar el usuario:", error);
+      return res.status(500).json({ message: "Error interno del servidor" });
+    }
   }
 }
 

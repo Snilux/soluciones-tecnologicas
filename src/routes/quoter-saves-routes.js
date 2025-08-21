@@ -27,4 +27,16 @@ router.delete('/fences/:id', QuoterSavesController.deleteQuoteFence)
 
 router.get("/fences/:id/:idCostumer", QuoterSavesController.GetQuoteFencesById);
 
+/* Routes for saved quoters -PANELS */
+
+router.get("/panels", QuoterSavesController.getQuotesOfPanels)
+
+router.delete("/panels/:id", QuoterSavesController.deleteQuotePanel)
+
+router.get("/panels/:id/:idCostumer", QuoterSavesController.GetQuotePanelsById);
+
+/* Routes for search users */
+
+router.get("/searchUser", QuoterSavesController.SearchUser)
+
 export default router;
