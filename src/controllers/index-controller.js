@@ -7,6 +7,9 @@ import nodemailer from "nodemailer";
 import QuoterModel from "../models/quoter-model.js";
 import CostumerModel from "../models/costumer-model.js";
 
+import dotenv from "dotenv";
+dotenv.config();
+
 class indexController {
   async renderIndex(req, res) {
     res.render("index/index", {
